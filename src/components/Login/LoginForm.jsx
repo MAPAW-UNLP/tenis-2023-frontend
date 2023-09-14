@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //components
-import FeedbackText from './FeedbackText';
-import LoaderSpinner from './LoaderSpinner';
+import FeedbackText from '../FeedbackText';
+import LoaderSpinner from '../LoaderSpinner';
 
 const LoginForm = ({ setSesion }) => {
   const URL_BASE = 'http://localhost:8083/api/';

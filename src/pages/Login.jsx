@@ -4,7 +4,7 @@ import React from 'react'
 import tennisImg from '../Img/tennisImg.jpg'
 
 //components
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/Login/LoginForm'
 
 //style
 import '../styles/login.css'

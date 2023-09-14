@@ -2,8 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-//font awesme
-
 //components
 import FeedbackText from './FeedbackText';
 import LoaderSpinner from './LoaderSpinner';
@@ -29,8 +27,6 @@ const LoginForm = ({ setSesion }) => {
       e.target.value === ''
         ? (loginBtn.disabled = true)
         : (loginBtn.disabled = false);
-      /*             const link= document.getElementById('linkLogin');
-            link.className = 'disabledLink'; */
     } else passInput.disabled = false;
   };
 
@@ -41,9 +37,6 @@ const LoginForm = ({ setSesion }) => {
     e.target.value === ''
       ? (loginBtn.disabled = true)
       : (loginBtn.disabled = false);
-
-    /*   const link= document.getElementById('linkLogin');
-        link.className = 'linkLogin active'; */
   };
 
   const habldeSubmit = (e) => {
@@ -94,9 +87,6 @@ const LoginForm = ({ setSesion }) => {
           onChange={handlePassChange}
           disabled
         />
-        {/* <button type="submit" id='login-btn' className='login-form-btn' disabled onClick={habldeSubmit}><Link to="/inicio" id='linkLogin' className='disabledLink'> Iniciar Sesion </Link></button>
-         */}
-
         <FeedbackText
           text={'El usuario o contraseña es invalido'}
           color={'#F4F4F4'}

@@ -23,8 +23,6 @@ function App() {
   const navigate = useNavigate();
   const [sesion, setSesion] = useState('');
 
-  const URL_BASE = `http://localhost:8083/api/`;
-
   //sesion Effect D:
   useEffect(() => {
     const user = localStorage.getItem('sesion');

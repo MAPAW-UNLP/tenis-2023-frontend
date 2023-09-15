@@ -7,10 +7,7 @@ const Cancha = ({id, nombre, tipo}) => {
     else if(tipo === 'azul'){return '#336699'}
   }
   return (
-
-    
     <div id="cancha-component">
-      
       <h2>{nombre}</h2>
       <h4>Proximo partido</h4>
       <div id='grafico' style={{ backgroundColor: pickBackgroundColor()}}>

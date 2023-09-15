@@ -6,7 +6,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 //Components
 import FeedbackText from '../FeedbackText';
-import InputComponent from '../InputComponent';
+import InputComponent from '../Utils/InputComponent';
 import NacimientoComponent from '../Utils/NacimientoComponent';
 
 const AlumnoDetail = ({

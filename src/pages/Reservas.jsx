@@ -11,7 +11,7 @@ import SelectHoraFin from '../components/SelectHoraFin';
 import NavBar from './NavBar';
 import AlquilerFormComponent from '../components/AlquilerFormComponent';
 import ClaseFormComponent from '../components/ClaseFormComponent';
-import InputComponent from '../components/InputComponent';
+import InputComponent from '../components/Utils/InputComponent';
 import SelectComponent from '../components/SelectComponent';
 
 //Fontawesome icons

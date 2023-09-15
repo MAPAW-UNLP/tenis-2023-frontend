@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import InputComponent from './InputComponent';
+import InputComponent from './Utils/InputComponent';
 import Pago from './Pago';
 import PagoDetail from './PagoDetail';
 //Font awesome

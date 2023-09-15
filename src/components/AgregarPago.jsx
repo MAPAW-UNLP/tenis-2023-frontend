@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 //Components
 import moment from 'moment';
-import InputComponent from './InputComponent';
+import InputComponent from './Utils/InputComponent';
 import Select from 'react-select';
 
 const AgregarPago = ({

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react'
-import NavBar from './NavBar'
-import '../styles/canchas.css'
+import NavBar from '../NavBar'
+import '../../styles/canchas.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 //Components
-import CanchasAddForm from '../components/Canchas/CanchasAddForm'
-import CanchasList from '../components/Canchas/CanchasList'
-import LoaderSpinner from '../components/LoaderSpinner'
+import CanchasAddForm from '../../components/Cancha/CanchasAddForm'
+import CanchasList from '../../components/Cancha/CanchasList'
+import LoaderSpinner from '../../components/LoaderSpinner'
 
-const Canchas = ({ setSesion  }) => { 
+const Canchas = ({ setSesion }) => { 
   const URL_BASE = `http://localhost:8083/api/`; 
 
   const [actived, setActived] = useState(false);

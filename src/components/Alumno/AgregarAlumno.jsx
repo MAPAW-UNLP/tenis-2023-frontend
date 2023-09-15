@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 //Components
-import InputComponent from './InputComponent';
-import FeedbackText from './FeedbackText';
-import NacimientoComponent from './NacimientoComponent';
+import InputComponent from '../InputComponent';
+import FeedbackText from '../FeedbackText';
+import NacimientoComponent from '../NacimientoComponent';
 
 const AgregarAlumno = ({
   active,

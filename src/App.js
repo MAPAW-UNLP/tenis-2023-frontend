@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 //Components
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Canchas from './pages/Canchas';
+import Canchas from './pages/Cancha/Canchas';
 import Reservas from './pages/Reservas';
-import Alumnos from './pages/Alumnos';
+import Alumnos from './pages/Alumno/Alumnos';
 import Profesores from './pages/Profesores';
 import Pagos from './pages/Pagos';
 //VarianteHome

@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 //Components
 import Login from './pages/Login';
 import Home from './pages/Home';
-import Canchas from './pages/Canchas';
+import Canchas from './pages/Cancha/Canchas';
 import Reservas from './pages/Reservas';
-import Alumnos from './pages/Alumnos';
+import Alumnos from './pages/Alumno/Alumnos';
 import Profesores from './pages/Profesores';
 import Pagos from './pages/Pagos';
 //VarianteHome
@@ -24,23 +24,23 @@ function App() {
   const [sesion, setSesion] = useState('');
 
   //Todo esto podría ir a la store global:
-  const [canchas, setCanchas] = useState([]);
+  // const [canchas, setCanchas] = useState([]);
   const [reservas, setReservas] = useState([]);
   const [pagos, setPagos] = useState([]);
 
-  const [actCanchas, setActCanchas] = useState(false);
+  // const [actCanchas, setActCanchas] = useState(false);
   const [actReservas, setActReservas] = useState(false);
   const [actPagos, setActPagos] = useState(false);
   /*  */
   /* Loaders */
   const [activedLoader, setActivedLoader] = useState(false);
   const [reservasLoader, setReservasLoader] = useState(false);
-  const [alumnosLoader, setAlumnosLoader] = useState(false);
+  // const [alumnosLoader, setAlumnosLoader] = useState(false);
   const [profesoresLoader, setProfesoresLoader] = useState(false);
 
   //para actualizar los alumnos
-  const [alumnos, setAlumnos] = useState([]);
-  const [actAlumnos, setActAlumnos] = useState(false);
+  // const [alumnos, setAlumnos] = useState([]);
+  // const [actAlumnos, setActAlumnos] = useState(false);
 
   //para actualizar los profesores
   const [profesores, setProfesores] = useState([]);
@@ -66,16 +66,16 @@ function App() {
     }
   }, [sesion]);
 
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    fetch(`${URL_BASE}canchas`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCanchas(data.detail))
-      .then((response) => setActivedLoader((v) => false)); //siempre aca da false
-    /* Desactivar spinner */
-  }, [actCanchas]);
+  // useEffect(() => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   fetch(`${URL_BASE}canchas`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((data) => setCanchas(data.detail))
+  //     .then((response) => setActivedLoader((v) => false)); //siempre aca da false
+  //   /* Desactivar spinner */
+  // }, [actCanchas]);
 
   //Con las reservas
   useEffect(() => {
@@ -91,17 +91,17 @@ function App() {
   }, [actReservas]);
 
   //get de los alumnos
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    fetch(`${URL_BASE}alumnos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-      .then((response) => setAlumnosLoader((v) => false));
+  // useEffect(() => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   fetch(`${URL_BASE}alumnos`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+  //     .then((response) => setAlumnosLoader((v) => false));
 
-    /* Desactivar spinner */
-  }, [actAlumnos]);
+  //   /* Desactivar spinner */
+  // }, [actAlumnos]);
 
   //get Profesores
   useEffect(() => {

@@ -6,11 +6,10 @@ import getDate from "date-fns/getYear";
 import range from "lodash/range";
 import moment from 'moment';
 
+import { formatDate } from './Functions';
 
-const NacimientoComponent = ({nacimiento, setNacimiento}) => {
-
-    console.log('interno', new Date(nacimiento));
-    const [startDate, setStartDate] = useState(nacimiento && new Date(nacimiento));
+const NacimientoComponent = ({alumnoForm, setNacimiento}) => {
+    const [startDate, setStartDate] = useState(new Date());
     const years = range(1970, getYear(new Date()) + 1, 1);
     const months = [
       "Enero",
@@ -27,16 +26,12 @@ const NacimientoComponent = ({nacimiento, setNacimiento}) => {
       "Diciembre",
     ];
 
-
     const handleChangeDate = (date) =>{
         setStartDate(date);
-        const mes = ("0" + (date.getMonth() + 1)).slice(-2)
-        const dia = ("0" + date.getDate()).slice(-2)
-        const año = ( date.getFullYear());
-        const nacimiento = `${año}${mes}${dia}`;
-        setNacimiento(nacimiento) 
-
+        const fechaNacimiento = formatDate(date)
+        setNacimiento({...alumnoForm, 'nacimiento': fechaNacimiento});
     }
+
     return (
       <DatePicker id='nacimientoPicker'
         placeholderText='Nacimiento'

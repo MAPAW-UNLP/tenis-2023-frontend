@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 //components
-import Alumno from '../Alumno';
-import AlumnoDetail from '../AlumnoDetail';
+import Alumno from './Alumno';
+import AlumnoDetail from './AlumnoDetail';
 //Font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

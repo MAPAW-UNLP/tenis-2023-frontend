@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 //Components
-import FeedbackText from './FeedbackText';
-import InputComponent from './InputComponent';
-import NacimientoComponent from './NacimientoComponent';
+import FeedbackText from '../FeedbackText';
+import InputComponent from '../InputComponent';
+import NacimientoComponent from '../Utils/NacimientoComponent';
 
 const AlumnoDetail = ({
   activeDetail,

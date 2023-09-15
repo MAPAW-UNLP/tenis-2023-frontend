@@ -6,7 +6,7 @@ import { useState } from 'react';
 //Components
 import InputComponent from '../InputComponent';
 import FeedbackText from '../FeedbackText';
-import NacimientoComponent from '../NacimientoComponent';
+import NacimientoComponent from '../Utils/NacimientoComponent';
 
 const AgregarAlumno = ({
   active,

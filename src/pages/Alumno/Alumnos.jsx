@@ -172,14 +172,13 @@ const Users = ({ setSesion }) => {
         <AgregarAlumno 
           active={active} 
           setActive={setActive} 
-          alumnos={alumnos} 
-          setActAlumnos={setActAlumnos} 
-          setAlumnosLoader={setAlumnosLoader}
           handleChangeName={handleChangeName}
           handleChangePhone={handleChangePhone}
           handleSubmitAlumnoForm={handleSubmitAlumnoForm}
           setAlumnoForm={setAlumnoForm}
           alumnoForm={alumnoForm}
+          nombreFB={nombreFB}
+          telefonoFB={telefonoFB}
         />
         {alumnos.length === 0 ? <div>...cargando</div>
          : <AlumnosList alumnos={alumnos} aluDetail={aluDetail} setAluDetail={setAluDetail}/>

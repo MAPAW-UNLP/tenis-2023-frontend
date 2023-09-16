@@ -149,8 +149,18 @@ const Users = ({ setSesion }) => {
 
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
-      .then((response) => setActAlumnos((v) => !v));
+      .then((response) => setActAlumnos((v) => !v))
+      .then(clearState)
   };
+  
+  const clearState = () => {
+    setAlumnoForm({ 
+      nombre: '',
+      telefono: '',
+      nacimiento: ''
+     });
+  };
+
   return (
     <div id='alumnos-component'>
       <NavBar title={'Alumnos'} setSesion={setSesion}/> 

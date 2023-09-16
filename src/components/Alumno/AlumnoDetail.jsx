@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 
-//Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-
-//Components
-import FeedbackText from '../FeedbackText';
 import InputComponent from '../Utils/InputComponent';
 import NacimientoComponent from '../Utils/NacimientoComponent';
 
 const AlumnoDetail = ({
   activeDetail,
   setActiveDetail,
-  aluDetail,
   setAluDetail,
   actAlu,
-  setActAlu,
-  alumnos,
+  checkStudentExistence,
 }) => {
-  const [nombre, setNombre] = useState('');
+  // const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [nacimiento, setNacimiento] = useState(actAlu.fechanac);
   const [nacShow, setNacShow] = useState(actAlu.fechanac);
@@ -26,19 +18,10 @@ const AlumnoDetail = ({
   //feedbackinline
   const [nombreFB, setNombreFB] = useState({ text: '', color: '' });
   const [telefonoFB, setTelefonoFB] = useState({ text: '', color: '' });
-
-  const mostrarNacimientoApropiadamente = (f) => {
-    if (f !== '') {
-      const date = f.split('-');
-      const fechaNacFormat = `${date[2]}/${date[1]}/${date[0]}`;
-      setNacShow(fechaNacFormat);
-      console.log(nacimiento);
-    }
-  };
+  
+  const URL_BASE = 'http://localhost:8083/api/';
 
   const handleCloseForm = () => {
-    /*setNombreFB({...nombreFB, 'text': '', color: ''});
-        setTelefonoFB({...telefonoFB, 'text': '', color: ''});*/
     setActiveDetail(false);
   };
 
@@ -47,17 +30,13 @@ const AlumnoDetail = ({
     const word = e.target.value.split(' ').join('');
 
     //validar que el nombrte sea solo texto y que no exista repetidos
-    setNombre(e.target.value);
+    // setNombre(e.target.value);
     if (e.target.value === '') {
       setNombreFB({ ...nombreFB, text: '', color: '' });
     } else {
       //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
-        if (
-          alumnos
-            .map((each) => each.nombre.toUpperCase())
-            .indexOf(e.target.value.toUpperCase()) === -1
-        ) {
+        if(checkStudentExistence(e.target.value)) {
           setNombreFB({
             ...nombreFB,
             text: 'El nombre de alumno es correcto',
@@ -104,14 +83,7 @@ const AlumnoDetail = ({
     }
   };
 
-  const handlePickBirth = (e) => {
-    //cambiar formato fecha de nacimiento
-    const fechaAdaptada = e.target.value.split('-').join('');
-    setNacimiento(fechaAdaptada);
-  };
-
   const actualizarAlumno = () => {
-    const URL_BASE = 'http://localhost:8083/api/';
     const nombreAlu = document.getElementById('nombreAlumno').value;
     const telAlu = document.getElementById('telefonoAlumno').value;
     const nacAlu = document.getElementById('nacimientoPicker').value;
@@ -132,7 +104,7 @@ const AlumnoDetail = ({
 
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
-      .then((response) => setAluDetail((v) => !v));
+      .then(() => setAluDetail((v) => !v));
   };
 
   return (
@@ -143,7 +115,6 @@ const AlumnoDetail = ({
             x
           </button>
           <h2>Editar Alumno</h2>
-          {console.log(actAlu)}
           <div className="inputlabel">
             <InputComponent
               type={'text'}
@@ -170,19 +141,12 @@ const AlumnoDetail = ({
               {telefonoFB.text}
             </p>
           </div>
-          {console.log(nacShow)}
-          <NacimientoComponent
-            nacimiento={actAlu.fechanac}
-            setNacimiento={setNacimiento}
-          />
+          <NacimientoComponent nacimiento={actAlu.fechanac} setNacimiento={setNacimiento} />
           <div id="clase-detail-btns">
             <button id="clase-detail-guardar" onClick={actualizarAlumno}>
               Guardar
             </button>
-            <button
-              id="clase-detail-cancelar"
-              onClick={() => setActiveDetail(false)}
-            >
+            <button id="clase-detail-cancelar" onClick={() => setActiveDetail(false)}>
               Cancelar
             </button>
           </div>

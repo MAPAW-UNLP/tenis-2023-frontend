@@ -37,7 +37,7 @@ const AgregarAlumno = ({
                 name={'nombre'}
                 className={'alumno-add-form-input'}
                 placeholder={'Nombre'}
-                onChangeFuncion={handleChangeName}
+                onChangeFuncion={(e) => handleChangeName(e, 'alumno-add-form-addBtn', 'telefonoInput')}
               />
               <p className="feedbackInline" style={{ color: nombreFB.color }}>
                 {nombreFB.text}
@@ -47,7 +47,7 @@ const AgregarAlumno = ({
               <InputReComponent
                 type={'text'}
                 name={'telefono'}
-                id="telefonotinput"
+                id="telefonoInput"
                 className={'alumno-add-form-input'}
                 placeholder={'Telefono'}
                 onChangeFuncion={handleChangePhone}

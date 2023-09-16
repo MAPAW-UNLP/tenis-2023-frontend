@@ -40,6 +40,7 @@ const Users = ({ setSesion }) => {
       .then((response) => setAlumnosLoader((v) => false));
 
     /* Desactivar spinner */
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlumnos]);
 
   // Metodo de ordenacion auxiliar
@@ -54,15 +55,17 @@ const Users = ({ setSesion }) => {
   };
 
   // Metodos que son pasados a componente Agregar Alumno 
-  const handleChangeName = (e) => {
+  const handleChangeName = (e, submitButtonName, telefonoInputName) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
     const word = e.target.value.split(' ').join('');
-    const submitBtn = document.getElementById('alumno-add-form-addBtn');
+    // const submitBtn = document.getElementById('alumno-add-form-addBtn');
+    const submitBtn = document.getElementById(submitButtonName)
 
-    console.log(alumnoForm)
     //validar que el nombre sea solo texto y que no exista repetidos
     setAlumnoForm({...alumnoForm, [e.target.name]: e.target.value});
-    const nextInput = document.getElementById('telefonotinput');
+    // const nextInput = document.getElementById('telefonotinput');
+    const nextInput = document.getElementById(telefonoInputName);
+
     if (e.target.value === '') {
       setNombreFB({ ...nombreFB, text: '', color: '' });
       nextInput.disabled = true;
@@ -70,11 +73,7 @@ const Users = ({ setSesion }) => {
     } else {
       //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
-        if (
-          alumnos
-            .map((each) => each.nombre.toUpperCase())
-            .indexOf(e.target.value.toUpperCase()) === -1
-        ) {
+        if (checkStudentExistence(e.target.value)) {
           setNombreFB({
             ...nombreFB,
             text: 'El nombre de alumno es correcto',
@@ -160,6 +159,10 @@ const Users = ({ setSesion }) => {
       nacimiento: ''
      });
   };
+
+  const checkStudentExistence = (student) => {
+    return alumnos.map((each) => each.nombre.toUpperCase()).indexOf(student.toUpperCase()) === -1
+   }
 
   return (
     <div id='alumnos-component'>

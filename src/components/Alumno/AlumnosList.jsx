@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-//components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import Alumno from './Alumno';
 import AlumnoDetail from './AlumnoDetail';
-//Font awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import {
-  faCaretDown,
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -14,23 +13,29 @@ const AlumnosList = ({ alumnos }) => {
   const [activeDetail, setActiveDetail] = useState(false);
   const [actAlu, setActAlu] = useState('');
   const [aluDetail, setAluDetail] = useState({});
+  
   const URL_BASE = `http://localhost:8083/api/`;
 
   const handleChangeSearchAlumnno = (e) => {
-    const Posibles = alumnos.filter((a) =>
+    const posibles = alumnos.filter((a) =>
       a.nombre.toUpperCase().includes(e.target.value.toUpperCase())
     );
     if (e.target.value === '') {
       setAlumnosFiltrados(alumnos);
     } else {
-      setAlumnosFiltrados(Posibles);
+      setAlumnosFiltrados(posibles);
     }
   };
+
+  const checkStudentExistence = (student) => {
+   return alumnos.map((each) => each.nombre.toUpperCase()).indexOf(student.toUpperCase()) === -1
+  }
 
   useEffect(() => {
     setAlumnosFiltrados(alumnos);
   }, [alumnos]);
 
+  // Este useEffect se dispara cuando traemos los datos para editar un alumno
   useEffect(() => {
     if (actAlu !== '') {
       fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
@@ -38,6 +43,7 @@ const AlumnosList = ({ alumnos }) => {
         .then((data) => setAluDetail(data))
         .then((response) => setActiveDetail(true));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlu]);
 
   return (
@@ -45,33 +51,24 @@ const AlumnosList = ({ alumnos }) => {
       <AlumnoDetail
         activeDetail={activeDetail}
         setActiveDetail={setActiveDetail}
-        aluDetail={aluDetail}
         setAluDetail={setAluDetail}
         actAlu={actAlu}
-        setActAlu={setActAlu}
         alumnos={alumnos}
+        checkStudentExistence={checkStudentExistence}
       />
       <div id="alumnos-list-options">
         <p>Nombre </p>
         <p>Telefono</p>
         <p>Nacimiento</p>
         <div id="alumnos-searchbar">
-          <FontAwesomeIcon
-            id="magnify-icon"
-            icon={faMagnifyingGlass}
-          ></FontAwesomeIcon>
-          <input
-            type="text"
-            name=""
-            id=""
-            placeholder="Busca un alumno"
-            onChange={handleChangeSearchAlumnno}
-          />
+          <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass}/>
+          <input type="text" placeholder="Busca un alumno" onChange={handleChangeSearchAlumnno}/>
         </div>
       </div>
+
       <div id="alumnos-list">
         {alumnosFiltrados.map((a) => (
-          <Alumno key={a.nombre} info={a} setActAlu={setActAlu}></Alumno>
+          <Alumno key={a.nombre} info={a} setActAlu={setActAlu}/>
         ))}
       </div>
     </div>

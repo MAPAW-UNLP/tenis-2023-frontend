@@ -21,7 +21,9 @@ const Alumnos = ({info, setActAlu}) => {
         <p>{info.nombre}</p>
         <p>{info.telefono}</p>
         <p>{mostrarNacimientoApropiadamente()}</p>
-        <button id='edit-profesor-btn' onClick={()=>setActAlu({id:info.id, nombre:info.nombre, telefono:info.telefono, fechanac:info.fechanac})}><FontAwesomeIcon icon={faUserEdit}></FontAwesomeIcon></button>
+        <button id='edit-profesor-btn' onClick={()=>setActAlu({id:info.id, nombre:info.nombre, telefono:info.telefono, fechanac:info.fechanac})}>
+            <FontAwesomeIcon icon={faUserEdit}/>
+        </button>
       </div>
     </>
   )

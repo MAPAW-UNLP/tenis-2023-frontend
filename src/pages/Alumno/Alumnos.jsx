@@ -8,6 +8,8 @@ import AgregarAlumno from '../../components/Alumno/AgregarAlumno'
 import AlumnosList from '../../components/Alumno/AlumnosList'
 import LoaderSpinner from '../../components/LoaderSpinner'
  
+import AlumnoDetail from '../../components/Alumno/AlumnoDetail' 
+
 import '../../styles/alumnos.css';
 
 const Users = ({ setSesion }) => {
@@ -28,6 +30,10 @@ const Users = ({ setSesion }) => {
   const [telefonoFB, setTelefonoFB] = useState({ text: '', color: '' });
 
   const [active, setActive] = useState(false);
+
+  // ALUMNO DETAIL
+  const [activeDetail, setActiveDetail] = useState(false);
+  const [actAlu, setActAlu] = useState('');
   const [aluDetail, setAluDetail] = useState({});
 
   useEffect(() => {
@@ -37,11 +43,22 @@ const Users = ({ setSesion }) => {
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-      .then((response) => setAlumnosLoader((v) => false));
+      .then(() => setAlumnosLoader((v) => false));
 
     /* Desactivar spinner */
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlumnos]);
+
+  // Este useEffect se dispara cuando traemos los datos para editar un alumno. Setea actAlu y mmuestra desplegable de edicion
+  useEffect(() => {
+    if (actAlu !== '') {
+      fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
+        .then((response) => response.json())
+        .then((data) => setAluDetail(data))
+        .then(() => setActiveDetail(true));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actAlu]);
 
   // Metodo de ordenacion auxiliar
   const ordenarPorNombre = (datos) => {
@@ -55,21 +72,23 @@ const Users = ({ setSesion }) => {
   };
 
   // Metodos que son pasados a componente Agregar Alumno 
-  const handleChangeName = (e, submitButtonName, telefonoInputName) => {
+  const handleChangeName = (e, submitButtonName, telefonoInputName, checkDisabled) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
     const word = e.target.value.split(' ').join('');
-    // const submitBtn = document.getElementById('alumno-add-form-addBtn');
+
     const submitBtn = document.getElementById(submitButtonName)
+    const shouldIStartDisabled = checkDisabled; // Deberia considerar este valor?
 
     //validar que el nombre sea solo texto y que no exista repetidos
     setAlumnoForm({...alumnoForm, [e.target.name]: e.target.value});
-    // const nextInput = document.getElementById('telefonotinput');
     const nextInput = document.getElementById(telefonoInputName);
-
+    
     if (e.target.value === '') {
       setNombreFB({ ...nombreFB, text: '', color: '' });
-      nextInput.disabled = true;
-      submitBtn.disabled = true;
+      if (shouldIStartDisabled) {
+        nextInput.disabled = true;
+        submitBtn.disabled = true;
+      } 
     } else {
       //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
@@ -79,15 +98,17 @@ const Users = ({ setSesion }) => {
             text: 'El nombre de alumno es correcto',
             color: '#7CBD1E',
           });
-          nextInput.disabled = false;
+          shouldIStartDisabled && (nextInput.disabled = false);
         } else {
           setNombreFB({
             ...nombreFB,
             text: 'El nombre de usuario ya existe',
             color: '#CC3636',
           });
-          nextInput.disabled = true;
-          submitBtn.disabled = true;
+          if (shouldIStartDisabled) {
+            nextInput.disabled = true;
+            submitBtn.disabled = true;
+          } 
         }
       } else {
         setNombreFB({
@@ -99,35 +120,37 @@ const Users = ({ setSesion }) => {
     }
   };
 
-  const handleChangePhone = (e) => {
+  const handleChangePhone = (e, submitButtonName, checkDisabled) => {
     const pattern = '^[0-9]+$';
     const tel = e.target.value;
     
     setAlumnoForm({...alumnoForm, [e.target.name]: e.target.value});
-    const submitBtn = document.getElementById('alumno-add-form-addBtn');
-    console.log(alumnoForm)
+    const submitBtn = document.getElementById(submitButtonName)
+    const shouldIStartDisabled = checkDisabled;
+
     if (tel === '') {
       setTelefonoFB({ ...telefonoFB, text: '', color: '' });
-      submitBtn.disabled = true;
+      shouldIStartDisabled && (submitBtn.disabled = true);
     } else {
-      if (tel.match(pattern) != null && alumnoForm.telefono.length >= 6) {
+      if (tel.match(pattern) != null && tel.length >= 7) {
         setTelefonoFB({
           ...telefonoFB,
           text: 'El nummero de telefono es correcto',
           color: '#7CBD1E',
         });
-        submitBtn.disabled = false;
+        shouldIStartDisabled && (submitBtn.disabled = false);
       } else {
         setTelefonoFB({
           ...telefonoFB,
           text: 'Solo numeros, minimo 7',
           color: '#CC3636',
         });
-        submitBtn.disabled = true;
+        shouldIStartDisabled && (submitBtn.disabled = true);
       }
     }
   };
 
+  // AGREGAR ALUMNO
   const handleSubmitAlumnoForm = (e) => {
     e.preventDefault();
 
@@ -148,7 +171,7 @@ const Users = ({ setSesion }) => {
 
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
-      .then((response) => setActAlumnos((v) => !v))
+      .then(() => setActAlumnos((v) => !v))
       .then(clearState)
   };
   
@@ -158,6 +181,14 @@ const Users = ({ setSesion }) => {
       telefono: '',
       nacimiento: ''
      });
+     setNombreFB({
+      text: '',
+      color: ''
+     })
+     setTelefonoFB({
+      text: '',
+      color: ''
+     })
   };
 
   const checkStudentExistence = (student) => {
@@ -179,12 +210,29 @@ const Users = ({ setSesion }) => {
           handleChangePhone={handleChangePhone}
           handleSubmitAlumnoForm={handleSubmitAlumnoForm}
           setAlumnoForm={setAlumnoForm}
+          clearState={clearState}
           alumnoForm={alumnoForm}
           nombreFB={nombreFB}
           telefonoFB={telefonoFB}
         />
         {alumnos.length === 0 ? <div>...cargando</div>
-         : <AlumnosList alumnos={alumnos} aluDetail={aluDetail} setAluDetail={setAluDetail}/>
+        : 
+          <div id="alumnos-list-component">
+            <AlumnoDetail
+              activeDetail={activeDetail}
+              setActiveDetail={setActiveDetail}
+              setAluDetail={setAluDetail}
+              actAlu={actAlu}
+              handleChangeName={handleChangeName}
+              handleChangePhone={handleChangePhone}
+              nombreFB={nombreFB}
+              telefonoFB={telefonoFB}
+              setAlumnoForm={setAlumnoForm}
+              alumnoForm={alumnoForm}
+              clearState={clearState}
+            />
+            <AlumnosList alumnos={alumnos} setActAlu={setActAlu} />
+          </div>
         }
       </div>
     </div>

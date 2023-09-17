@@ -13,6 +13,7 @@ const AgregarAlumno = ({
   handleChangePhone,
   handleSubmitAlumnoForm,
   setAlumnoForm,
+  clearState,
   alumnoForm,
   nombreFB,
   telefonoFB
@@ -20,6 +21,7 @@ const AgregarAlumno = ({
 
   const handleCloseForm = () => {
     setActive(false);
+    clearState()
   };
   
   return (
@@ -37,7 +39,7 @@ const AgregarAlumno = ({
                 name={'nombre'}
                 className={'alumno-add-form-input'}
                 placeholder={'Nombre'}
-                onChangeFuncion={(e) => handleChangeName(e, 'alumno-add-form-addBtn', 'telefonoInput')}
+                onChangeFuncion={(e) => handleChangeName(e, 'alumno-add-form-addBtn', 'telefonoInput', true)}
               />
               <p className="feedbackInline" style={{ color: nombreFB.color }}>
                 {nombreFB.text}
@@ -50,7 +52,7 @@ const AgregarAlumno = ({
                 id="telefonoInput"
                 className={'alumno-add-form-input'}
                 placeholder={'Telefono'}
-                onChangeFuncion={handleChangePhone}
+                onChangeFuncion={(e) => handleChangePhone(e, 'alumno-add-form-addBtn', true)}
                 deshabilitado={true}
                 min={7}
                 max={12}

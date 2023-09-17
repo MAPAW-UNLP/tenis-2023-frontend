@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import Alumno from './Alumno';
-import AlumnoDetail from './AlumnoDetail';
 
 import {
   faMagnifyingGlass,
 } from '@fortawesome/free-solid-svg-icons';
 
-const AlumnosList = ({ alumnos }) => {
-  const [alumnosFiltrados, setAlumnosFiltrados] = useState(alumnos);
-  const [activeDetail, setActiveDetail] = useState(false);
-  const [actAlu, setActAlu] = useState('');
-  const [aluDetail, setAluDetail] = useState({});
-  
-  const URL_BASE = `http://localhost:8083/api/`;
+const AlumnosList = ({ alumnos, setActAlu }) => {
+  const [alumnosFiltrados, setAlumnosFiltrados] = useState(alumnos);  
 
   const handleChangeSearchAlumnno = (e) => {
     const posibles = alumnos.filter((a) =>
@@ -27,35 +21,12 @@ const AlumnosList = ({ alumnos }) => {
     }
   };
 
-  const checkStudentExistence = (student) => {
-   return alumnos.map((each) => each.nombre.toUpperCase()).indexOf(student.toUpperCase()) === -1
-  }
-
   useEffect(() => {
     setAlumnosFiltrados(alumnos);
   }, [alumnos]);
 
-  // Este useEffect se dispara cuando traemos los datos para editar un alumno
-  useEffect(() => {
-    if (actAlu !== '') {
-      fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
-        .then((response) => response.json())
-        .then((data) => setAluDetail(data))
-        .then((response) => setActiveDetail(true));
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actAlu]);
-
   return (
-    <div id="alumnos-list-component">
-      <AlumnoDetail
-        activeDetail={activeDetail}
-        setActiveDetail={setActiveDetail}
-        setAluDetail={setAluDetail}
-        actAlu={actAlu}
-        alumnos={alumnos}
-        checkStudentExistence={checkStudentExistence}
-      />
+    <>
       <div id="alumnos-list-options">
         <p>Nombre </p>
         <p>Telefono</p>
@@ -71,7 +42,7 @@ const AlumnosList = ({ alumnos }) => {
           <Alumno key={a.nombre} info={a} setActAlu={setActAlu}/>
         ))}
       </div>
-    </div>
+    </>
   );
 };
 

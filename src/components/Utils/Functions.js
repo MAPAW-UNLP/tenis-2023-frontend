@@ -5,3 +5,13 @@ export const formatDate = (date) =>{
     const fechaNacimiento = `${año}${mes}${dia}`;
     return fechaNacimiento
 }
+
+export const ordenarPorNombre = (datos) => {
+  return datos.sort(function (a, b) {
+    if (a.nombre.toUpperCase() > b.nombre.toUpperCase()) {
+      return 1;
+    } else {
+      return -1;
+    }
+  });
+};

@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 //Components
-import FeedbackText from './FeedbackText';
-import InputComponent from './Utils/InputComponent';
+import FeedbackText from '../FeedbackText';
+import InputComponent from '../Utils/InputComponent';
 
 const AgregarProfesor = ({
   active,

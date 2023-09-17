@@ -1,19 +1,41 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
-//font
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-//components
-import NavBar from './NavBar'
-import AgregarProfesor from '../components/AgregarProfesor'
-import ProfesoresList from '../components/ProfesoresList'
-import LoaderSpinner from '../components/LoaderSpinner'
-//styles
-import '../styles/profesores.css'
-const Profesores = ({actProfesores, setActProfesores, profesores, setProfesores, setProfesoresLoader, profesoresLoader, setSesion}) => {
+import { ordenarPorNombre } from '../../components/Utils/Functions' 
 
+import NavBar from '../NavBar'
+import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
+import ProfesoresList from '../../components/Profesor/ProfesoresList'
+import LoaderSpinner from '../../components/LoaderSpinner'
+
+import '../../styles/profesores.css'
+
+const Profesores = ({ setSesion }) => {
+    const URL_BASE = `http://localhost:8083/api/`;
+
+    // Activo y profesores en detalle (particular)
     const [active, setActive] = useState(false);
     const [profeDetail, setProfeDetail] = useState({});
+
+    // Loader
+    const [profesoresLoader, setProfesoresLoader] = useState(false);
+
+    //para actualizar los profesores
+    const [profesores, setProfesores] = useState([]);
+    const [actProfesores, setActProfesores] = useState(false);
+    
+    //get Profesores
+    useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}profesores`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProfesores(ordenarPorNombre(data)))
+      .then(() => setProfesoresLoader((v) => false));
+    /* Desactivar spinner */
+    }, [actProfesores]);
 
     return (
         <div id='profesores-component'>

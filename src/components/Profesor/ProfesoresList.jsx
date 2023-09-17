@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 //components
 import Profesor from './Profesor';
 import ProfesorDetail from './ProfesorDetail';
-import InputComponent from './Utils/InputComponent';
+import InputComponent from '../Utils/InputComponent';
 //Font awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

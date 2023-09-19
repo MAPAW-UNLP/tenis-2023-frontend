@@ -6,12 +6,13 @@ import { checkExistenceIn, ordenarPorNombre } from '../../components/Utils/Funct
 
 import NavBar from '../NavBar'
 import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
-import ProfesoresList from '../../components/Profesor/ProfesoresList'
+import { ProfesoresList } from '../../components/Profesor/ProfesoresList'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/profesores.css'
+import { ProfesorDetail }  from '../../components/Profesor/ProfesorDetail'
 
-const Profesores = ({ setSesion }) => {
+export const Profesores = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const feedbackStructure = {
@@ -19,13 +20,16 @@ const Profesores = ({ setSesion }) => {
     color: ''
   }
 
-  // Activo y profesores en detalle (particular)
   const [active, setActive] = useState(false);
+
+  // Profesores en detalle (edicion)
+  const [activeDetail, setActiveDetail] = useState(false)
   const [profeDetail, setProfeDetail] = useState({});
+  const [willEdit, setWillEdit] = useState(false)
 
   const [profesoresLoader, setProfesoresLoader] = useState(true); // Spinner
 
-  //para actualizar los profesores
+  //para actualizar los profesores en la lista
   const [profesores, setProfesores] = useState([]);
   const [actProfesores, setActProfesores] = useState(false);
   
@@ -38,7 +42,9 @@ const Profesores = ({ setSesion }) => {
 
   const [feedback, setFeedback] = useState({
     nombreFB: feedbackStructure,
-    telefonoFB: feedbackStructure
+    telefonoFB: feedbackStructure,
+    nombreFBCorrecto: false,
+    telefonoFBCorrecto: false
   })
 
   useEffect(() => {
@@ -52,6 +58,17 @@ const Profesores = ({ setSesion }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actProfesores]);
 
+    // EDICION DE PROFESOR 
+    useEffect(() => {
+      if (willEdit) {
+        fetch(`${URL_BASE}persona?personaId=${profeDetail.id}`)
+          .then((response) => response.json())
+          .then((data) => setProfeDetail(data))
+          .then(() => setActiveDetail(true));
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [willEdit]);
+
   // AGREGAR PROFESOR
   const handleChangeName = (e, submitButtonName, telefonoInputName, checkDisabled) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
@@ -62,7 +79,8 @@ const Profesores = ({ setSesion }) => {
     const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
 
     setProfesorForm({...profesorForm, [e.target.name]: nombreProfesor})
-    const nextInput = document.getElementById(telefonoInputName);
+    let nextInput;
+    if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
 
     if (nombreProfesor === '') {
       setFeedback({...feedback, nombreFB: feedbackStructure})
@@ -73,16 +91,16 @@ const Profesores = ({ setSesion }) => {
     } else {
       if (pattern.test(word)) {
         if (checkExistenceIn(profesores, "nombre", nombreProfesor)) {
-          setFeedback({...feedback, nombreFB: {...feedback.nombreFB, text: 'El nombre de profesor es correcto', color: '#7CBD1E'}})
+          setFeedback({...feedback, nombreFBCorrecto:true, nombreFB: {...feedback.nombreFB, text: 'El nombre de profesor es correcto', color: '#7CBD1E'}})
           shouldIStartDisabled && (nextInput.disabled = false);
         } else {
-          setFeedback({...feedback, nombreFB: {...feedback.nombreFB, text: 'El nombre de profesor ya existe', color: '#CC3636'}})
+          setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'El nombre de profesor ya existe', color: '#CC3636'}})
           if (shouldIStartDisabled) {
             nextInput.disabled = true;
             submitBtn.disabled = true;
           } 
         }
-      } else setFeedback({...feedback, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+      } else setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
     }
   };    
 
@@ -100,10 +118,10 @@ const Profesores = ({ setSesion }) => {
       shouldIStartDisabled && (submitBtn.disabled = true);
     } else {
       if (telefonoProfesor.match(pattern) != null && telefonoProfesor.length >= 7) {
-        setFeedback({...feedback, telefonoFB: {...feedback.telefonoFB, text: 'El nummero de telefono es correcto', color: '#7CBD1E'}})
+        setFeedback({...feedback, telefonoFBCorrecto: true, telefonoFB: {...feedback.telefonoFB, text: 'El nummero de telefono es correcto', color: '#7CBD1E'}})
         shouldIStartDisabled && (submitBtn.disabled = false);
       } else {
-        setFeedback({...feedback, telefonoFB: {...feedback.telefonoFB, text: 'Solo numeros, minimo 7', color: '#CC3636'}})
+        setFeedback({...feedback,  telefonoFBCorrecto: false, telefonoFB: {...feedback.telefonoFB, text: 'Solo numeros, minimo 7', color: '#CC3636'}})
         shouldIStartDisabled && (submitBtn.disabled = true);
       }
     }
@@ -146,7 +164,9 @@ const Profesores = ({ setSesion }) => {
 
      setFeedback({
       nombreFB:feedbackStructure,
-      telefonoFB: feedbackStructure
+      telefonoFB: feedbackStructure,
+      telefonoFBCorrecto: false,
+      nombreFBCorrecto: false
      })
   };
 
@@ -166,11 +186,20 @@ const Profesores = ({ setSesion }) => {
             {profesoresLoader ?  
               <LoaderSpinner active={profesoresLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
             :
-              <ProfesoresList profesores={profesores} profeDetail={profeDetail} setProfeDetail={setProfeDetail}/>
+            <div id="profesores-list-component">
+              <ProfesorDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} 
+                setProfeDetail={setProfeDetail} profeDetail={profeDetail}
+                handleChangeName={handleChangeName} handleChangePhone={handleChangePhone}
+                feedback={feedback} setProfesorForm={setProfesorForm} profesorForm={profesorForm} clearState={clearState}
+                setWillEdit={setWillEdit} setActProfesores={setActProfesores}
+              />
+              <ProfesoresList profesores={profesores} profeDetail={profeDetail} 
+                setProfeDetail={setProfeDetail} setActiveDetail={setActiveDetail}
+                setWillEdit={setWillEdit}
+              />
+            </div>
         }
         </div>
     </div>
   )
 }
-
-export default Profesores

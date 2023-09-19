@@ -1,113 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-//Fontawesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import InputReComponent from '../Utils/InputReComponent';
 
-//Components
-import FeedbackText from '../FeedbackText';
-import InputComponent from '../Utils/InputComponent';
-
-const ProfesorDetail = ({
+export const ProfesorDetail = ({
   activeDetail,
   setActiveDetail,
-  profeDetail,
   setProfeDetail,
-  actProfe,
-  setActProfe,
-  profesores,
+  profeDetail,
+  handleChangeName,
+  handleChangePhone,
+  feedback,
+  clearState,
+  setWillEdit,
+  setActProfesores,
 }) => {
-  const [nombre, setNombre] = useState('');
-  const [telefono, setTelefono] = useState('');
-
-  //feedbackinline
-  const [nombreFB, setNombreFB] = useState({ text: '', color: '' });
-  const [telefonoFB, setTelefonoFB] = useState({ text: '', color: '' });
+  const URL_BASE = 'http://localhost:8083/api/';
 
   const handleCloseForm = () => {
-    /*setNombreFB({...nombreFB, 'text': '', color: ''});
-        setTelefonoFB({...telefonoFB, 'text': '', color: ''});*/
-    setActiveDetail(false);
-  };
-
-  const handleChangeName = (e) => {
-    const pattern = new RegExp('^[A-Z]+$', 'i');
-    const word = e.target.value.split(' ').join('');
-
-    //validar que el nombrte sea solo texto y que no exista repetidos
-    setNombre(e.target.value);
-    if (e.target.value === '') {
-      setNombreFB({ ...nombreFB, text: '', color: '' });
-    } else {
-      //Cumple las expectativas de ser un nombre
-      if (pattern.test(word)) {
-        if (
-          profesores
-            .map((each) => each.nombre.toUpperCase())
-            .indexOf(e.target.value.toUpperCase()) === -1
-        ) {
-          setNombreFB({
-            ...nombreFB,
-            text: 'El nombre de profesor es correcto',
-            color: '#7CBD1E',
-          });
-        } else {
-          setNombreFB({
-            ...nombreFB,
-            text: 'El nombre de profesor ya existe',
-            color: '#CC3636',
-          });
-        }
-      } else {
-        setNombreFB({
-          ...nombreFB,
-          text: 'Escriba un nombre de profesor sin numeros',
-          color: '#CC3636',
-        });
-      }
-    }
-  };
-
-  const handleChangePhone = (e) => {
-    const pattern = '^[0-9]+$';
-    const tel = e.target.value;
-    setTelefono(tel);
-
-    if (tel === '') {
-      setTelefonoFB({ ...telefonoFB, text: '', color: '' });
-    } else {
-      if (tel.match(pattern) != null && telefono.length >= 6) {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'El nummero de telefono es correcto',
-          color: '#7CBD1E',
-        });
-      } else {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'Solo numeros, minimo 7',
-          color: '#CC3636',
-        });
-      }
-    }
-  };
+    setActiveDetail(false)
+    setWillEdit(false)
+    setProfeDetail({})
+    clearState()
+  }
 
   const actualizarProfesor = () => {
-    const URL_BASE = 'http://localhost:8083/api/';
     const nombreProfe = document.getElementById('nombreProfesor').value;
     const telProfe = document.getElementById('telefonoProfesor').value;
+
     const data = {
-      id: actProfe.id,
+      id: profeDetail.id,
       esalumno: false,
     };
-    nombreProfe == ''
-      ? (data.nombre = actProfe.nombre)
-      : (data.nombre = nombreProfe);
-    telProfe == ''
-      ? (data.telefono = actProfe.telefono)
-      : (data.telefono = telProfe);
 
-    setActiveDetail(false);
+    nombreProfe === '' ? (data.nombre = profeDetail.nombre) : (data.nombre = nombreProfe); 
+    telProfe === '' ? (data.telefono = profeDetail.telefono) : (data.telefono = telProfe);
 
     const requestOptions = {
       method: 'PUT',
@@ -116,59 +42,55 @@ const ProfesorDetail = ({
 
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
-      .then((response) => setProfeDetail((v) => !v));
+      .then(() => handleCloseForm())
+      .then(() => setProfeDetail({}))
+      .then(() => setActProfesores((v) => !v));
   };
 
   return (
     <>
       {activeDetail && (
         <div id="profesor-edit-component">
-          <button id="close-profesor-add-form" onClick={handleCloseForm}>
-            x
-          </button>
+          <button id="close-profesor-add-form" onClick={handleCloseForm}> x </button>
           <h2>Editar Profesor</h2>
-          {console.log(actProfe)}
           <div className="inputlabel">
-            <InputComponent
+            <InputReComponent
               type={'text'}
               id={'nombreProfesor'}
+              name={'nombre'}
               className={'profesor-add-form-input'}
-              placeholder={actProfe.nombre}
-              onChangeFuncion={handleChangeName}
+              placeholder={profeDetail.nombre}
+              onChangeFuncion={(e) => handleChangeName(e, 'clase-detail-guardar', '', false)}
             />
-            <p className="feedbackInline" style={{ color: nombreFB.color }}>
-              {nombreFB.text}
+            <p className="feedbackInline" style={{ color: feedback.nombreFB.color }}>
+              {feedback.nombreFB.text}
             </p>
           </div>
           <div className="inputlabel">
-            <InputComponent
+            <InputReComponent
               type={'text'}
+              name={'telefono'}
               id={'telefonoProfesor'}
               className={'profesor-add-form-input'}
-              placeholder={actProfe.telefono}
-              onChangeFuncion={handleChangePhone}
+              placeholder={profeDetail.telefono}
+              onChangeFuncion={(e) => handleChangePhone(e, 'clase-detail-guardar', false)}
               min={7}
               max={12}
             />
-            <p className="feedbackInline" style={{ color: telefonoFB.color }}>
-              {telefonoFB.text}
+            <p className="feedbackInline" style={{ color: feedback.telefonoFB.color }}>
+              {feedback.telefonoFB.text}
             </p>
           </div>
           <div id="clase-detail-btns">
-            <button id="clase-detail-guardar" onClick={actualizarProfesor}>
-              Guardar
-            </button>
-            <button
-              id="clase-detail-cancelar"
-              onClick={() => setActiveDetail(false)}
-            >
-              Cancelar
-            </button>
+            {(feedback.nombreFBCorrecto && feedback.telefonoFBCorrecto) ?
+              <button id="clase-detail-guardar" onClick={actualizarProfesor}> Guardar </button>
+            :
+              <button id="clase-detail-disabled" type='button' disabled={true}> Guardar </button>
+            }
+            <button id="clase-detail-cancelar" onClick={handleCloseForm}> Cancelar </button>
           </div>
         </div>
       )}
     </>
   );
 };
-
-export default ProfesorDetail;

@@ -1,30 +1,25 @@
 import React, { useState, useEffect } from 'react';
-//components
-import Profesor from './Profesor';
-import ProfesorDetail from './ProfesorDetail';
-import InputComponent from '../Utils/InputComponent';
-//Font awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCaretDown,
-  faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
 
-const ProfesoresList = ({ profesores }) => {
+import { Profesor } from './Profesor';
+import InputComponent from '../Utils/InputComponent';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+
+export const ProfesoresList = ({ profesores, profeDetail, actProfesor, setProfeDetail, setActiveDetail, setWillEdit }) => {
   const [profesoresFiltrados, setProfesoresFiltrados] = useState(profesores);
-  const [activeDetail, setActiveDetail] = useState(false);
-  const [actProfe, setActProfe] = useState('');
-  const [profeDetail, setProfeDetail] = useState({});
-  const URL_BASE = `http://localhost:8083/api/`;
 
   const handleChangeSearchProfessor = (e) => {
-    const Posibles = profesores.filter((a) =>
-      a.nombre.toUpperCase().includes(e.target.value.toUpperCase())
+    const profesorEnBusqueda = e.target.value;
+
+    const posibles = profesores.filter((a) =>
+      a.nombre.toUpperCase().includes(profesorEnBusqueda.toUpperCase())
     );
-    if (e.target.value === '') {
+    
+    if (profesorEnBusqueda === '') {
       setProfesoresFiltrados(profesores);
     } else {
-      setProfesoresFiltrados(Posibles);
+      setProfesoresFiltrados(posibles);
     }
   };
 
@@ -32,48 +27,21 @@ const ProfesoresList = ({ profesores }) => {
     setProfesoresFiltrados(profesores);
   }, [profesores]);
 
-  useEffect(() => {
-    if (actProfe !== '') {
-      fetch(`${URL_BASE}persona?personaId=${actProfe.id}`)
-        .then((response) => response.json())
-        .then((data) => setProfeDetail(data))
-        .then((response) => setActiveDetail(true));
-    }
-  }, [actProfe]);
-
-  return (
-    <div id="profesores-list-component">
-      <ProfesorDetail
-        activeDetail={activeDetail}
-        setActiveDetail={setActiveDetail}
-        profeDetail={profeDetail}
-        setProfeDetail={setProfeDetail}
-        actProfe={actProfe}
-        setActProfe={setActProfe}
-        profesores={profesores}
-      />
+  return(
+    <>
       <div id="profesores-list-options">
         <p>Nombre</p>
         <p>Telefono</p>
         <div id="profesores-searchbar">
-          <FontAwesomeIcon
-            id="magnify-icon"
-            icon={faMagnifyingGlass}
-          ></FontAwesomeIcon>
-          <InputComponent
-            type={'text'}
-            placeholder={'Busca un profesor'}
-            onChangeFuncion={handleChangeSearchProfessor}
-          />
+          <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass}/>
+          <InputComponent type={'text'} placeholder={'Busca un profesor'} onChangeFuncion={handleChangeSearchProfessor}/>
         </div>
       </div>
       <div id="profesores-list">
         {profesoresFiltrados.map((p) => (
-          <Profesor key={p.id} info={p} setActProfe={setActProfe}></Profesor>
+          <Profesor key={p.id} info={p} setProfeDetail={setProfeDetail} setWillEdit={setWillEdit}/>
         ))}
       </div>
-    </div>
+    </>
   );
 };
-
-export default ProfesoresList;

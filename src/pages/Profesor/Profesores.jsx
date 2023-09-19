@@ -159,10 +159,8 @@ const Profesores = ({ setSesion }) => {
             </button>
             
             <AgregarProfesor 
-              active={active} setActive={setActive} setProfesores={setProfesores}
-              profesores={profesores} setActProfesores={setActProfesores} setProfesoresLoader={setProfesoresLoader}
-              handleChangeName={handleChangeName} handleChangePhone={handleChangePhone} feedback={feedback}
-              handleCloseForm={handleCloseForm} submitProfesorForm={submitProfesorForm}
+              active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName}
+              handleChangePhone={handleChangePhone} feedback={feedback} submitProfesorForm={submitProfesorForm}
             />
             
             {profesoresLoader ?  

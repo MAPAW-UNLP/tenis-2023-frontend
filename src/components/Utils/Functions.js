@@ -15,3 +15,7 @@ export const ordenarPorNombre = (datos) => {
     }
   });
 };
+
+export const checkExistenceIn = (aList, attribute, aSubject) => {
+  return aList.map((each) => each[attribute].toUpperCase()).indexOf(aSubject.toUpperCase()) === -1
+}

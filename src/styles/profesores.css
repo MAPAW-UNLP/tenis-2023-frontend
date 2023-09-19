@@ -1,6 +1,7 @@
 #profesores-component{
     background-color: var(--primary-blue);
-    height: 100vh;
+    min-height: 100vh;
+    height: 100%;
 }
 
 #profesores-component-mainContent{
@@ -18,6 +19,7 @@
 
 #profesores-list-component{
     margin-top: 2vh;
+    margin-bottom: 10vh;
     width: 100%;
     border-radius: 20px;
     background-color: var(--neutral-white);

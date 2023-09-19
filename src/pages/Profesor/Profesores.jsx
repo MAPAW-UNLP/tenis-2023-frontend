@@ -41,6 +41,18 @@ const Profesores = ({ setSesion }) => {
     telefonoFB: feedbackStructure
   })
 
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}profesores`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProfesores(ordenarPorNombre(data)))
+      .then(() => setProfesoresLoader(() => false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actProfesores]);
+
+  // AGREGAR PROFESOR
   const handleChangeName = (e, submitButtonName, telefonoInputName, checkDisabled) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
     const word = e.target.value.split(' ').join('');
@@ -49,20 +61,16 @@ const Profesores = ({ setSesion }) => {
     const submitBtn = document.getElementById(submitButtonName)
     const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
 
-    //validar que el nombrte sea solo texto y que no exista repetidos
     setProfesorForm({...profesorForm, [e.target.name]: nombreProfesor})
-    console.log(profesorForm)
     const nextInput = document.getElementById(telefonoInputName);
 
     if (nombreProfesor === '') {
       setFeedback({...feedback, nombreFB: feedbackStructure})
-      console.log(feedback)
       if (shouldIStartDisabled){
         nextInput.disabled = true;
         submitBtn.disabled = true;
       }
     } else {
-      //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
         if (checkExistenceIn(profesores, "nombre", nombreProfesor)) {
           setFeedback({...feedback, nombreFB: {...feedback.nombreFB, text: 'El nombre de profesor es correcto', color: '#7CBD1E'}})
@@ -78,16 +86,69 @@ const Profesores = ({ setSesion }) => {
     }
   };    
 
-  useEffect(() => {
-  const requestOptions = {
-    method: 'GET',
+  const handleChangePhone = (e, submitButtonName, checkDisabled) => {
+    const pattern = '^[0-9]+$';
+
+    const telefonoProfesor = e.target.value;
+    setProfesorForm({...profesorForm, [e.target.name]: telefonoProfesor})
+
+    const submitBtn = document.getElementById(submitButtonName);
+    const shouldIStartDisabled = checkDisabled;
+
+    if (telefonoProfesor === '') {
+      setFeedback({...feedback, telefonoFB: feedbackStructure})
+      shouldIStartDisabled && (submitBtn.disabled = true);
+    } else {
+      if (telefonoProfesor.match(pattern) != null && telefonoProfesor.length >= 7) {
+        setFeedback({...feedback, telefonoFB: {...feedback.telefonoFB, text: 'El nummero de telefono es correcto', color: '#7CBD1E'}})
+        shouldIStartDisabled && (submitBtn.disabled = false);
+      } else {
+        setFeedback({...feedback, telefonoFB: {...feedback.telefonoFB, text: 'Solo numeros, minimo 7', color: '#CC3636'}})
+        shouldIStartDisabled && (submitBtn.disabled = true);
+      }
+    }
   };
-  fetch(`${URL_BASE}profesores`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => setProfesores(ordenarPorNombre(data)))
-    .then(() => setProfesoresLoader(() => false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actProfesores]);
+  
+  const submitProfesorForm = (e) => {
+    e.preventDefault();
+    setFeedback({
+      nombreFB:feedbackStructure,
+      telefonoFB: feedbackStructure
+    })
+
+    setProfesoresLoader((prevValue) => !prevValue);
+    setActive(false);
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({
+        nombre: profesorForm.nombre,
+        telefono: profesorForm.telefono,
+        email: profesorForm.email,
+        esalumno: false,
+      }),
+    };
+    fetch(`${URL_BASE}persona`, requestOptions)
+      .then((response) => response.json())
+      .then(() => setActProfesores((v) => !v));
+  };
+
+  const handleCloseForm = () => {
+    setActive(false);
+    clearState()
+  };
+
+  const clearState = () => {
+    setProfesorForm({ 
+      nombre: '',
+      telefono: '',
+      email: ''
+     });
+
+     setFeedback({
+      nombreFB:feedbackStructure,
+      telefonoFB: feedbackStructure
+     })
+  };
 
   return (
     <div id='profesores-component'>
@@ -100,7 +161,8 @@ const Profesores = ({ setSesion }) => {
             <AgregarProfesor 
               active={active} setActive={setActive} setProfesores={setProfesores}
               profesores={profesores} setActProfesores={setActProfesores} setProfesoresLoader={setProfesoresLoader}
-              handleChangeName={handleChangeName} feedback={feedback}
+              handleChangeName={handleChangeName} handleChangePhone={handleChangePhone} feedback={feedback}
+              handleCloseForm={handleCloseForm} submitProfesorForm={submitProfesorForm}
             />
             
             {profesoresLoader ?  

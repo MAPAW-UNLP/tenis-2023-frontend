@@ -3,22 +3,15 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import { useEffect } from 'react';
 
-
 /* Components */
+import LinkItem from '../../components/LinkItem';
 
-import LinkItem from '../components/LinkItem';
-
-import '../styles/navbar.css'
+import '../../styles/navbar.css'
 import { useState } from 'react';
 
-
 const NavBar = ({title, setSesion}) => {
-
-    
     const [active, setActive] = useState('link');
     
-
-
     useEffect(() =>{
         //cambia la clase active del nav y se las saca a los que no lo tienen
         var pathName = window.location.pathname.replace('/', '').split(" ").join(" ");
@@ -35,7 +28,6 @@ const NavBar = ({title, setSesion}) => {
         setSesion('')
     }
   return (
-      
       <div id='navBar-component'>
           <div id='navBar-transparent'></div>
           <nav id='navBar'>

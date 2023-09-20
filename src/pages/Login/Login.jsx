@@ -1,17 +1,15 @@
 import React from 'react'
 
 //resources
-import tennisImg from '../Img/tennisImg.jpg'
+import tennisImg from '../../Img/tennisImg.jpg'
 
 //components
-import LoginForm from '../components/Login/LoginForm'
+import LoginForm from '../../components/Login/LoginForm'
 
 //style
-import '../styles/login.css'
+import '../../styles/login.css'
 
-const Login = ({ setSesion }) => {
-
-
+export const Login = ({ setSesion }) => {
   return (
     <div id='login-frame'>
         <div id='nav-div'> 
@@ -30,4 +28,3 @@ const Login = ({ setSesion }) => {
   )
 }
 
-export default Login

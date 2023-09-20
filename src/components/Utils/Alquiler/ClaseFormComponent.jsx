@@ -2,8 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 
 //Components
-import InputComponent from './Utils/InputComponent';
-import SelectComponent from './SelectComponent';
+import InputComponent from '../InputComponent';
+import SelectComponent from '../SelectComponent';
 import Select from 'react-select';
 
 

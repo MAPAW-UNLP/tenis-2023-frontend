@@ -1,12 +1,12 @@
 import React from 'react'
 
 //components
-import NavBar from './NavBar'
-import HomeCard from '../components/HomeCard'
+import NavBar from '../Navbar/NavBar'
+import HomeCard from '../../components/HomeCard'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTableTennis, faUser, faCalendar,faUserTie, faDollarSign } from '@fortawesome/free-solid-svg-icons'
 
-const Home = ({setSesion}) => {
+export const Home = ({setSesion}) => {
 
   
   return (
@@ -57,5 +57,3 @@ const Home = ({setSesion}) => {
     </>
   )
 }
-
-export default Home

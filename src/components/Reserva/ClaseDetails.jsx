@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
-import '../styles/claseDetail.css';
+import '../../styles/claseDetail.css';
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -12,9 +12,9 @@ import {
   faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 //components
-import SelectAlumnosAddClase from './SelectAlumnosAddClase';
-import FeedbackText from './FeedbackText';
-import LoaderSpinner from './LoaderSpinner';
+import SelectAlumnosAddClase from '../SelectAlumnosAddClase';
+import FeedbackText from '../FeedbackText';
+import LoaderSpinner from '../LoaderSpinner';
 import Select from 'react-select';
 import EditFechaYHoraController from './EditFechaYHoraController';
 import SelectorDeAlumnosDeClase from './SelectorDeAlumnosDeClase';

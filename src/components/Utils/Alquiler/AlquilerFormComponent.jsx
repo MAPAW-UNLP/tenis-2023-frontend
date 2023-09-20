@@ -3,8 +3,8 @@ import { useState } from 'react';
 
 
 //Components
-import InputComponent from './Utils/InputComponent';
-import SelectComponent from './SelectComponent';
+import InputComponent from '../InputComponent';
+import SelectComponent from '../SelectComponent';
 
 
 //FontawesomeIcon
@@ -13,8 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
 const AlquilerFormComponent = ({active, canchas,setCancha,setActive, handleAddReserva, setNombre, setTelefono}) => {
-
-
 
     const handleChangeSelect = (e) =>{
         setCancha(e.target.value);

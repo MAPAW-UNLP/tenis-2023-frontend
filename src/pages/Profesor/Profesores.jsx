@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { checkExistenceIn, ordenarPorNombre } from '../../components/Utils/Functions' 
 
-import NavBar from '../NavBar'
+import NavBar from '../Navbar/NavBar'
 import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
 import { ProfesoresList } from '../../components/Profesor/ProfesoresList'
 import LoaderSpinner from '../../components/LoaderSpinner'

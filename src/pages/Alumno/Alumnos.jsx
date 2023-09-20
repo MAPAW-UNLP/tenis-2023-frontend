@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
-import NavBar from '../NavBar'
+import NavBar from '../Navbar/NavBar'
 import AgregarAlumno from '../../components/Alumno/AgregarAlumno'
 import AlumnosList from '../../components/Alumno/AlumnosList'
 import LoaderSpinner from '../../components/LoaderSpinner'

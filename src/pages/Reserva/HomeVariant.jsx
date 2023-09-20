@@ -3,19 +3,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 //components
-import NavBar from './NavBar';
-import Reserva from '../components/Reserva';
-import LoaderSpinner from '../components/LoaderSpinner';
-import CalendarComponent from '../components/CalendarComponent';
-import VistaSemanal from '../components/VistaSemanal';
-import AlquilerDetails from '../components/AlquilerDetails';
-import ClaseDetails from '../components/ClaseDetails';
+import NavBar from '../Navbar/NavBar';
+import Reserva from '../../components/Reserva/Reserva';
+import LoaderSpinner from '../../components/LoaderSpinner';
+import CalendarComponent from '../../components/Reserva/CalendarComponent';
+import VistaSemanal from '../../components/VistaSemanal';
+import AlquilerDetails from '../../components/Reserva/AlquilerDetails';
+import ClaseDetails from '../../components/Reserva/ClaseDetails';
 //Fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { ordenarPorNombre } from '../components/Utils/Functions';
-import '../styles/home.css';
+import { ordenarPorNombre } from '../../components/Utils/Functions';
+import '../../styles/home.css';
 
 const Home = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
@@ -93,43 +93,43 @@ const Home = ({ setSesion }) => {
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`${URL_BASE}reservas`, requestOptions)
-      .then(setReservasLoader(true))
-      .then((response) => response.json())
-      .then((data) => setReservas(data.detail))
-      .then(() => setReservasLoader((v) => false));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actReservas]);
-
-    useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
     fetch(`${URL_BASE}profesores`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actProfesores]);
 
-    useEffect(() => {
+  useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
     fetch(`${URL_BASE}canchas`, requestOptions)
       .then((response) => response.json())
       .then((data) => setCanchas(data.detail))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actCanchas]);
 
-    useEffect(() => {
+  useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlumnos]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}reservas`, requestOptions)
+      .then(setReservasLoader(true))
+      .then((response) => response.json())
+      .then((data) => setReservas(data.detail))
+      .then(() => setReservasLoader((v) => false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actReservas]);
 
   return (
     <div id="home-component">

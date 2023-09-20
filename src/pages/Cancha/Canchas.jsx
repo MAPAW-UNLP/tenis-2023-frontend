@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import NavBar from '../NavBar'
+import NavBar from '../Navbar/NavBar'
 import '../../styles/canchas.css'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -10,7 +10,7 @@ import CanchasAddForm from '../../components/Cancha/CanchasAddForm'
 import CanchasList from '../../components/Cancha/CanchasList'
 import LoaderSpinner from '../../components/LoaderSpinner'
 
-const Canchas = ({ setSesion }) => { 
+export const Canchas = ({ setSesion }) => { 
   const URL_BASE = `http://localhost:8083/api/`; 
 
   const [actived, setActived] = useState(false);
@@ -149,5 +149,3 @@ const Canchas = ({ setSesion }) => {
     </div>
   )
 }
-
-export default Canchas

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import moment from 'moment';
-import '../styles/alquilerDetail.css'
+import '../../styles/alquilerDetail.css'
 
 //fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

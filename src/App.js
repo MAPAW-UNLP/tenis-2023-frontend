@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //Components
-import Login from './pages/Login';
-import Home from './pages/Home';
-import Canchas from './pages/Cancha/Canchas';
-import Reservas from './pages/Reservas';
+import { Login } from './pages/Login/Login';
+import { Home } from './pages/Home/Home';
+import { Canchas } from './pages/Cancha/Canchas';
+import { Reservas } from './pages/Reserva/Reservas';
 import Alumnos from './pages/Alumno/Alumnos';
 import { Profesores } from './pages/Profesor/Profesores';
 import { Pagos } from './pages/Pagos/Pagos';
 
 //VarianteHome
-import HomeVariant from './pages/HomeVariant';
+import HomeVariant from './pages/Reserva/HomeVariant';
 
 //Style
 import './styles/App.css';

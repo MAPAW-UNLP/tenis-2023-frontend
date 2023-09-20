@@ -2,23 +2,23 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 //styles
-import '../styles/reservas.css';
+import '../../styles/reservas.css';
 
 //hora
-import SelectHoraInicio from '../components/SelectHoraInicio';
-import SelectHoraFin from '../components/SelectHoraFin';
+import SelectHoraInicio from '../../components/Utils/Alquiler/SelectHoraInicio';
+import SelectHoraFin from '../../components/Utils/Alquiler/SelectHoraFin';
 //components
-import NavBar from './NavBar';
-import AlquilerFormComponent from '../components/AlquilerFormComponent';
-import ClaseFormComponent from '../components/ClaseFormComponent';
-import InputComponent from '../components/Utils/InputComponent';
-import SelectComponent from '../components/SelectComponent';
+import NavBar from '../Navbar/NavBar';
+import AlquilerFormComponent from '../../components/Utils/Alquiler/AlquilerFormComponent';
+import ClaseFormComponent from '../../components/Utils/Alquiler/ClaseFormComponent';
+import InputComponent from '../../components/Utils/InputComponent';
+import SelectComponent from '../../components/Utils/SelectComponent';
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const Reservas = ({
+export const Reservas = ({
   canchas,
   reservas,
   profesores,
@@ -272,5 +272,3 @@ const Reservas = ({
     </div>
   );
 };
-
-export default Reservas;

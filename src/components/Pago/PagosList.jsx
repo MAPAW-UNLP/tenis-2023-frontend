@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import InputComponent from './Utils/InputComponent';
-import Pago from './Pago';
-import PagoDetail from './PagoDetail';
-//Font awesome
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCaretDown,
-  faMagnifyingGlass,
-} from '@fortawesome/free-solid-svg-icons';
+import { Pago } from './Pago';
+import { PagoDetail }  from './PagoDetail';
 
-const PagosList = ({ pagos }) => {
+export const PagosList = ({ pagos }) => {
   const [activeDetail, setActiveDetail] = useState(false);
   const [actUser, setActUser] = useState('');
   const [pagosActUser, setPagosActUser] = useState();
@@ -21,18 +14,14 @@ const PagosList = ({ pagos }) => {
         .then((response) => response.json())
 
         .then((data) => setPagosActUser(data))
-        .then((response) => setActiveDetail(true));
+        .then(() => setActiveDetail(true));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actUser]);
 
   return (
     <div id="pagos-list-component">
-      <PagoDetail
-        activeDetail={activeDetail}
-        setActiveDetail={setActiveDetail}
-        pagosActUser={pagosActUser}
-        actUser={actUser}
-      />
+      <PagoDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} pagosActUser={pagosActUser} actUser={actUser}/>
       <div id="pagos-list-options">
         <p>Alumno</p>
         <p>Fecha</p>
@@ -47,5 +36,3 @@ const PagosList = ({ pagos }) => {
     </div>
   );
 };
-
-export default PagosList;

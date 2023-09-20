@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-//Components
+
 import moment from 'moment';
-import InputComponent from './Utils/InputComponent';
 import Select from 'react-select';
 
-const AgregarPago = ({
-  active,
-  setActive,
-  setPagos,
-  pagos,
-  setActPagos,
-  alumnos,
-}) => {
+export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
   const URL_BASE = `http://localhost:8083/api/`;
   const [user_id, setUser_id] = useState('');
   const [tipoClase, setTipoClase] = useState('');
@@ -51,15 +43,13 @@ const AgregarPago = ({
 
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then((response) => setActPagos((v) => !v));
+      .then(() => setActPagos((v) => !v));
   };
   return (
     <>
       {active && (
         <div id="pago-add-component">
-          <button id="close-pago-add-form" onClick={handleCloseForm}>
-            x
-          </button>
+          <button id="close-pago-add-form" onClick={handleCloseForm}> x </button>
           <h2>Nuevo pago</h2>
           <form action="" id="pago-add-form" onSubmit={submitPagoForm}>
             <label className="pago-form-label">Alumno</label>
@@ -71,8 +61,8 @@ const AgregarPago = ({
                 value: el.id,
               }))}
               placeholder="Seleccionar"
-            ></Select>
-            <label htmlFor="" className="pago-form-label">
+            />
+            <label htmlFor="" className="pago-form-label"> 
               Tipo
             </label>
             <select
@@ -109,5 +99,3 @@ const AgregarPago = ({
     </>
   );
 };
-
-export default AgregarPago;

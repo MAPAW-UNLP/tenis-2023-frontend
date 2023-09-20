@@ -3,15 +3,15 @@ import React, { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
-import NavBar from './NavBar'
-import AgregarPago from '../components/AgregarPago'
-import PagosList from '../components/PagosList'
+import NavBar from '../NavBar'
+import { AgregarPago } from '../../components/Pago/AgregarPago'
+import { PagosList } from '../../components/Pago/PagosList'
 
-import { ordenarPorNombre } from '../components/Utils/Functions'
+import { ordenarPorNombre } from '../../components/Utils/Functions'
 
-import '../styles/pagos.css'
+import '../../styles/pagos.css'
 
-const Pagos = ({ setSesion }) => {
+export const Pagos = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [ active, setActive] = useState(false);
@@ -38,20 +38,19 @@ const Pagos = ({ setSesion }) => {
 
   return (
     <div id='pagos-Component'>
-        <NavBar title={'Pagos'} setSesion={setSesion}></NavBar>
-
+        <NavBar title={'Pagos'} setSesion={setSesion}/>
         <div id='pagos-component-mainContent'>
-            <button id='canchas-add-btn' onClick={() => {setActive((active)=> true)}} >  <FontAwesomeIcon icon={faPlusCircle}/></button>
+            <button id='canchas-add-btn' onClick={() => {setActive((active)=> true)}}>
+              <FontAwesomeIcon icon={faPlusCircle}/>
+            </button>
             <AgregarPago active={active} setActive={setActive} setPagos={setPagos}
               pagos={pagos} setActPagos={setActPagos} alumnos={alumnos} />
             { pagos.length === 0 ?
-              <div> cargando componente</div>
+              <div> cargando componente </div>
             :
-             <PagosList pagos={pagos} />
+              <PagosList pagos={pagos} />
             }
         </div>
     </div>
   )
 }
-
-export default Pagos

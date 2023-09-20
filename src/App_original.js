@@ -8,7 +8,7 @@ import Canchas from './pages/Cancha/Canchas';
 import Reservas from './pages/Reservas';
 import Alumnos from './pages/Alumno/Alumnos';
 import Profesores from './pages/Profesores';
-import Pagos from './pages/Pagos';
+import Pagos from './pages/Pagos/Pagos';
 //VarianteHome
 import HomeV from './pages/HomeVariant';
 

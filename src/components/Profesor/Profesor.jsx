@@ -10,6 +10,7 @@ export const Profesor = ({ info, setProfeDetail, profeDetail, setWillEdit, loadi
       <div id="loading"></div>
     )
   }
+  
   return (
     <div className='profesor-info'>
         <p>{info.nombre}</p>

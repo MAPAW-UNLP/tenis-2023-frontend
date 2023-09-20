@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import InputReComponent from '../Utils/InputReComponent';
+import '../../styles/profesorLoader.css'
 
 export const ProfesorDetail = ({
   activeDetail,
@@ -15,12 +16,25 @@ export const ProfesorDetail = ({
   setActProfesores,
 }) => {
   const URL_BASE = 'http://localhost:8083/api/';
+  const [waitingUpdate, setWaitingUpdate] = useState(false);
+
+  const LoadingSpinner = () => {
+    return(
+      <div className='spinnerContainer' style={{marginBottom:"1.2em", marginTop:".5em"}}>
+        <div id="waitingUpdate" className='waiting-update'></div>
+      </div>
+    )
+  }
 
   const handleCloseForm = () => {
     setActiveDetail(false)
     setWillEdit(false)
     setProfeDetail({})
     clearState()
+  }
+  const actualizar = () => {
+    actualizarProfesor()
+    setWaitingUpdate(true)
   }
 
   const actualizarProfesor = () => {
@@ -42,6 +56,7 @@ export const ProfesorDetail = ({
 
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
+      .then(() => setWaitingUpdate(false))
       .then(() => handleCloseForm())
       .then(() => setProfeDetail({}))
       .then(() => setActProfesores((v) => !v));
@@ -81,14 +96,16 @@ export const ProfesorDetail = ({
               {feedback.telefonoFB.text}
             </p>
           </div>
-          <div id="clase-detail-btns">
-            {(feedback.nombreFBCorrecto && feedback.telefonoFBCorrecto) ?
-              <button id="clase-detail-guardar" onClick={actualizarProfesor}> Guardar </button>
-            :
-              <button id="clase-detail-disabled" type='button' disabled={true}> Guardar </button>
-            }
-            <button id="clase-detail-cancelar" onClick={handleCloseForm}> Cancelar </button>
-          </div>
+          {waitingUpdate ? <LoadingSpinner active={waitingUpdate} containerClass={'contenedorLogin'} loaderClass={'loader'}/> : (
+            <div id="clase-detail-btns">
+              {(feedback.nombreFBCorrecto && feedback.telefonoFBCorrecto) ?
+                <button id="clase-detail-guardar" onClick={actualizar}> Guardar </button>
+              :
+                <button id="clase-detail-disabled" type='button' disabled={true}> Guardar </button>
+              }
+              <button id="clase-detail-cancelar" onClick={handleCloseForm}> Cancelar </button>
+            </div>
+          )}
         </div>
       )}
     </>

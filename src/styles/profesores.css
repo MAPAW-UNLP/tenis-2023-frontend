@@ -29,7 +29,7 @@
 #profesores-list-options{
     height: 8vh;
     display: grid;
-    grid-template-columns: 30% 30% 40%;
+    grid-template-columns: 20% 20% 20% 40%;
     align-content: center;
     align-items: center;
     justify-content: center;
@@ -40,7 +40,9 @@
     border-bottom: 5px solid var(--neutral-black);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    padding-left: 2%;
+}
+#profesores-list-options :first-child{
+    margin-left: .5em;
 }
 
 #profesores-searchbar{
@@ -74,7 +76,7 @@
 
 .profesor-info{
     display: grid;
-    grid-template-columns: 30% 30% 30%;
+    grid-template-columns: 20% 20% 40% 20%;
     margin: 0.5%;
     padding: 1%;
     border-radius: 12px;

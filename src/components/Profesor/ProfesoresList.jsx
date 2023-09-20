@@ -32,6 +32,7 @@ export const ProfesoresList = ({ profesores, setProfeDetail, profeDetail, setWil
       <div id="profesores-list-options">
         <p>Nombre</p>
         <p>Telefono</p>
+        <p>Email</p>
         <div id="profesores-searchbar">
           <FontAwesomeIcon id="magnify-icon" icon={faMagnifyingGlass}/>
           <InputComponent type={'text'} placeholder={'Busca un profesor'} onChangeFuncion={handleChangeSearchProfessor}/>

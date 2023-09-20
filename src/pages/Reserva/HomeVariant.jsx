@@ -152,6 +152,8 @@ const Home = ({ setSesion }) => {
         profesores={profesores}
         setActReservas={setActReservas}
       />
+      {/* <LoaderSpinner active={reservasLoader} containerClass={'homeLoader'} loaderClass={'homeLoaderSpinner'}/> */}
+
       <div id="table-component">
         <div id="table-options">
           <button
@@ -167,8 +169,7 @@ const Home = ({ setSesion }) => {
           </div>
           {/* Aca iria el selector */}
         </div>
-        <div
-          id="table-grid"
+        <div id="table-grid"
           style={{
             display: 'grid',
             gridTemplateColumns: `13vw repeat(${canchas.length}, 1fr)`,
@@ -222,11 +223,7 @@ const Home = ({ setSesion }) => {
             />
           ))}
         </div>
-        <LoaderSpinner
-          active={reservasLoader}
-          containerClass={'homeLoader'}
-          loaderClass={'homeLoaderSpinner'}
-        />
+        <LoaderSpinner active={reservasLoader} containerClass={'homeLoaderNew'} loaderClass={'homeLoaderSpinner'}/>
       </div>
     </div>
   );

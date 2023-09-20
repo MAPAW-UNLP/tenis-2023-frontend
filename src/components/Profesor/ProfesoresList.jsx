@@ -6,7 +6,7 @@ import InputComponent from '../Utils/InputComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-export const ProfesoresList = ({ profesores, profeDetail, actProfesor, setProfeDetail, setActiveDetail, setWillEdit }) => {
+export const ProfesoresList = ({ profesores, setProfeDetail, profeDetail, setWillEdit, setLoadingDetails, loadingDetails}) => {
   const [profesoresFiltrados, setProfesoresFiltrados] = useState(profesores);
 
   const handleChangeSearchProfessor = (e) => {
@@ -39,7 +39,8 @@ export const ProfesoresList = ({ profesores, profeDetail, actProfesor, setProfeD
       </div>
       <div id="profesores-list">
         {profesoresFiltrados.map((p) => (
-          <Profesor key={p.id} info={p} setProfeDetail={setProfeDetail} setWillEdit={setWillEdit}/>
+          <Profesor key={p.id} info={p} setProfeDetail={setProfeDetail} profeDetail={profeDetail} setWillEdit={setWillEdit}
+            loadingDetails={loadingDetails} setLoadingDetails={setLoadingDetails}/>
         ))}
       </div>
     </>

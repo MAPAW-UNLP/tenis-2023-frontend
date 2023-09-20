@@ -28,6 +28,7 @@ export const Profesores = ({ setSesion }) => {
   const [willEdit, setWillEdit] = useState(false)
 
   const [profesoresLoader, setProfesoresLoader] = useState(true); // Spinner
+  const [loadingDetails, setLoadingDetails] = useState(false) // Spinner edit
 
   //para actualizar los profesores en la lista
   const [profesores, setProfesores] = useState([]);
@@ -64,7 +65,8 @@ export const Profesores = ({ setSesion }) => {
         fetch(`${URL_BASE}persona?personaId=${profeDetail.id}`)
           .then((response) => response.json())
           .then((data) => setProfeDetail(data))
-          .then(() => setActiveDetail(true));
+          .then(() => setActiveDetail(true))
+          .then(() => setLoadingDetails(false));
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [willEdit]);
@@ -193,9 +195,8 @@ export const Profesores = ({ setSesion }) => {
                 feedback={feedback} setProfesorForm={setProfesorForm} profesorForm={profesorForm} clearState={clearState}
                 setWillEdit={setWillEdit} setActProfesores={setActProfesores}
               />
-              <ProfesoresList profesores={profesores} profeDetail={profeDetail} 
-                setProfeDetail={setProfeDetail} setActiveDetail={setActiveDetail}
-                setWillEdit={setWillEdit}
+              <ProfesoresList profesores={profesores} setProfeDetail={setProfeDetail} profeDetail={profeDetail}
+                setWillEdit={setWillEdit} setLoadingDetails={setLoadingDetails} loadingDetails={loadingDetails}
               />
             </div>
         }

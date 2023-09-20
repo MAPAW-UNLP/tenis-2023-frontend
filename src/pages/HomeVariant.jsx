@@ -86,6 +86,8 @@ const Home = ({ setSesion }) => {
   const [alumnos, setAlumnos] = useState([]);
   const [profesores, setProfesores] = useState([]);
   const [actProfesores, setActProfesores] = useState(false);
+  const [actCanchas, setActCanchas] = useState(false);
+  const [actAlumnos, setActAlumnos] = useState(false);
 
   useEffect(() => {
     const requestOptions = {
@@ -108,6 +110,26 @@ const Home = ({ setSesion }) => {
       .then((data) => setProfesores(ordenarPorNombre(data)))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actProfesores]);
+
+    useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}canchas`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setCanchas(data.detail))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actCanchas]);
+
+    useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}alumnos`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actAlumnos]);
 
   return (
     <div id="home-component">

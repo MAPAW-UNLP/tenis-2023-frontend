@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //react router
 import { useNavigate } from 'react-router-dom';
 
@@ -12,23 +12,14 @@ import AlquilerDetails from '../components/AlquilerDetails';
 import ClaseDetails from '../components/ClaseDetails';
 //Fontawesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faPlusCircle,
-  faCaretRight,
-  faCaretLeft,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
+import { ordenarPorNombre } from '../components/Utils/Functions';
 import '../styles/home.css';
 
-const Home = ({
-  canchas,
-  reservas,
-  reservasLoader,
-  setSesion,
-  alumnos,
-  profesores,
-  setActReservas,
-}) => {
+const Home = ({ setSesion }) => {
+  const URL_BASE = `http://localhost:8083/api/`;
+  
   //Todo esto es para manejar una fecha visible para el usuario
   const horas = [
     '8:00',
@@ -72,15 +63,9 @@ const Home = ({
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2);
   const dia = ('0' + new Date().getDate()).slice(-2);
   const año = new Date().getFullYear();
-
   const DateToday = `${año}-${mes}-${dia}`;
 
   const [today, setToday] = useState(DateToday);
-
-  const handleChangeDate = (e) => {
-    setToday(e.target.value);
-    console.log(today);
-  };
 
   //alumnos de la clase
   const [alumnosDeLaClase, setAlumnosDeLaClase] = useState([]);
@@ -93,12 +78,41 @@ const Home = ({
 
   const navigate = useNavigate();
 
+  // Refactor desde home para reservas
+  const [reservas, setReservas] = useState([]);
+  const [reservasLoader, setReservasLoader] = useState(false); // Spinner
+  const [actReservas, setActReservas] = useState(false);
+  const [canchas, setCanchas] = useState([]);
+  const [alumnos, setAlumnos] = useState([]);
+  const [profesores, setProfesores] = useState([]);
+  const [actProfesores, setActProfesores] = useState(false);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}reservas`, requestOptions)
+      .then(setReservasLoader(true))
+      .then((response) => response.json())
+      .then((data) => setReservas(data.detail))
+      .then(() => setReservasLoader((v) => false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actReservas]);
+
+    useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}profesores`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProfesores(ordenarPorNombre(data)))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actProfesores]);
+
   return (
     <div id="home-component">
       <NavBar title={'Tennis app'} setSesion={setSesion} />
-      {/*         <VistaSemanal canchas={canchas} reservas={reservas}/>
-            
- */}
+      {/* <VistaSemanal canchas={canchas} reservas={reservas}/> */}
       <AlquilerDetails
         reserva={reservaDetail}
         diaReserva={today}

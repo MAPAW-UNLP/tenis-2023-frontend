@@ -26,45 +26,45 @@ function App() {
   //Todo esto podría ir a la store global:
   // const [canchas, setCanchas] = useState([]);
   const [reservas, setReservas] = useState([]);
-  const [pagos, setPagos] = useState([]);
+  // const [pagos, setPagos] = useState([]);
 
   // const [actCanchas, setActCanchas] = useState(false);
   const [actReservas, setActReservas] = useState(false);
-  const [actPagos, setActPagos] = useState(false);
+  // const [actPagos, setActPagos] = useState(false);
   /*  */
   /* Loaders */
   const [activedLoader, setActivedLoader] = useState(false);
   const [reservasLoader, setReservasLoader] = useState(false);
   // const [alumnosLoader, setAlumnosLoader] = useState(false);
-  const [profesoresLoader, setProfesoresLoader] = useState(false);
+  // const [profesoresLoader, setProfesoresLoader] = useState(false);
 
   //para actualizar los alumnos
   // const [alumnos, setAlumnos] = useState([]);
   // const [actAlumnos, setActAlumnos] = useState(false);
 
   //para actualizar los profesores
-  const [profesores, setProfesores] = useState([]);
-  const [actProfesores, setActProfesores] = useState(false);
+  // const [profesores, setProfesores] = useState([]);
+  // const [actProfesores, setActProfesores] = useState(false);
 
-  const URL_BASE = `http://localhost:8083/api/`;
+  // const URL_BASE = `http://localhost:8083/api/`;
 
-  const ordenarPorNombre = (datos) => {
-    return datos.sort(function (a, b) {
-      if (a.nombre.toUpperCase() > b.nombre.toUpperCase()) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
-  };
+  // const ordenarPorNombre = (datos) => {
+  //   return datos.sort(function (a, b) {
+  //     if (a.nombre.toUpperCase() > b.nombre.toUpperCase()) {
+  //       return 1;
+  //     } else {
+  //       return -1;
+  //     }
+  //   });
+  // };
 
   //sesion Effect D:
-  useEffect(() => {
-    const user = localStorage.getItem('sesion');
-    if (user === '') {
-      navigate('/');
-    }
-  }, [sesion]);
+  // useEffect(() => {
+  //   const user = localStorage.getItem('sesion');
+  //   if (user === '') {
+  //     navigate('/');
+  //   }
+  // }, [sesion]);
 
   // useEffect(() => {
   //   const requestOptions = {
@@ -117,15 +117,15 @@ function App() {
   }, [actProfesores]);
 
   //fet pagos
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    fetch(`${URL_BASE}pagos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setPagos(data));
-    /* Desactivar spinner */
-  }, [actPagos]);
+  // useEffect(() => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   fetch(`${URL_BASE}pagos`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((data) => setPagos(data));
+  //   /* Desactivar spinner */
+  // }, [actPagos]);
 
   return (
     <>

@@ -13,7 +13,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 
-const ClaseFormComponent = ({active, canchas,setCancha,setActive, handleAddReserva, profesores, setProfesores, alumnos, setAlumnos, grupoIds, setGrupoIds, setProfesorSel, replica, setReplica, tipoClase, setTipoClase}) => {
+const ClaseFormComponent = ({active, canchas, setCancha, setActive, handleAddReserva, profesores, setProfesores, alumnos, setAlumnos, grupoIds, setGrupoIds, setProfesorSel, replica, setReplica, tipoClase, setTipoClase}) => {
 
   const [tipoClaseSel, setTipoClaseSel] = useState('');
 

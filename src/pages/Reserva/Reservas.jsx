@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //styles
 import '../../styles/reservas.css';
@@ -18,24 +18,32 @@ import SelectComponent from '../../components/Utils/SelectComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-export const Reservas = ({
-  canchas,
-  reservas,
-  profesores,
-  setActReservas,
-  setReservasLoader,
-  setProfesores,
-  alumnos,
-  setAlumnos,
-  setSesion,
-}) => {
+import { ordenarPorNombre } from '../../components/Utils/Functions';
+
+export const Reservas = ({ setSesion }) => {
+  const URL_BASE = `http://localhost:8083/api/`;
   //navegacion
   const navigate = useNavigate();
+  
+  const [reservas, setReservas] = useState([]);
+  const [actReservas, setActReservas] = useState(false);
+  const [reservasLoader, setReservasLoader] = useState(false);
+  
+  //para actualizar los profesores
+  const [profesores, setProfesores] = useState([]);
+  const [alumnos, setAlumnos] = useState([])
+  const [actAlumnos, setActAlumnos] = useState(false);
+
+  const [actProfesores, setActProfesores] = useState(false);
+
   const [alquilerOp, setAlquilerOp] = useState(false);
   const [claseOp, setClaseOp] = useState(false);
   //a futuro vamos a tener un tipo reserva por aca.
   const [reservaTipo, setReservaTipo] = useState('');
   const [cancha, setCancha] = useState('');
+  const [canchas, setCanchas] = useState([]);
+  const [actCanchas, setActCanchas] = useState(false);
+
   //con estos campos verificar actualizar el select de cancha solo mostrando las posibles
   const [dia, setDia] = useState('');
   const [horaInicio, setHoraInicio] = useState('');
@@ -187,6 +195,36 @@ export const Reservas = ({
       .then(setReservasLoader(true))
       .finally(navigate('../reservas'));
   };
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}canchas`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setCanchas(data.detail))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actCanchas]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}profesores`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setProfesores(ordenarPorNombre(data)))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actProfesores]);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}alumnos`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actAlumnos]);
 
   return (
     <div id="reservas-component">

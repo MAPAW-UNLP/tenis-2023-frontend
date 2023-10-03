@@ -4,19 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 import NavBar from '../Navbar/NavBar'
-import { AgregarPago } from '../../components/Pago/AgregarPago'
-import { PagosList } from '../../components/Pago/PagosList'
+import { AgregarCobro } from '../../components/Cobro/AgregarCobro'
+import { CobrosList } from '../../components/Cobro/CobrosList'
 
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 
-import '../../styles/pagos.css'
+import '../../styles/cobros.css'
 
-export const Pagos = ({ setSesion }) => {
+export const Cobros = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [ active, setActive] = useState(false);
-  const [pagos, setPagos] = useState([]);
-  const [actPagos, setActPagos] = useState(false);
+  const [cobros, setCobros] = useState([]);
+  const [actCobros, setActCobros] = useState(false);
 
   const [alumnos, setAlumnos] = useState([]);
 
@@ -26,28 +26,27 @@ export const Pagos = ({ setSesion }) => {
     };
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setPagos(data));
+      .then((data) => setCobros(data));
     
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actPagos]);
+  }, [actCobros]);
 
   return (
-    <div id='pagos-Component'>
-        <NavBar title={'Pagos'} setSesion={setSesion}/>
-        <div id='pagos-component-mainContent'>
-            <button id='canchas-add-btn' onClick={() => {setActive((active)=> true)}}>
+    <div id='cobros-Component'>
+        <NavBar title={'Cobros'} setSesion={setSesion}/>
+        <div id='cobros-component-mainContent'>
+            <button id='canchas-add-btn' onClick={() => {setActive(()=> true)}}>
               <FontAwesomeIcon icon={faPlusCircle}/>
             </button>
-            <AgregarPago active={active} setActive={setActive} setPagos={setPagos}
-              pagos={pagos} setActPagos={setActPagos} alumnos={alumnos} />
-            { pagos.length === 0 ?
+            <AgregarCobro active={active} setActive={setActive} setActCobros={setActCobros} alumnos={alumnos} />
+            {cobros.length === 0 ?
               <div> cargando componente </div>
             :
-              <PagosList pagos={pagos} />
+              <CobrosList cobros={cobros} />
             }
         </div>
     </div>

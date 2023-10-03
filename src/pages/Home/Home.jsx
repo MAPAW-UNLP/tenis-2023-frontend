@@ -46,11 +46,11 @@ export const Home = ({setSesion}) => {
           nombreClase={'profesoreshc'}
         />
         <HomeCard 
-          title={'Pagos'} 
+          title={'Cobros'} 
           descr={'Movimiento de dinero y manejo de pagos'} 
           Logo={<FontAwesomeIcon icon={faDollarSign} />} 
           color={'#94F5C5'} 
-          link="../pagos" 
+          link="../cobros" 
           nombreClase={'pagoshc'}
         />
       </div>

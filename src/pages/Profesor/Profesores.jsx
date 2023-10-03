@@ -44,8 +44,10 @@ export const Profesores = ({ setSesion }) => {
   const [feedback, setFeedback] = useState({
     nombreFB: feedbackStructure,
     telefonoFB: feedbackStructure,
+    emailFB: feedbackStructure,
     nombreFBCorrecto: false,
-    telefonoFBCorrecto: false
+    telefonoFBCorrecto: false,
+    emailFBCorrecto: false
   })
 
   useEffect(() => {
@@ -62,17 +64,22 @@ export const Profesores = ({ setSesion }) => {
     // EDICION DE PROFESOR 
     useEffect(() => {
       if (willEdit) {
-        fetch(`${URL_BASE}persona?personaId=${profeDetail.id}`)
-          .then((response) => response.json())
-          .then((data) => setProfeDetail(data))
-          .then(() => setActiveDetail(true))
-          .then(() => setLoadingDetails(false));
+        // fetch(`${URL_BASE}profesor?profesorId=${profeDetail.id}`, requestOptions)
+        //   .then((response) => {response.json()})
+        //   .then((data) => setProfeDetail(data))
+        //   .then(() => setActiveDetail(true))
+        //   .then(() => setLoadingDetails(false));
+        
+        // Mientras este el endpoint roto seteo manualmente los sets
+        setProfeDetail('');
+        setActiveDetail(true)
+        setLoadingDetails(false)
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [willEdit]);
 
   // AGREGAR PROFESOR
-  const handleChangeName = (e, submitButtonName, telefonoInputName, checkDisabled) => {
+  const handleChangeName = (e, submitButtonName, emailInputName, checkDisabled) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
     const word = e.target.value.split(' ').join('');
     
@@ -82,7 +89,7 @@ export const Profesores = ({ setSesion }) => {
 
     setProfesorForm({...profesorForm, [e.target.name]: nombreProfesor})
     let nextInput;
-    if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
+    if (shouldIStartDisabled) nextInput = document.getElementById(emailInputName);
 
     if (nombreProfesor === '') {
       setFeedback({...feedback, nombreFB: feedbackStructure})
@@ -103,6 +110,40 @@ export const Profesores = ({ setSesion }) => {
           } 
         }
       } else setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+    }
+  };    
+
+  const handleChangeEmail = (e, submitButtonName, telefonoInputName, checkDisabled) => {
+    const pattern = new RegExp('^[A-Z]+$', 'i');
+    const word = e.target.value.split(' ').join('');
+    
+    const emailProfesor = e.target.value;
+    const submitBtn = document.getElementById(submitButtonName)
+    const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
+
+    setProfesorForm({...profesorForm, [e.target.name]: emailProfesor})
+    let nextInput;
+    if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
+
+    if (emailProfesor === '') {
+      setFeedback({...feedback, emailFB: feedbackStructure})
+      if (shouldIStartDisabled){
+        nextInput.disabled = true;
+        submitBtn.disabled = true;
+      }
+    } else {
+      if (pattern.test(word)) {
+        if (checkExistenceIn(profesores, "email", emailProfesor)) {
+          setFeedback({...feedback, emailFBCorrecto:true, emailFB: {...feedback.emailFB, text: 'El nombre de profesor es correcto', color: '#7CBD1E'}})
+          shouldIStartDisabled && (nextInput.disabled = false);
+        } else {
+          setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'El nombre de profesor ya existe', color: '#CC3636'}})
+          if (shouldIStartDisabled) {
+            nextInput.disabled = true;
+            submitBtn.disabled = true;
+          } 
+        }
+      } else setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
     }
   };    
 
@@ -133,7 +174,8 @@ export const Profesores = ({ setSesion }) => {
     e.preventDefault();
     setFeedback({
       nombreFB:feedbackStructure,
-      telefonoFB: feedbackStructure
+      telefonoFB: feedbackStructure,
+      emailFB: feedbackStructure
     })
 
     setProfesoresLoader((prevValue) => !prevValue);
@@ -147,6 +189,7 @@ export const Profesores = ({ setSesion }) => {
         esalumno: false,
       }),
     };
+
     fetch(`${URL_BASE}persona`, requestOptions)
       .then((response) => response.json())
       .then(() => setActProfesores((v) => !v));
@@ -167,8 +210,10 @@ export const Profesores = ({ setSesion }) => {
      setFeedback({
       nombreFB:feedbackStructure,
       telefonoFB: feedbackStructure,
+      emailFB: feedbackStructure,
       telefonoFBCorrecto: false,
-      nombreFBCorrecto: false
+      nombreFBCorrecto: false,
+      emailFBCorrecto:false
      })
   };
 
@@ -181,7 +226,7 @@ export const Profesores = ({ setSesion }) => {
             </button>
             
             <AgregarProfesor 
-              active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName}
+              active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName} handleChangeEmail={handleChangeEmail}
               handleChangePhone={handleChangePhone} feedback={feedback} submitProfesorForm={submitProfesorForm}
             />
             

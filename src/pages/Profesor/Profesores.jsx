@@ -45,9 +45,9 @@ export const Profesores = ({ setSesion }) => {
     nombreFB: feedbackStructure,
     telefonoFB: feedbackStructure,
     emailFB: feedbackStructure,
-    nombreFBCorrecto: false,
-    telefonoFBCorrecto: false,
-    emailFBCorrecto: false
+    nombreFBCorrecto: null,
+    telefonoFBCorrecto: null,
+    emailFBCorrecto: null
   })
 
   useEffect(() => {
@@ -67,13 +67,10 @@ export const Profesores = ({ setSesion }) => {
         fetch(`${URL_BASE}profesorr?profesorId=${profeDetail.id}`)
           .then((response) => response.json())
           .then((data) => setProfeDetail(data))
+          .then(profesorForm.nombre = profeDetail.nombre,
+             profesorForm.email = profeDetail.email, profesorForm.telefono = profeDetail.telefono)
           .then(() => setActiveDetail(true))
           .then(() => setLoadingDetails(false));
-        
-        // Mientras este el endpoint roto seteo manualmente los sets
-        // setProfeDetail('');
-        // setActiveDetail(true)
-        // setLoadingDetails(false)
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [willEdit]);
@@ -96,6 +93,7 @@ export const Profesores = ({ setSesion }) => {
       if (shouldIStartDisabled){
         nextInput.disabled = true;
         submitBtn.disabled = true;
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB:{...feedback.nombreFB, text:'', color:''}})
       }
     } else {
       if (pattern.test(word)) {
@@ -109,7 +107,13 @@ export const Profesores = ({ setSesion }) => {
             submitBtn.disabled = true;
           } 
         }
-      } else setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+      } else{
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+        if (shouldIStartDisabled) {
+          nextInput.disabled = true;
+          submitBtn.disabled = true;
+        } 
+      }
     }
   };    
 
@@ -127,6 +131,7 @@ export const Profesores = ({ setSesion }) => {
       if (shouldIStartDisabled){
         nextInput.disabled = true;
         submitBtn.disabled = true;
+        setFeedback({...feedback, emailFBCorrecto:false, emailFB:{...feedback.emailFB, text:'', color:''}})
       }
     } else {
       if (validateEmail(emailProfesor)) {
@@ -140,7 +145,13 @@ export const Profesores = ({ setSesion }) => {
             submitBtn.disabled = true;
           } 
         }
-      } else setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Ingrese una direccion de email valida', color: '#CC3636'}})
+      } else{
+        setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Ingrese una direccion de email valida', color: '#CC3636'}})
+        if (shouldIStartDisabled) {
+          nextInput.disabled = true;
+          submitBtn.disabled = true;
+        } 
+      }
     }
   };    
 
@@ -150,12 +161,15 @@ export const Profesores = ({ setSesion }) => {
     const telefonoProfesor = e.target.value;
     setProfesorForm({...profesorForm, [e.target.name]: telefonoProfesor})
 
-    const submitBtn = document.getElementById(submitButtonName);
+    let submitBtn = document.getElementById(submitButtonName);
     const shouldIStartDisabled = checkDisabled;
 
     if (telefonoProfesor === '') {
       setFeedback({...feedback, telefonoFB: feedbackStructure})
-      shouldIStartDisabled && (submitBtn.disabled = true);
+      if(shouldIStartDisabled){
+        submitBtn.disabled = true;
+        setFeedback({...feedback, telefonoFBCorrecto:false, telefonoFB:{...feedback.telefonoFB, text:'', color:''}})
+      }
     } else {
       if (telefonoProfesor.match(pattern) != null && telefonoProfesor.length >= 7) {
         setFeedback({...feedback, telefonoFBCorrecto: true, telefonoFB: {...feedback.telefonoFB, text: 'El nummero de telefono es correcto', color: '#7CBD1E'}})
@@ -167,6 +181,16 @@ export const Profesores = ({ setSesion }) => {
     }
   };
   
+  // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
+  useEffect(() => {
+    if (feedback.nombreFBCorrecto && feedback.emailFBCorrecto && feedback.telefonoFBCorrecto
+      && document.getElementById('profesor-add-form-addBtn') !== null) {
+      let addBtn = document.getElementById('profesor-add-form-addBtn');
+      addBtn.disabled = false;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedback]);
+
   const submitProfesorForm = (e) => {
     e.preventDefault();
     setFeedback({
@@ -183,11 +207,10 @@ export const Profesores = ({ setSesion }) => {
         nombre: profesorForm.nombre,
         telefono: profesorForm.telefono,
         email: profesorForm.email,
-        esalumno: false,
       }),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}profesorr`, requestOptions)
       .then((response) => response.json())
       .then(() => setActProfesores((v) => !v));
   };
@@ -208,9 +231,9 @@ export const Profesores = ({ setSesion }) => {
       nombreFB:feedbackStructure,
       telefonoFB: feedbackStructure,
       emailFB: feedbackStructure,
-      telefonoFBCorrecto: false,
-      nombreFBCorrecto: false,
-      emailFBCorrecto:false
+      telefonoFBCorrecto: null,
+      nombreFBCorrecto: null,
+      emailFBCorrecto:null
      })
   };
 

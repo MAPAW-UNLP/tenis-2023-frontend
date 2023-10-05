@@ -117,7 +117,7 @@ export const Profesores = ({ setSesion }) => {
     const emailProfesor = e.target.value;
     const submitBtn = document.getElementById(submitButtonName)
     const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
-    console.log(emailProfesor)
+
     setProfesorForm({...profesorForm, [e.target.name]: emailProfesor})
     let nextInput;
     if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
@@ -233,7 +233,7 @@ export const Profesores = ({ setSesion }) => {
             <div id="profesores-list-component">
               <ProfesorDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} 
                 setProfeDetail={setProfeDetail} profeDetail={profeDetail}
-                handleChangeName={handleChangeName} handleChangePhone={handleChangePhone}
+                handleChangeName={handleChangeName} handleChangePhone={handleChangePhone} handleChangeEmail={handleChangeEmail}
                 feedback={feedback} setProfesorForm={setProfesorForm} profesorForm={profesorForm} clearState={clearState}
                 setWillEdit={setWillEdit} setActProfesores={setActProfesores}
               />

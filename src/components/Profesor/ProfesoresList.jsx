@@ -13,7 +13,7 @@ export const ProfesoresList = ({ profesores, setProfeDetail, profeDetail, setWil
     const profesorEnBusqueda = e.target.value;
 
     const posibles = profesores.filter((a) =>
-      a.nombre.toUpperCase().includes(profesorEnBusqueda.toUpperCase())
+      a.nombre.toUpperCase().includes(profesorEnBusqueda.toUpperCase()) || a.email.includes(profesorEnBusqueda)
     );
     
     if (profesorEnBusqueda === '') {

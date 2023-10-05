@@ -15,9 +15,9 @@ export const Profesor = ({ info, setProfeDetail, profeDetail, setWillEdit, loadi
     <div className='profesor-info'>
         <p>{info.nombre}</p>
         <p>{info.telefono}</p>
-        <p>Esto_es_un_email_de_prueba@gmail.com</p>
+        <p>{info.email}</p>
         <button id='edit-profesor-btn' style={{margin: 'auto'}}
-          onClick={()=> setProfeDetail({id:info.id, nombre:info.nombre, telefono:info.telefono}, setWillEdit(true), setLoadingDetails(true))}>
+          onClick={()=> setProfeDetail({id:info.id, nombre:info.nombre, telefono:info.telefono, email:info.email}, setWillEdit(true), setLoadingDetails(true))}>
           {(loadingDetails && profeDetail.id === info.id) ? 
             <LoadingSpinner active={loadingDetails} containerClass={'contenedorLogin'} loaderClass={'loader'}/> 
           : 

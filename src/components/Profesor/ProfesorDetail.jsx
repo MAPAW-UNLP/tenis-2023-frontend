@@ -10,6 +10,7 @@ export const ProfesorDetail = ({
   profeDetail,
   handleChangeName,
   handleChangePhone,
+  handleChangeEmail,
   feedback,
   clearState,
   setWillEdit,
@@ -81,6 +82,21 @@ export const ProfesorDetail = ({
               {feedback.nombreFB.text}
             </p>
           </div>
+
+          <div className="inputlabel">
+            <InputReComponent
+              type={'text'}
+              id={'emailProfesor'}
+              name={'email'}
+              className={'profesor-add-form-input'}
+              placeholder={profeDetail.email}
+              onChangeFuncion={(e) => handleChangeEmail(e, 'clase-detail-guardar', '', false)}
+            />
+            <p className="feedbackInline" style={{ color: feedback.emailFB.color }}>
+              {feedback.emailFB.text}
+            </p>
+          </div>
+
           <div className="inputlabel">
             <InputReComponent
               type={'text'}
@@ -96,6 +112,7 @@ export const ProfesorDetail = ({
               {feedback.telefonoFB.text}
             </p>
           </div>
+          
           {waitingUpdate ? <LoadingSpinner active={waitingUpdate} containerClass={'contenedorLogin'} loaderClass={'loader'}/> : (
             <div id="clase-detail-btns">
               {(feedback.nombreFBCorrecto && feedback.telefonoFBCorrecto) ?

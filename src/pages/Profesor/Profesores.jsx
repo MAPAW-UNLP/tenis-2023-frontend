@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { checkExistenceIn, ordenarPorNombre } from '../../components/Utils/Functions' 
+import { checkExistenceIn, ordenarPorNombre, validateEmail } from '../../components/Utils/Functions' 
 
 import NavBar from '../Navbar/NavBar'
 import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
@@ -54,7 +54,7 @@ export const Profesores = ({ setSesion }) => {
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`${URL_BASE}profesores`, requestOptions)
+    fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
       .then(() => setProfesoresLoader(() => false));
@@ -64,16 +64,16 @@ export const Profesores = ({ setSesion }) => {
     // EDICION DE PROFESOR 
     useEffect(() => {
       if (willEdit) {
-        // fetch(`${URL_BASE}profesor?profesorId=${profeDetail.id}`, requestOptions)
-        //   .then((response) => {response.json()})
-        //   .then((data) => setProfeDetail(data))
-        //   .then(() => setActiveDetail(true))
-        //   .then(() => setLoadingDetails(false));
+        fetch(`${URL_BASE}profesorr?profesorId=${profeDetail.id}`)
+          .then((response) => response.json())
+          .then((data) => setProfeDetail(data))
+          .then(() => setActiveDetail(true))
+          .then(() => setLoadingDetails(false));
         
         // Mientras este el endpoint roto seteo manualmente los sets
-        setProfeDetail('');
-        setActiveDetail(true)
-        setLoadingDetails(false)
+        // setProfeDetail('');
+        // setActiveDetail(true)
+        // setLoadingDetails(false)
       }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [willEdit]);
@@ -113,14 +113,11 @@ export const Profesores = ({ setSesion }) => {
     }
   };    
 
-  const handleChangeEmail = (e, submitButtonName, telefonoInputName, checkDisabled) => {
-    const pattern = new RegExp('^[A-Z]+$', 'i');
-    const word = e.target.value.split(' ').join('');
-    
+  const handleChangeEmail = (e, submitButtonName, telefonoInputName, checkDisabled) => {    
     const emailProfesor = e.target.value;
     const submitBtn = document.getElementById(submitButtonName)
     const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
-
+    console.log(emailProfesor)
     setProfesorForm({...profesorForm, [e.target.name]: emailProfesor})
     let nextInput;
     if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
@@ -132,18 +129,18 @@ export const Profesores = ({ setSesion }) => {
         submitBtn.disabled = true;
       }
     } else {
-      if (pattern.test(word)) {
+      if (validateEmail(emailProfesor)) {
         if (checkExistenceIn(profesores, "email", emailProfesor)) {
-          setFeedback({...feedback, emailFBCorrecto:true, emailFB: {...feedback.emailFB, text: 'El nombre de profesor es correcto', color: '#7CBD1E'}})
+          setFeedback({...feedback, emailFBCorrecto:true, emailFB: {...feedback.emailFB, text: 'El email ingresado es correcto', color: '#7CBD1E'}})
           shouldIStartDisabled && (nextInput.disabled = false);
         } else {
-          setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'El nombre de profesor ya existe', color: '#CC3636'}})
+          setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'El email ingresado ya existe', color: '#CC3636'}})
           if (shouldIStartDisabled) {
             nextInput.disabled = true;
             submitBtn.disabled = true;
           } 
         }
-      } else setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+      } else setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Ingrese una direccion de email valida', color: '#CC3636'}})
     }
   };    
 

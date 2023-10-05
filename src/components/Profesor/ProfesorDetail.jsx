@@ -54,7 +54,7 @@ export const ProfesorDetail = ({
       body: JSON.stringify(data),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}profesorr`, requestOptions)
       .then((response) => response.json())
       .then(() => setWaitingUpdate(false))
       .then(() => handleCloseForm())

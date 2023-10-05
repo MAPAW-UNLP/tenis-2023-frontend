@@ -19,3 +19,9 @@ export const ordenarPorNombre = (datos) => {
 export const checkExistenceIn = (aList, attribute, aSubject) => {
   return aList.map((each) => each[attribute].toUpperCase()).indexOf(aSubject.toUpperCase()) === -1
 }
+
+export const validateEmail = (email) => {
+  // eslint-disable-next-line no-useless-escape
+  const emailRegex = /^(?:[^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*|"[^\n"]+")@(?:[^<>()[\].,;:\s@"]+\.)+[^<>()[\]\.,;:\s@"]{2,63}$/i;
+  return emailRegex.test(email);
+};

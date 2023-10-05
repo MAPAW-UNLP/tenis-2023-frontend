@@ -5,7 +5,8 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import InputReComponent from '../Utils/InputReComponent';
 
-const AgregarProfesor = ({ active, handleCloseForm, handleChangeName, handleChangePhone, feedback, submitProfesorForm }) => {
+const AgregarProfesor = ({ active, handleCloseForm, handleChangeName, handleChangeEmail, 
+  handleChangePhone, feedback, submitProfesorForm }) => {
   return (
     <>
       {active && (
@@ -14,17 +15,31 @@ const AgregarProfesor = ({ active, handleCloseForm, handleChangeName, handleChan
             x
           </button>
           <h2>Nuevo Profesor</h2>
-          <form action="" id="alumno-add-form" onSubmit={submitProfesorForm}>
+          <form id="alumno-add-form" onSubmit={submitProfesorForm}>
             <div className="inputlabel">
               <InputReComponent
                 type={'text'}
                 name={"nombre"}
                 className={'profesor-add-form-input'}
                 placeholder={'Nombre'}
-                onChangeFuncion={(e) => handleChangeName(e, 'profesor-add-form-addBtn', 'telefonoInput', true)}
+                onChangeFuncion={(e) => handleChangeName(e, 'profesor-add-form-addBtn', 'emailInput', true)}
               />
               <p className="feedbackInline" style={{ color: feedback.nombreFB.color }}>
                 {feedback.nombreFB.text}
+              </p>
+            </div>
+            <div className="inputlabel">
+              <InputReComponent
+                type={'text'}
+                name={"email"}
+                id={'emailInput'}
+                className={'profesor-add-form-input'}
+                placeholder={'Email'}
+                onChangeFuncion={(e) => handleChangeEmail(e, 'profesor-add-form-addBtn', 'telefonoInput', true)}
+                deshabilitado={true}
+              />
+              <p className="feedbackInline" style={{ color: feedback.emailFB.color }}>
+                {feedback.emailFB.text}
               </p>
             </div>
             <div className="inputlabel">

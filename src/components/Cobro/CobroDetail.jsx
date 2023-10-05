@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const PagoDetail = ({ activeDetail, setActiveDetail, pagosActUser, actUser }) => {
+export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, actUser }) => {
   let clasesIndividuales = 0;
   let clasesGrupales = 0;
 
@@ -25,11 +25,11 @@ export const PagoDetail = ({ activeDetail, setActiveDetail, pagosActUser, actUse
   return (
     <>
       {activeDetail &&
-        <div id='pagos-detail'>
+        <div id='cobros-detail'>
           <button id='close-detail-add-form' onClick={handleCloseForm}>x</button>
           <h2>{actUser.nombre}</h2>
-          <div id='pagos-detail-list'>
-            {pagosActUser.map((el, i) => {
+          <div id='cobros-detail-list'>
+            {cobrosActUser.map((el, i) => {
               if (el.idTipoClase === 1) {
                 clasesIndividuales += el.cantidad
               }
@@ -37,14 +37,14 @@ export const PagoDetail = ({ activeDetail, setActiveDetail, pagosActUser, actUse
                 clasesGrupales += el.cantidad
               }
               return (
-                <div className='pagos-detail-item' key={i}>
-                  <p id='pagos-detail-fecha'>{mostrarFechaDescentemente(el.fecha)}</p>
-                  <p id='pagos-detail-tipo'>Tipo: {returnTipoClase(el.idTipoClase)}</p>
-                  <p id='pagos-detail-cantidad'>Cantidad: {el.cantidad}</p>
+                <div className='cobros-detail-item' key={i}>
+                  <p id='cbros-detail-fecha'>{mostrarFechaDescentemente(el.fecha)}</p>
+                  <p id='cobros-detail-tipo'>Tipo: {returnTipoClase(el.idTipoClase)}</p>
+                  <p id='cobros-detail-cantidad'>Cantidad: {el.cantidad}</p>
                 </div>)
             })}
           </div>
-          <div id='pagos-detail-contadores'>
+          <div id='cobros-detail-contadores'>
             <div>Clases Individuales: {clasesIndividuales}</div>
             <div>Clases Grupales: {clasesGrupales}</div>
           </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-import { checkExistenceIn, ordenarPorNombre } from '../../components/Utils/Functions' 
+import { checkExistenceIn, ordenarPorNombre, validateEmail } from '../../components/Utils/Functions' 
 
 import NavBar from '../Navbar/NavBar'
 import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
@@ -44,15 +44,17 @@ export const Profesores = ({ setSesion }) => {
   const [feedback, setFeedback] = useState({
     nombreFB: feedbackStructure,
     telefonoFB: feedbackStructure,
-    nombreFBCorrecto: false,
-    telefonoFBCorrecto: false
+    emailFB: feedbackStructure,
+    nombreFBCorrecto: null,
+    telefonoFBCorrecto: null,
+    emailFBCorrecto: null
   })
 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`${URL_BASE}profesores`, requestOptions)
+    fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
       .then((data) => setProfesores(ordenarPorNombre(data)))
       .then(() => setProfesoresLoader(() => false));
@@ -62,9 +64,11 @@ export const Profesores = ({ setSesion }) => {
     // EDICION DE PROFESOR 
     useEffect(() => {
       if (willEdit) {
-        fetch(`${URL_BASE}persona?personaId=${profeDetail.id}`)
+        fetch(`${URL_BASE}profesorr?profesorId=${profeDetail.id}`)
           .then((response) => response.json())
           .then((data) => setProfeDetail(data))
+          .then(profesorForm.nombre = profeDetail.nombre,
+             profesorForm.email = profeDetail.email, profesorForm.telefono = profeDetail.telefono)
           .then(() => setActiveDetail(true))
           .then(() => setLoadingDetails(false));
       }
@@ -72,7 +76,7 @@ export const Profesores = ({ setSesion }) => {
     }, [willEdit]);
 
   // AGREGAR PROFESOR
-  const handleChangeName = (e, submitButtonName, telefonoInputName, checkDisabled) => {
+  const handleChangeName = (e, submitButtonName, emailInputName, checkDisabled) => {
     const pattern = new RegExp('^[A-Z]+$', 'i');
     const word = e.target.value.split(' ').join('');
     
@@ -82,13 +86,14 @@ export const Profesores = ({ setSesion }) => {
 
     setProfesorForm({...profesorForm, [e.target.name]: nombreProfesor})
     let nextInput;
-    if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
+    if (shouldIStartDisabled) nextInput = document.getElementById(emailInputName);
 
     if (nombreProfesor === '') {
       setFeedback({...feedback, nombreFB: feedbackStructure})
       if (shouldIStartDisabled){
         nextInput.disabled = true;
         submitBtn.disabled = true;
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB:{...feedback.nombreFB, text:'', color:''}})
       }
     } else {
       if (pattern.test(word)) {
@@ -102,7 +107,51 @@ export const Profesores = ({ setSesion }) => {
             submitBtn.disabled = true;
           } 
         }
-      } else setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+      } else{
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de profesor sin numeros', color: '#CC3636'}})
+        if (shouldIStartDisabled) {
+          nextInput.disabled = true;
+          submitBtn.disabled = true;
+        } 
+      }
+    }
+  };    
+
+  const handleChangeEmail = (e, submitButtonName, telefonoInputName, checkDisabled) => {    
+    const emailProfesor = e.target.value;
+    const submitBtn = document.getElementById(submitButtonName)
+    const shouldIStartDisabled = checkDisabled; // Con esto pregunto, deberia considerar este valor/input?
+
+    setProfesorForm({...profesorForm, [e.target.name]: emailProfesor})
+    let nextInput;
+    if (shouldIStartDisabled) nextInput = document.getElementById(telefonoInputName);
+
+    if (emailProfesor === '') {
+      setFeedback({...feedback, emailFB: feedbackStructure})
+      if (shouldIStartDisabled){
+        nextInput.disabled = true;
+        submitBtn.disabled = true;
+        setFeedback({...feedback, emailFBCorrecto:false, emailFB:{...feedback.emailFB, text:'', color:''}})
+      }
+    } else {
+      if (validateEmail(emailProfesor)) {
+        if (checkExistenceIn(profesores, "email", emailProfesor)) {
+          setFeedback({...feedback, emailFBCorrecto:true, emailFB: {...feedback.emailFB, text: 'El email ingresado es correcto', color: '#7CBD1E'}})
+          shouldIStartDisabled && (nextInput.disabled = false);
+        } else {
+          setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'El email ingresado ya existe', color: '#CC3636'}})
+          if (shouldIStartDisabled) {
+            nextInput.disabled = true;
+            submitBtn.disabled = true;
+          } 
+        }
+      } else{
+        setFeedback({...feedback, emailFBCorrecto:false, emailFB: {...feedback.emailFB, text: 'Ingrese una direccion de email valida', color: '#CC3636'}})
+        if (shouldIStartDisabled) {
+          nextInput.disabled = true;
+          submitBtn.disabled = true;
+        } 
+      }
     }
   };    
 
@@ -112,12 +161,15 @@ export const Profesores = ({ setSesion }) => {
     const telefonoProfesor = e.target.value;
     setProfesorForm({...profesorForm, [e.target.name]: telefonoProfesor})
 
-    const submitBtn = document.getElementById(submitButtonName);
+    let submitBtn = document.getElementById(submitButtonName);
     const shouldIStartDisabled = checkDisabled;
 
     if (telefonoProfesor === '') {
       setFeedback({...feedback, telefonoFB: feedbackStructure})
-      shouldIStartDisabled && (submitBtn.disabled = true);
+      if(shouldIStartDisabled){
+        submitBtn.disabled = true;
+        setFeedback({...feedback, telefonoFBCorrecto:false, telefonoFB:{...feedback.telefonoFB, text:'', color:''}})
+      }
     } else {
       if (telefonoProfesor.match(pattern) != null && telefonoProfesor.length >= 7) {
         setFeedback({...feedback, telefonoFBCorrecto: true, telefonoFB: {...feedback.telefonoFB, text: 'El nummero de telefono es correcto', color: '#7CBD1E'}})
@@ -129,11 +181,22 @@ export const Profesores = ({ setSesion }) => {
     }
   };
   
+  // Si todos los feefbacks son correctos entonces habilito boton para AGREGAR PROFESOR
+  useEffect(() => {
+    if (feedback.nombreFBCorrecto && feedback.emailFBCorrecto && feedback.telefonoFBCorrecto
+      && document.getElementById('profesor-add-form-addBtn') !== null) {
+      let addBtn = document.getElementById('profesor-add-form-addBtn');
+      addBtn.disabled = false;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedback]);
+
   const submitProfesorForm = (e) => {
     e.preventDefault();
     setFeedback({
       nombreFB:feedbackStructure,
-      telefonoFB: feedbackStructure
+      telefonoFB: feedbackStructure,
+      emailFB: feedbackStructure
     })
 
     setProfesoresLoader((prevValue) => !prevValue);
@@ -144,10 +207,10 @@ export const Profesores = ({ setSesion }) => {
         nombre: profesorForm.nombre,
         telefono: profesorForm.telefono,
         email: profesorForm.email,
-        esalumno: false,
       }),
     };
-    fetch(`${URL_BASE}persona`, requestOptions)
+
+    fetch(`${URL_BASE}profesorr`, requestOptions)
       .then((response) => response.json())
       .then(() => setActProfesores((v) => !v));
   };
@@ -167,8 +230,10 @@ export const Profesores = ({ setSesion }) => {
      setFeedback({
       nombreFB:feedbackStructure,
       telefonoFB: feedbackStructure,
-      telefonoFBCorrecto: false,
-      nombreFBCorrecto: false
+      emailFB: feedbackStructure,
+      telefonoFBCorrecto: null,
+      nombreFBCorrecto: null,
+      emailFBCorrecto:null
      })
   };
 
@@ -181,7 +246,7 @@ export const Profesores = ({ setSesion }) => {
             </button>
             
             <AgregarProfesor 
-              active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName}
+              active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName} handleChangeEmail={handleChangeEmail}
               handleChangePhone={handleChangePhone} feedback={feedback} submitProfesorForm={submitProfesorForm}
             />
             
@@ -191,7 +256,7 @@ export const Profesores = ({ setSesion }) => {
             <div id="profesores-list-component">
               <ProfesorDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} 
                 setProfeDetail={setProfeDetail} profeDetail={profeDetail}
-                handleChangeName={handleChangeName} handleChangePhone={handleChangePhone}
+                handleChangeName={handleChangeName} handleChangePhone={handleChangePhone} handleChangeEmail={handleChangeEmail}
                 feedback={feedback} setProfesorForm={setProfesorForm} profesorForm={profesorForm} clearState={clearState}
                 setWillEdit={setWillEdit} setActProfesores={setActProfesores}
               />

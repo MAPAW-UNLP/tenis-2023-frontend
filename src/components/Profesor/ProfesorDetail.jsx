@@ -10,6 +10,7 @@ export const ProfesorDetail = ({
   profeDetail,
   handleChangeName,
   handleChangePhone,
+  handleChangeEmail,
   feedback,
   clearState,
   setWillEdit,
@@ -40,21 +41,22 @@ export const ProfesorDetail = ({
   const actualizarProfesor = () => {
     const nombreProfe = document.getElementById('nombreProfesor').value;
     const telProfe = document.getElementById('telefonoProfesor').value;
+    const emailProfe = document.getElementById('emailProfesor').value;
 
     const data = {
-      id: profeDetail.id,
-      esalumno: false,
+      id: profeDetail.id
     };
 
     nombreProfe === '' ? (data.nombre = profeDetail.nombre) : (data.nombre = nombreProfe); 
     telProfe === '' ? (data.telefono = profeDetail.telefono) : (data.telefono = telProfe);
+    emailProfe === '' ? (data.email = profeDetail.email) : (data.email = emailProfe);
 
     const requestOptions = {
       method: 'PUT',
       body: JSON.stringify(data),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}profesorr`, requestOptions)
       .then((response) => response.json())
       .then(() => setWaitingUpdate(false))
       .then(() => handleCloseForm())
@@ -75,12 +77,29 @@ export const ProfesorDetail = ({
               name={'nombre'}
               className={'profesor-add-form-input'}
               placeholder={profeDetail.nombre}
+              defaultValue={profeDetail.nombre}
               onChangeFuncion={(e) => handleChangeName(e, 'clase-detail-guardar', '', false)}
             />
             <p className="feedbackInline" style={{ color: feedback.nombreFB.color }}>
               {feedback.nombreFB.text}
             </p>
           </div>
+
+          <div className="inputlabel">
+            <InputReComponent
+              type={'text'}
+              id={'emailProfesor'}
+              name={'email'}
+              className={'profesor-add-form-input'}
+              placeholder={profeDetail.email}
+              defaultValue={profeDetail.email}
+              onChangeFuncion={(e) => handleChangeEmail(e, 'clase-detail-guardar', '', false)}
+            />
+            <p className="feedbackInline" style={{ color: feedback.emailFB.color }}>
+              {feedback.emailFB.text}
+            </p>
+          </div>
+
           <div className="inputlabel">
             <InputReComponent
               type={'text'}
@@ -88,6 +107,7 @@ export const ProfesorDetail = ({
               id={'telefonoProfesor'}
               className={'profesor-add-form-input'}
               placeholder={profeDetail.telefono}
+              defaultValue={profeDetail.telefono}
               onChangeFuncion={(e) => handleChangePhone(e, 'clase-detail-guardar', false)}
               min={7}
               max={12}
@@ -96,13 +116,14 @@ export const ProfesorDetail = ({
               {feedback.telefonoFB.text}
             </p>
           </div>
+
           {waitingUpdate ? <LoadingSpinner active={waitingUpdate} containerClass={'contenedorLogin'} loaderClass={'loader'}/> : (
             <div id="clase-detail-btns">
-              {(feedback.nombreFBCorrecto && feedback.telefonoFBCorrecto) ?
-                <button id="clase-detail-guardar" onClick={actualizar}> Guardar </button>
-              :
+              {(feedback.nombreFBCorrecto === false || feedback.telefonoFBCorrecto === false || feedback.emailFBCorrecto === false) ?
                 <button id="clase-detail-disabled" type='button' disabled={true}> Guardar </button>
-              }
+              :
+                <button id="clase-detail-guardar" onClick={actualizar}> Guardar </button>
+            }
               <button id="clase-detail-cancelar" onClick={handleCloseForm}> Cancelar </button>
             </div>
           )}

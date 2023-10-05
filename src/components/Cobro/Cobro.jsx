@@ -2,7 +2,7 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFileInvoiceDollar } from '@fortawesome/free-solid-svg-icons';
 
-export const Pago = ({info,setActUser}) => {
+export const Cobro = ({ info,setActUser }) => {
 
     const returnTipoClase = (tipoClase) =>{
         if(tipoClase === 0){
@@ -20,12 +20,12 @@ export const Pago = ({info,setActUser}) => {
     }
 
     return (
-        <div className='pago-info'>
+        <div className='cobro-info'>
             <p>{info.nombrePersona}</p>
             <p>{mostrarFechaDescentemente()}</p>
             <p>{returnTipoClase(info.idTipoClase)}</p>
             <p>{info.cantidad}</p>
-            <button id='historial-usuario-btn' onClick={()=>setActUser({id:info.idPersona, nombre:info.nombrePersona})}>
+            <button id='historial-usuario-btn' onClick={()=> setActUser({id:info.idPersona, nombre:info.nombrePersona})}>
               <FontAwesomeIcon icon={faFileInvoiceDollar}/>
             </button>
         </div>

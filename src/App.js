@@ -8,7 +8,7 @@ import { Canchas } from './pages/Cancha/Canchas';
 import { Reservas } from './pages/Reserva/Reservas';
 import Alumnos from './pages/Alumno/Alumnos';
 import { Profesores } from './pages/Profesor/Profesores';
-import { Pagos } from './pages/Pagos/Pagos';
+import { Cobros } from './pages/Cobros/Cobros';
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant';
@@ -44,7 +44,7 @@ function App() {
           <Route path="/canchas" element={<Canchas setSesion={setSesion} />} />
           <Route path="/alumnos" element={<Alumnos setSesion={setSesion} />}/>
           <Route path="/profesores" element={<Profesores setSesion={setSesion} />}/>
-          <Route path="/pagos" element={<Pagos setSesion={setSesion} />}/>
+          <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
         </Routes>
       </div>

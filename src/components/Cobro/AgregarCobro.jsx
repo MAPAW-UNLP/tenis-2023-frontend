@@ -5,7 +5,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import moment from 'moment';
 import Select from 'react-select';
 
-export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
+export const AgregarCobro = ({ active, setActive, setActCobros, alumnos }) => {
   const URL_BASE = `http://localhost:8083/api/`;
   const [user_id, setUser_id] = useState('');
   const [tipoClase, setTipoClase] = useState('');
@@ -27,7 +27,7 @@ export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
     setActive(false);
   };
 
-  const submitPagoForm = (e) => {
+  const submitCobroForm = (e) => {
     e.preventDefault();
     setActive(false);
     const requestOptions = {
@@ -43,16 +43,16 @@ export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
 
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then(() => setActPagos((v) => !v));
+      .then(() => setActCobros((v) => !v));
   };
   return (
     <>
       {active && (
-        <div id="pago-add-component">
-          <button id="close-pago-add-form" onClick={handleCloseForm}> x </button>
-          <h2>Nuevo pago</h2>
-          <form action="" id="pago-add-form" onSubmit={submitPagoForm}>
-            <label className="pago-form-label">Alumno</label>
+        <div id="cobro-add-component">
+          <button id="close-cobro-add-form" onClick={handleCloseForm}> x </button>
+          <h2>Nuevo cobro</h2>
+          <form action="" id="cobro-add-form" onSubmit={submitCobroForm}>
+            <label className="cobro-form-label"> Alumno </label>
             <Select
               className="inputReserva"
               onChange={handleChangeUser_id}
@@ -62,13 +62,11 @@ export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
               }))}
               placeholder="Seleccionar"
             />
-            <label htmlFor="" className="pago-form-label"> 
-              Tipo
-            </label>
+            <label htmlFor="" className="cobro-form-label"> Tipo </label>
             <select
               name=""
               onChange={handleChangeClassType}
-              id="pago-form-select"
+              id="cobro-form-select"
               placeholder="De reserva"
               className={'profesor-add-form-input'}
             >
@@ -77,12 +75,12 @@ export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
               <option value="2">Clase grupal</option>
             </select>
 
-            <label htmlFor="" className="pago-form-label">
+            <label htmlFor="" className="cobro-form-label">
               Cantidad Clases
             </label>
             <input
               type="number"
-              id="pago-form-input"
+              id="cobro-form-input"
               min={1}
               pattern="\d*"
               max={20}
@@ -90,8 +88,8 @@ export const AgregarPago = ({ active, setActive, setActPagos, alumnos }) => {
               className={'profesor-add-form-input'}
             />
 
-            <button id="pago-add-form-addBtn">
-              <FontAwesomeIcon id="pagos-add-form-btn" icon={faPlusCircle} />
+            <button id="cobro-add-form-addBtn">
+              <FontAwesomeIcon id="cobros-add-form-btn" icon={faPlusCircle} />
             </button>
           </form>
         </div>

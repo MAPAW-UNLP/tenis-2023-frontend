@@ -17,6 +17,7 @@ import './styles/App.css';
 
 //routes react
 import { Routes, Route } from 'react-router-dom';
+import CrearClase from './pages/CrearClase';
 
 function App() {
   //para la sesion
@@ -116,16 +117,16 @@ function App() {
     /* Desactivar spinner */
   }, [actProfesores]);
 
-  //fet pagos
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-    };
-    fetch(`${URL_BASE}pagos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setPagos(data));
-    /* Desactivar spinner */
-  }, [actPagos]);
+  // //fet pagos
+  // useEffect(() => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //   };
+  //   fetch(`${URL_BASE}pagos`, requestOptions)
+  //     .then((response) => response.json())
+  //     .then((data) => setPagos(data));
+  //   /* Desactivar spinner */
+  // }, [actPagos]);
 
   return (
     <>
@@ -208,6 +209,21 @@ function App() {
             path="/nuevaReserva"
             element={
               <Reservas
+                canchas={canchas}
+                reservas={reservas}
+                setActReservas={setActReservas}
+                setReservasLoader={setReservasLoader}
+                setSesion={setSesion}
+                profesores={profesores}
+                alumnos={alumnos}
+                setProfesores={setProfesores}
+              />
+            }
+          ></Route>
+          <Route
+            path="/crearClase"
+            element={
+              <CrearClase
                 canchas={canchas}
                 reservas={reservas}
                 setActReservas={setActReservas}

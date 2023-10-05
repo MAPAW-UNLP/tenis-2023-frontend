@@ -46,6 +46,7 @@ const NavBar = ({title, setSesion}) => {
                   <LinkItem to={'/alumnos'} setActive={setActive} name={'Alumnos'} />
                   <LinkItem to={'/profesores'} setActive={setActive} name={'Profesores'} />
                   <LinkItem to={'/pagos'} setActive={setActive} name={'Pagos'} />
+                  <LinkItem to={'/crearClase'}  setActive={setActive} name={'Crear clase'}/>
                   <li> <Link to="/" className='linkCerrarSesion' onClick={handleCloseSesion}>Cerrar Sesión </Link></li>
               </ul>
           </nav>

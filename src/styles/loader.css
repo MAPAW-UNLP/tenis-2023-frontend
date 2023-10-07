@@ -107,6 +107,13 @@
     margin-top: -30%;
 }
 
+#homeLoaderNew{
+  left: 40vw;
+  width: 20vw;
+  height: 20vh;
+  margin-top: -30%;
+}
+
 .homeLoaderSpinner {
     font-size: 60px;
     margin: 30% auto;

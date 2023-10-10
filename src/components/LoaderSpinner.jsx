@@ -5,7 +5,9 @@ const LoaderSpinner = ({active, containerClass, loaderClass}) => {
   return (
     <>
         {active && 
-        <div><div id={containerClass}><div className={loaderClass} id='loader'></div></div></div>
+          <div id={containerClass}>
+            <div className={loaderClass} id='loader'/>
+          </div>
         }
     </>
   )

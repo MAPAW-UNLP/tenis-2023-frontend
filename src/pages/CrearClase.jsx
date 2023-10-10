@@ -1,16 +1,17 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 //styles
 import '../styles/crearClase.css';
-
+//utils
+import { ordenarPorNombre } from '../components/Utils/Functions';
 //hora
-import SelectHoraInicio from '../components/SelectHoraInicio';
-import SelectHoraFin from '../components/SelectHoraFin';
+import SelectHoraInicio from '../components/Utils/Alquiler/SelectHoraInicio';
+import SelectHoraFin from '../components/Utils/Alquiler/SelectHoraFin';
 //components
-import NavBar from './NavBar';
-import InputComponent from '../components/InputComponent';
-import SelectComponent from '../components/SelectComponent';
+import NavBar from './Navbar/NavBar';
+import InputComponent from '../components/Utils/InputComponent';
+import SelectComponent from '../components/Utils/SelectComponent';
 
 //Fontawesome icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,12 +22,7 @@ const URL_BASE = `http://localhost:8083/api/`;
 
 // Crear clase recibe por parámetro:
 // Las canchas, las reservas (para comprobar disponibilidad), y los alumnos.
-const CrearClase = ({
-  canchas,
-  reservas,
-  alumnos,
-  setSesion,
-}) => {
+const CrearClase = ({ setSesion }) => {
   
   //navegacion
   const navigate = useNavigate();
@@ -40,12 +36,39 @@ const CrearClase = ({
   const [horaFin, setHoraFin] = useState('');
   const [cancha, setCancha] = useState('');
   const [alumnosSelec, setAlumnosSelec] = useState([]);
+  
+  const [alumnos, setAlumnos] = useState([]);
+  const [actAlumnos, setActAlumnos] = useState(false);
+  const [canchas, setCanchas] = useState([])
+  const [actCanchas, setActCanchas] = useState(false);
 
   // Dia formateado para HTML
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2);
   const day = ('0' + new Date().getDate()).slice(-2);
   const año = new Date().getFullYear();
   const today = `${año}-${mes}-${day}`;
+
+  // GET alumnos
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}alumnos`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actAlumnos]);
+
+  // GET canchas
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+    };
+    fetch(`${URL_BASE}canchas`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => setCanchas(data.detail))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [actCanchas]);
 
   // Manejadores (handles) de las variables que son enviadas a la BD.
   // En orden: Fecha inicio, repeticion, fecha fin, hora inicio, hora fin, cancha, alumnos.

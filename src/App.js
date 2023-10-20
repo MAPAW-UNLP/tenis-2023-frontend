@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
 //Components
 import { Login } from './pages/Login/Login';
 import { Home } from './pages/Home/Home';
@@ -9,6 +10,7 @@ import { Reservas } from './pages/Reserva/Reservas';
 import Alumnos from './pages/Alumno/Alumnos';
 import { Profesores } from './pages/Profesor/Profesores';
 import { Cobros } from './pages/Cobros/Cobros';
+import CrearClase from './pages/CrearClase';
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant';
@@ -46,6 +48,7 @@ function App() {
           <Route path="/profesores" element={<Profesores setSesion={setSesion} />}/>
           <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
+          <Route path="/crearClase" element={<CrearClase setSesion={setSesion} />}/>
         </Routes>
       </div>
     </>

@@ -46,8 +46,8 @@ export const Home = ({setSesion}) => {
           nombreClase={'profesoreshc'}
         />
         <HomeCard 
-          title={'Cobros'} 
-          descr={'Movimiento de dinero y manejo de pagos'} 
+          title={'Movimientos'} 
+          descr={'Movimiento de dinero y manejo de cobros'} 
           Logo={<FontAwesomeIcon icon={faDollarSign} />} 
           color={'#94F5C5'} 
           link="../cobros" 

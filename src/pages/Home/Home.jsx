@@ -50,7 +50,7 @@ export const Home = ({setSesion}) => {
           descr={'Movimiento de dinero y manejo de cobros'} 
           Logo={<FontAwesomeIcon icon={faDollarSign} />} 
           color={'#94F5C5'} 
-          link="../cobros" 
+          link="../movimientos" 
           nombreClase={'pagoshc'}
         />
       </div>

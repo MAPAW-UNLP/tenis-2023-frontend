@@ -11,6 +11,7 @@ import Alumnos from './pages/Alumno/Alumnos';
 import { Profesores } from './pages/Profesor/Profesores';
 import { Cobros } from './pages/Cobros/Cobros';
 import CrearClase from './pages/CrearClase';
+import { Movimientos } from './pages/Movimientos/Movimientos'
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant';
@@ -47,6 +48,7 @@ function App() {
           <Route path="/alumnos" element={<Alumnos setSesion={setSesion} />}/>
           <Route path="/profesores" element={<Profesores setSesion={setSesion} />}/>
           <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
+          <Route path="/movimientos" element={<Movimientos setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
           <Route path="/crearClase" element={<CrearClase setSesion={setSesion} />}/>
         </Routes>

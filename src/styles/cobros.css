@@ -1,7 +1,9 @@
 #cobros-component{
     background-color: var(--primary-blue);
     height: 100%;
+    min-height: 100vh;
 }
+
 #cobros-component-mainContent{
     display: flex;
     flex-direction: column;
@@ -10,7 +12,6 @@
     margin: auto;
     margin-top: 5vh;
     align-items: center;
-    margin-bottom: 10%;
 }
 
 #cobros-list-component{
@@ -19,6 +20,7 @@
     border-radius: 20px;
     background-color: var(--neutral-white);
     cursor: default;
+    margin-bottom: 10vh;
 }
 
 #cobros-list-options{
@@ -149,7 +151,6 @@
 
 #cobro-form-select{
     margin-top: 0;
-
 }
 
 #cobro-form-input{
@@ -158,7 +159,6 @@
 
 .cobro-form-label{
     font-family: var(--normal-text);
-
     width: 90%;
     color: var(--accent-green);
 }
@@ -258,7 +258,6 @@ cobros-detail-list::-webkit-scrollbar-track {
 
 #cobros-detail h2{
     width: 100%;
-    
     margin-top: 3vh;
     background-color: var(--neutral-white);
     color: var(--neutral-black);
@@ -270,13 +269,11 @@ cobros-detail-list::-webkit-scrollbar-track {
 #cobros-detail-fecha{
     font-weight:500;
     font-size: 120%;
-
 }
 
 #cobros-detail-tipo{
     font-weight:900;
     font-size: 130%;
-
 }
 
 #cobros-detail-contadores{

@@ -10,6 +10,7 @@ import { CobrosList } from '../../components/Cobro/CobrosList'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 
 import '../../styles/cobros.css'
+import LoaderSpinner from '../../components/LoaderSpinner'
 
 export const Cobros = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
@@ -19,6 +20,7 @@ export const Cobros = ({ setSesion }) => {
   const [actCobros, setActCobros] = useState(false);
 
   const [alumnos, setAlumnos] = useState([]);
+  const [cobrosLoader, setCobrosLoader] = useState(true); // Spinner
 
   useEffect(() => {
     const requestOptions = {
@@ -26,8 +28,9 @@ export const Cobros = ({ setSesion }) => {
     };
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setCobros(data));
-    
+      .then((data) => setCobros(data))
+      .then(() => setCobrosLoader(() => false));
+
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
@@ -36,15 +39,14 @@ export const Cobros = ({ setSesion }) => {
   }, [actCobros]);
 
   return (
-    <div id='cobros-Component'>
+    <div id='cobros-component'>
         <NavBar title={'Cobros'} setSesion={setSesion}/>
         <div id='cobros-component-mainContent'>
             <button id='canchas-add-btn' onClick={() => {setActive(()=> true)}}>
               <FontAwesomeIcon icon={faPlusCircle}/>
             </button>
             <AgregarCobro active={active} setActive={setActive} setActCobros={setActCobros} alumnos={alumnos} />
-            {cobros.length === 0 ?
-              <div> cargando componente </div>
+            {cobrosLoader ? <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'}/>
             :
               <CobrosList cobros={cobros} />
             }

@@ -42,8 +42,8 @@ export const Cobros = ({ setSesion }) => {
     <div id='cobros-component'>
         <NavBar title={'Cobros'} setSesion={setSesion}/>
         <div id='cobros-component-mainContent'>
-            <button id='canchas-add-btn' onClick={() => {setActive(()=> true)}}>
-              <FontAwesomeIcon icon={faPlusCircle}/>
+            <button className='cobros-add-btn' onClick={() => {setActive(()=> true)}}>
+              <h1 className='cobros-add-btn-text'>Crear nuevo cobro</h1>
             </button>
             <AgregarCobro active={active} setActive={setActive} setActCobros={setActCobros} alumnos={alumnos} />
             {cobrosLoader ? <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'}/>

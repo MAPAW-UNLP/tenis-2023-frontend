@@ -88,8 +88,9 @@ export const AgregarCobro = ({ active, setActive, setActCobros, alumnos }) => {
               className={'profesor-add-form-input'}
             />
 
-            <button id="cobro-add-form-addBtn">
-              <FontAwesomeIcon id="cobros-add-form-btn" icon={faPlusCircle} />
+            <button className="cobro-add-form-addBtn">
+              {/* <FontAwesomeIcon id="cobros-add-form-btn" icon={faPlusCircle} /> */}
+              Aceptar
             </button>
           </form>
         </div>

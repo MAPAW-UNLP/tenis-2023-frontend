@@ -47,8 +47,9 @@
 #cobros-list-options{
     height: 8vh;
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 15% 20% 20% 10% 30%;
     align-content: center;
+    align-items: center;
     justify-content: start;
     color: var(--neutral-black);
     font-family: var(--title-text);
@@ -57,21 +58,103 @@
     border-bottom: 5px solid var(--neutral-black);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    padding-left: 2%;
+    /* padding-left: 2%; */
 }
+
+#cobros-list-options :first-child {
+    margin-left: .5em;
+}
+
+/* CABECERA DE LISTA */
+
+.cobros-list-options-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:space-between; 
+    align-items: center; 
+    height: 8vh;
+    color: var(--neutral-black);
+    font-family: var(--title-text);
+    font-size: 150%;
+    background-color: var(--neutral-white);
+    border-bottom: 5px solid var(--neutral-black);
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+  }
+  
+.item {
+    padding: 10px;
+    text-align: center;
+}
+  
+.dia, .concepto, .monto {
+    flex-basis: 15%;
+}
+  
+.descripcion, .buscar {
+    flex-grow: 1; /* Descripción y Búsqueda ocupan todo el espacio restante */
+}
+
+.cobros-searchbar{
+    position: relative;
+}
+
+.cobros-searchbar input{
+    width: 90%;
+    font-family: var(--normal-text);
+    font-size: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--neutral-black);
+    color: var(--neutral-black);
+    padding-left: 2%;
+    transition: all 0.5s ease;
+}
+
+.cobros-searchbar input:focus{
+    outline: 2px solid var(--accent-green);
+    border: none;
+}
+
+.magnify-icon{
+    color: var(--neutral-black);
+    position: absolute;
+    top: 35%;
+    right: 10%;
+}
+
+/* FIN CABECERA DE LISTA */
 
 .cobro-info{
     display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
+    grid-template-columns: 15% 20% 20% 10%;
     align-items: center;
     justify-content: start;
     margin: 0.5%;
-    padding: 1%;
+    padding: .8em;
     border-radius: 12px;
     background-color: var(--neutral-black);
     color: var(--neutral-white-text);
     font-family: var(--normal-text);
     font-size: 110%;
+}
+
+.cobros-info-flex{
+    display: flex;
+    margin: 0.5%;
+    padding-top: .8em;
+    flex-wrap: wrap;
+    padding-bottom: .8em;
+    justify-content:space-between; 
+    align-items: center; 
+    border-radius: 12px;
+    background-color: var(--neutral-black);
+    color: var(--neutral-white-text);
+    font-family: var(--normal-text);
+    font-size: 110%;
+}
+
+.item-detail{
+    text-align: center;
 }
 
 #cobros-list{

@@ -11,6 +11,7 @@ import { ordenarPorNombre } from '../../components/Utils/Functions'
 
 import '../../styles/cobros.css'
 import LoaderSpinner from '../../components/LoaderSpinner'
+import { CobrosTable } from '../../components/Cobro/CobrosTable'
 
 export const Cobros = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
@@ -46,9 +47,11 @@ export const Cobros = ({ setSesion }) => {
               <h1 className='cobros-add-btn-text'>Crear nuevo cobro</h1>
             </button>
             <AgregarCobro active={active} setActive={setActive} setActCobros={setActCobros} alumnos={alumnos} />
-            {cobrosLoader ? <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'}/>
+            {cobrosLoader ? 
+              <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'}/>
             :
-              <CobrosList cobros={cobros} />
+              // <CobrosList cobros={cobros} />
+              <CobrosTable/>
             }
         </div>
     </div>

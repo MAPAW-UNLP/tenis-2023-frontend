@@ -1,4 +1,4 @@
-#cobros-component{
+/* #cobros-component{
     background-color: var(--primary-blue);
     height: 100%;
     min-height: 100vh;
@@ -12,9 +12,9 @@
     margin: auto;
     margin-top: 5vh;
     align-items: center;
-}
+} */
 
-.cobros-add-btn{
+/* .cobros-add-btn{
     width: 100%;
     height: 5rem;
     background-color: var(--accent-green);
@@ -33,18 +33,18 @@
 
 .cobros-add-btn:hover{
     box-shadow: 0px 3px 10px #75b21a
-}
+} */
 
-#cobros-list-component{
+/* #cobros-list-component{
     margin-top: 2vh;
     width: 100%;
     border-radius: 20px;
     background-color: var(--neutral-white);
     cursor: default;
     margin-bottom: 10vh;
-}
+} */
 
-#cobros-list-options{
+/* #cobros-list-options{
     height: 8vh;
     display: grid;
     grid-template-columns: 15% 20% 20% 10% 30%;
@@ -58,16 +58,16 @@
     border-bottom: 5px solid var(--neutral-black);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-    /* padding-left: 2%; */
-}
+    padding-left: 2%;
+} */
 
-#cobros-list-options :first-child {
+/* #cobros-list-options :first-child {
     margin-left: .5em;
-}
+} */
 
 /* CABECERA DE LISTA */
 
-.cobros-list-options-flex {
+/* .cobros-list-options-flex {
     display: flex;
     flex-wrap: wrap;
     justify-content:space-between; 
@@ -80,9 +80,9 @@
     border-bottom: 5px solid var(--neutral-black);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
-  }
+  } */
   
-.item {
+/* .item {
     padding: 10px;
     text-align: center;
 }
@@ -92,11 +92,12 @@
 }
   
 .descripcion, .buscar {
-    flex-grow: 1; /* Descripción y Búsqueda ocupan todo el espacio restante */
-}
+    flex-grow: 1; Descripción y Búsqueda ocupan todo el espacio restante
+} */
 
-.cobros-searchbar{
+/* .cobros-searchbar{
     position: relative;
+    width: 90%;
 }
 
 .cobros-searchbar input{
@@ -120,11 +121,11 @@
     position: absolute;
     top: 35%;
     right: 10%;
-}
+} */
 
 /* FIN CABECERA DE LISTA */
 
-.cobro-info{
+/* .cobro-info{
     display: grid;
     grid-template-columns: 15% 20% 20% 10%;
     align-items: center;
@@ -151,68 +152,72 @@
     color: var(--neutral-white-text);
     font-family: var(--normal-text);
     font-size: 110%;
-}
+} */
 
-.item-detail{
+/* .item-detail{
     text-align: center;
-}
+} */
 
-#cobros-list{
+/* #cobros-list{
     min-height: 100%;
     max-height: 60vh;
     overflow-y: scroll; 
-}
+} */
 
-#cobros-list::-webkit-scrollbar {
-    width: 12px;/* width of the entire scrollbar */
-}
+/* #cobros-list::-webkit-scrollbar {
+    width: 12px;width of the entire scrollbar
+} */
   
-#cobros-list::-webkit-scrollbar-track {
+/* #cobros-list::-webkit-scrollbar-track {
     background-color:transparent;
     border-bottom-left-radius:20px ;
     border-bottom-right-radius:20px ;
     opacity: .5;   
-}
+} */
   
-#cobros-list::-webkit-scrollbar-thumb {
-    background-color: var(--accent-green);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
-}
+/* #cobros-list::-webkit-scrollbar-thumb {
+    background-color: var(--accent-green);    color of the scroll thumb
+    border-radius: 20px;       roundness of the scroll thumb
+    border: 2px solid var(--neutral-white);  creates padding around scroll thumb
+} */
 
 /* Cobro add form */
-#cobro-add-component{
+/* .movimiento-add-component{
     background-color: var(--neutral-white);
     display: flex;
     flex-direction: column;
     position: absolute;
     top: 50%;
     border-radius:20px; 
-    width: 40vw;
+    width: 38vw;
     z-index: 20;
     box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
 }
 
-#close-cobro-add-form{
+.close-movimiento-add-form{
     background:  none;
     position: absolute;
     top: 1vh;
     border: none;
     right: 2vw;
     font-family: var(--title-text);
-    font-size: 150%;
+    font-size: 1.8em;
     color: var(--neutral-black);
     transition: all 0.5s ease;
     cursor: pointer;
-}
+} */
 
-#close-cobro-add-form:hover{
+/* .close-cobro-add-form:hover{
     font-size: 175%;
     font-weight: bolder;
     color: #CC3636;
-}
+} */
 
-#cobro-add-component h2{
+/* .close-movimiento-add-form:hover{
+    color: #CC3636;
+} */
+
+/* .movimiento-add-component h2{
     width: 100%;
     margin-top: 3vh;
     background-color: var(--neutral-white);
@@ -222,16 +227,48 @@
     font-family: var(--title-text);
 }
 
-#cobro-add-form{
+.movimiento-add-form{
     display: flex;
     flex-direction: column;
     align-items: center;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     background-color: var(--neutral-white);
+} */
+
+/* .movimiento-add-form input:last-of-type{
+    margin-bottom: 2em;
 }
 
-.cobro-add-form-addBtn{
+.movimiento-add-form label{
+    width: 80%;
+}
+
+.movimiento-add-form select, .movimiento-add-form input{
+    width: 80%;
+    font-family: var(--normal-text);
+    height: 2.2rem;
+    margin-bottom: 15px;
+    font-size: large;
+    background-color: var(--neutral-white);
+    padding-left: 5px;
+    border: 1px solid #d9d9d9;
+    color: var(--neutral-black);
+    border-radius: .2em;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.movimiento-add-form input:focus, select:focus{
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 .20rem rgba(13,110,253,.20);
+    outline: 0;
+}
+
+.movimiento-add-form select:active{
+    color: var(--neutral-black);
+}
+
+.movimiento-add-form-addBtn{
     width: 100%;
     background-color: var(--accent-green);
     height: 5rem;
@@ -242,33 +279,50 @@
     color: var(--neutral-white);
     font-size: 2.3em;
     font-weight: bolder;
-}
+} */
 
-#cobro-add-form-addBtn:disabled{
+/* .movimiento-add-form-addBtn:disabled{
     background-color: var(--neutral-black);
-}
+} */
 
-#cobros-add-form-btn{
+/* .cobro-add-form-addBtn{
+    width: 100%;
+    background-color: var(--accent-green);
+    height: 5rem;
+    border: none;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    cursor: pointer;
+    color: var(--neutral-white);
+    font-size: 2.3em;
+    font-weight: bolder;
+} */
+
+/* .cobro-add-form-addBtn:disabled{
+    background-color: var(--neutral-black);
+} */
+
+/* #cobros-add-form-btn{
     color: var(--accent-green);
     background-color: var(--accent-green);
     border: none;
     color: var(--neutral-white);
     font-size: 350%;
-}
+} */
 
-#cobro-form-select{
+/* #cobro-form-select{
     margin-top: 0;
-}
+} */
 
-#cobro-form-input{
+/* #cobro-form-input{
     margin-top: 0;
-}
+} */
 
-.cobro-form-label{
+/* .movimiento-form-label{
     font-family: var(--normal-text);
     width: 90%;
     color: var(--accent-green);
-}
+} */
 
 #historial-usuario-btn{
     width: 50%;

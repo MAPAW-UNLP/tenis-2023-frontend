@@ -3,7 +3,7 @@ import { Cobro } from './Cobro';
 import { CobroDetail }  from './CobroDetail';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import InputComponent from '../Utils/InputComponent';
+import InputComponent from '../../Utils/InputComponent';
 import { CobroItem } from './CobroItem';
 
 export const CobrosList = ({ cobros }) => {

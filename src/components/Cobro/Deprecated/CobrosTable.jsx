@@ -1,7 +1,7 @@
-import '../../styles/cobroTable.css'
+import '../../../styles/cobroTable.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
-import InputComponent from '../Utils/InputComponent';
+import InputComponent from '../../Utils/InputComponent';
 
 export const CobrosTable = () => {
   return (

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { AgregarMovimiento } from '../../components/Movimiento/AgregarMovimiento'
-import { MovimientoTable } from '../../components/Movimiento/MovimientoTable'
-import { ordenarPorNombre } from '../../components/Utils/Functions'
-import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
-import LoaderSpinner from '../../components/LoaderSpinner'
 import NavBar from '../Navbar/NavBar'
+import { MovimientoTable } from '../../components/Movimiento/MovimientoTable'
+import { AgregarMovimiento } from '../../components/Movimiento/AgregarMovimiento'
+import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
+import { ordenarPorNombre } from '../../components/Utils/Functions'
+import LoaderSpinner from '../../components/LoaderSpinner'
 
 import '../../styles/movimiento/movimiento.css'
 
-export const Cobros = ({ setSesion }) => {
+export const Pagos = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [active, setActive] = useState(false);
@@ -51,11 +51,11 @@ export const Cobros = ({ setSesion }) => {
 
   return (
     <div className='movimiento-component'>
-      <NavBar title={'Cobros'} setSesion={setSesion} />
+      <NavBar title={'Pagos'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
-        <GenericLargeButton doSomething={() => setActive(true)} movimiento={"cobro"} />
+        <GenericLargeButton doSomething={() => setActive(true)} movimiento={"pago"}/>
         <AgregarMovimiento active={active} setActive={setActive} setActCobros={setActCobros}
-          alumnos={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+          alumnos={alumnos} movimientoName={"Pago"} movimientoOptions={movimientoOptions} />
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :

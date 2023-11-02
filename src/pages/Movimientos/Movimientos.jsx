@@ -1,11 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
-//components
 import NavBar from '../Navbar/NavBar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faDollarSign, faUpLong, faDownLong, faScaleBalanced } from '@fortawesome/free-solid-svg-icons'
-import '../../styles/movimientos.css'
+
+import '../../styles/movimiento/movimiento.css'
 
 export const Movimientos = ({ setSesion }) => {
   const navigate = useNavigate()
@@ -36,7 +35,7 @@ export const Movimientos = ({ setSesion }) => {
           </div>
         </div>
 
-        <div className="card pagos">
+        <div className="card pagos" onClick={() => handleRedirect('../pagos')}>
           <div className="image" style={{ backgroundColor: '#f5a694', position: 'relative' }}>
             <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
               <FontAwesomeIcon icon={faDollarSign} style={{ position: 'absolute', left: '32%', top: '0', bottom: '0', margin: 'auto' }} />

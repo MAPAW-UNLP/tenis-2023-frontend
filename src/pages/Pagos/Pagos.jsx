@@ -37,11 +37,11 @@ export const Pagos = ({ setSesion }) => {
   const movimientoOptions = [
     {
       id: 1,
-      concepto: "Alumno"
+      concepto: "Profesor"
     },
     {
       id: 2,
-      concepto: "Alquiler"
+      concepto: "Proveedor"
     },
     {
       id: 3,
@@ -53,7 +53,7 @@ export const Pagos = ({ setSesion }) => {
     <div className='movimiento-component'>
       <NavBar title={'Pagos'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
-        <GenericLargeButton doSomething={() => setActive(true)} movimiento={"pago"}/>
+        <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo pago"}/>
         <AgregarMovimiento active={active} setActive={setActive} setActCobros={setActCobros}
           alumnos={alumnos} movimientoName={"Pago"} movimientoOptions={movimientoOptions} />
         {cobrosLoader ?

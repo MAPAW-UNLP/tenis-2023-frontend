@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-
 import NavBar from '../Navbar/NavBar'
 import AgregarAlumno from '../../components/Alumno/AgregarAlumno'
 import AlumnosList from '../../components/Alumno/AlumnosList'
 import LoaderSpinner from '../../components/LoaderSpinner'
+import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
  
 import AlumnoDetail from '../../components/Alumno/AlumnoDetail' 
 
@@ -200,9 +197,7 @@ const Users = ({ setSesion }) => {
       <NavBar title={'Alumnos'} setSesion={setSesion}/> 
       <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
       <div id='alumnos-component-mainContent'>
-        <button id='canchas-add-btn' onClick={() => {setActive((active)=> true)}}>
-          <FontAwesomeIcon icon={faPlusCircle}/>
-        </button>
+        <GenericLargeButton title={"Crear nuevo alumno"} doSomething={() => setActive(true)}/>
         <AgregarAlumno 
           active={active} 
           setActive={setActive} 

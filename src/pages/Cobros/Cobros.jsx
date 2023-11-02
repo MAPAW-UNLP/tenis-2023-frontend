@@ -53,7 +53,7 @@ export const Cobros = ({ setSesion }) => {
     <div className='movimiento-component'>
       <NavBar title={'Cobros'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
-        <GenericLargeButton doSomething={() => setActive(true)} movimiento={"cobro"} />
+        <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
         <AgregarMovimiento active={active} setActive={setActive} setActCobros={setActCobros}
           alumnos={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
         {cobrosLoader ?

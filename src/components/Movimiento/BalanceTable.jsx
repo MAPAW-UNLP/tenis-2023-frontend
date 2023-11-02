@@ -11,8 +11,8 @@ export const BalanceTable = () => {
             <th>Concepto</th>
             <th>Descripción</th>
             <th style={{width:'10em'}}/>
-            <th>Debe</th>
-            <th>Haber</th>
+            <th className='debe-th'>Debe</th>
+            <th className='haber-th'>Haber</th>
           </tr>
         </thead>
         <tbody>
@@ -22,8 +22,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Juan Cruz Gutierrez</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -31,8 +31,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Jhon Doe</td>
             <td/>
-            <td/>
-            <td>$2000</td>
+            <td className='debe-td'/>
+            <td className='haber-td'>$2000</td>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -40,8 +40,8 @@ export const BalanceTable = () => {
             <td>Donacion</td>
             <td>Donacion de Levy</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -49,8 +49,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Matias Adorno</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -58,8 +58,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Diego Gonzales</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -67,8 +67,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Jhon Doe</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -76,8 +76,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Jhon Doe</td>
             <td/>
-            <td/>
-            <td>$2000</td>
+            <td className='debe-td'/>
+            <td className='haber-td'>$2000</td>
           </tr>
           <tr style={{height:'5px'}}/>
           <tr className='table-row'>
@@ -85,8 +85,8 @@ export const BalanceTable = () => {
             <td>Alumno</td>
             <td>Jhon Doe</td>
             <td/>
-            <td>$1000</td>
-            <td/>
+            <td className='debe-td'>$1000</td>
+            <td className='haber-td'/>
           </tr>
         </tbody>
       </table>

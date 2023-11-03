@@ -94,3 +94,18 @@
   text-align: center;
   background-color: #f5a694;
 }
+
+.container-balance {
+  margin-bottom: unset;
+}
+
+.balance-table-footer {
+  width: 100%;
+  color: var(--neutral-black);
+  font-family: var(--title-text);
+  font-size: 1.5em;
+  padding: 10px;
+  background-color: var(--neutral-white);
+  margin-bottom: 10vh;
+  border-top: 2.5px solid var(--neutral-black);
+}

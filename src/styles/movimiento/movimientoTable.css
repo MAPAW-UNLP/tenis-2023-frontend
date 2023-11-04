@@ -46,6 +46,10 @@
   font-size: 110%;
 }
 
+.monto-td {
+  text-align: center;
+}
+
 /* FORMULARIO GENERICO */
 .movimiento-searchbar {
   position: relative;

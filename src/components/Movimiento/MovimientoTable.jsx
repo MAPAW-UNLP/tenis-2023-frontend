@@ -28,7 +28,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Juan Cruz Gutierrez</td>
-            <td>$5000</td>
+            <td className='monto-td'>$5000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -36,7 +36,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Jhon Doe</td>
-            <td>$1000</td>
+            <td className='monto-td'>$1000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -44,7 +44,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Donacion</td>
             <td>Donacion de Levy</td>
-            <td>$3000</td>
+            <td className='monto-td'>$3000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -52,7 +52,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Matias Adorno</td>
-            <td>$5000</td>
+            <td className='monto-td'>$5000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -60,7 +60,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Diego Gonzales</td>
-            <td>$5000</td>
+            <td className='monto-td'>$5000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -68,7 +68,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Jhon Doe</td>
-            <td>$1000</td>
+            <td className='monto-td'>$1000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -76,7 +76,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Jhon Doe</td>
-            <td>$1000</td>
+            <td className='monto-td'>$1000</td>
             <td></td>
           </tr>
           <tr style={{height:'5px'}}/>
@@ -84,7 +84,7 @@ export const MovimientoTable = () => {
             <td>30/10/23</td>
             <td>Alumno</td>
             <td>Jhon Doe</td>
-            <td>$1000</td>
+            <td className='monto-td'>$1000</td>
             <td></td>
           </tr>
         </tbody>

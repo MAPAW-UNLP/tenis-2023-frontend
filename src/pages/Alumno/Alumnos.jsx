@@ -13,7 +13,7 @@ const Users = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [alumnos, setAlumnos] = useState([]);
-  const [alumnosLoader, setAlumnosLoader] = useState(false);
+  const [alumnosLoader, setAlumnosLoader] = useState(true);
   const [actAlumnos, setActAlumnos] = useState(false);
 
   const [alumnoForm, setAlumnoForm] = useState({
@@ -195,7 +195,6 @@ const Users = ({ setSesion }) => {
   return (
     <div id='alumnos-component'>
       <NavBar title={'Alumnos'} setSesion={setSesion}/> 
-      <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
       <div id='alumnos-component-mainContent'>
         <GenericLargeButton title={"Crear nuevo alumno"} doSomething={() => setActive(true)}/>
         <AgregarAlumno 
@@ -210,24 +209,27 @@ const Users = ({ setSesion }) => {
           nombreFB={nombreFB}
           telefonoFB={telefonoFB}
         />
-        {alumnos.length === 0 ? <div>...cargando</div>
+        {alumnosLoader ? 
+          <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
         : 
-          <div id="alumnos-list-component">
-            <AlumnoDetail
-              activeDetail={activeDetail}
-              setActiveDetail={setActiveDetail}
-              setAluDetail={setAluDetail}
-              actAlu={actAlu}
-              handleChangeName={handleChangeName}
-              handleChangePhone={handleChangePhone}
-              nombreFB={nombreFB}
-              telefonoFB={telefonoFB}
-              setAlumnoForm={setAlumnoForm}
-              alumnoForm={alumnoForm}
-              clearState={clearState}
-            />
-            <AlumnosList alumnos={alumnos} setActAlu={setActAlu} />
-          </div>
+          <>
+            <div id="alumnos-list-component">
+              <AlumnoDetail
+                activeDetail={activeDetail}
+                setActiveDetail={setActiveDetail}
+                setAluDetail={setAluDetail}
+                actAlu={actAlu}
+                handleChangeName={handleChangeName}
+                handleChangePhone={handleChangePhone}
+                nombreFB={nombreFB}
+                telefonoFB={telefonoFB}
+                setAlumnoForm={setAlumnoForm}
+                alumnoForm={alumnoForm}
+                clearState={clearState}
+              />
+              <AlumnosList alumnos={alumnos} setActAlu={setActAlu} />
+            </div>
+          </>
         }
       </div>
     </div>

@@ -14,39 +14,27 @@ export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, actU
   }
 
   const returnTipoClase = (tipoClase) => {
-    if (tipoClase === 0) {
-      return 'Alquiler'
-    }
-    else if (tipoClase === 1) {
-      return 'Clase Indv.'
-    }
-    return 'Clase Grupal'
+    if (tipoClase === 0) return 'Alquiler'
+    else if (tipoClase === 1) return 'Clase Indv.'
+    else return 'Clase Grupal'
   }
+
   return (
     <>
       {activeDetail &&
         <div className='cobros-detail'>
           <button className='close-detail-add-form' onClick={handleCloseForm}>x</button>
-          <h2>{actUser.nombre}</h2>
+          <h2>Detalles</h2>
+          <h3 className='cobros-detail-title'>{actUser.nombre}</h3>
           <div className='cobros-detail-list'>
             {cobrosActUser.map((el, i) => {
-              if (el.idTipoClase === 1) {
-                clasesIndividuales += el.cantidad
-              }
-              if (el.idTipoClase === 2) {
-                clasesGrupales += el.cantidad
-              }
               return (
                 <div className='cobros-detail-item' key={i}>
-                  <p className='cbros-detail-fecha'>{mostrarFechaDescentemente(el.fecha)}</p>
-                  <p className='cobros-detail-tipo'>Tipo: {returnTipoClase(el.idTipoClase)}</p>
-                  <p className='cobros-detail-cantidad'>Cantidad: {el.cantidad}</p>
+                  <div className='cobros-detail-fecha'>{mostrarFechaDescentemente(el.fecha)}</div>
+                  <div className='cobros-detail-tipo'>Tipo: {returnTipoClase(el.idTipoClase)}</div>
+                  <div className='cobros-detail-cantidad'>Monto: $2500 </div>
                 </div>)
             })}
-          </div>
-          <div className='cobros-detail-contadores'>
-            <div>Clases Individuales: {clasesIndividuales}</div>
-            <div>Clases Grupales: {clasesGrupales}</div>
           </div>
         </div>
       }

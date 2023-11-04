@@ -83,7 +83,6 @@ const AlumnoDetail = ({
               {telefonoFB.text}
             </p>
           </div>
-          <NacimientoComponent alumnoForm={alumnoForm} setNacimiento={setAlumnoForm} />
           <div id="clase-detail-btns">
             <button id="clase-detail-guardar" onClick={actualizarAlumno}>
               Guardar

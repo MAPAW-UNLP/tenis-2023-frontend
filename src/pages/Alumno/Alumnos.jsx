@@ -50,7 +50,7 @@ const Users = ({ setSesion }) => {
     };
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => {setAlumnos((data.length !== 0) ? ordenarPorNombre(data) : data)})
       .then(() => setAlumnosLoader((v) => false));
 
     /* Desactivar spinner */
@@ -60,7 +60,7 @@ const Users = ({ setSesion }) => {
   // Este useEffect se dispara cuando traemos los datos para editar un alumno. Setea actAlu y mmuestra desplegable de edicion
   useEffect(() => {
     if (actAlu !== '') {
-      fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
+      fetch(`${URL_BASE}alumno?alumnoId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
         .then(() => setActiveDetail(true))
@@ -180,12 +180,11 @@ const Users = ({ setSesion }) => {
       body: JSON.stringify({
         nombre: alumnoForm.nombre,
         telefono: alumnoForm.telefono,
-        fechanac: alumnoForm.nacimiento,
-        esalumno: true,
+        fechaNac: alumnoForm.nacimiento,
       }),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}alumno`, requestOptions)
       .then((response) => response.json())
       .then(() => setActAlumnos((v) => !v))
       .then(clearState)
@@ -250,6 +249,7 @@ const Users = ({ setSesion }) => {
                 clearState={clearState}
                 setAlumnoForm={setAlumnoForm}
                 alumnoForm={alumnoForm}
+                setActAlumnos={setActAlumnos}
               />
               <AlumnosList alumnos={alumnos} actAlu={actAlu} setActAlu={setActAlu} setLoadingDetails={setLoadingDetails}
                 loadingDetails={loadingDetails} />

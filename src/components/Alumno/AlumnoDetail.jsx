@@ -10,7 +10,8 @@ const AlumnoDetail = ({
   handleChangeName,
   handleChangePhone,
   feedback,
-  clearState
+  clearState,
+  setActAlumnos
 }) => {  
   const URL_BASE = 'http://localhost:8083/api/';
 
@@ -39,9 +40,10 @@ const AlumnoDetail = ({
       body: JSON.stringify(data),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}alumno`, requestOptions)
       .then((response) => response.json())
-      .then(() => setAluDetail((v) => !v));
+      .then(() => setAluDetail((v) => !v))
+      .then(() => setActAlumnos((v) => !v))
   };
 
   return (

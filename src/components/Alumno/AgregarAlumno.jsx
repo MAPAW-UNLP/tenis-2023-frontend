@@ -15,8 +15,7 @@ const AgregarAlumno = ({
   setAlumnoForm,
   clearState,
   alumnoForm,
-  nombreFB,
-  telefonoFB
+  feedback
 }) => {
 
   const handleCloseForm = () => {
@@ -41,8 +40,8 @@ const AgregarAlumno = ({
                 placeholder={'Nombre'}
                 onChangeFuncion={(e) => handleChangeName(e, 'alumno-add-form-addBtn', 'telefonoInput', true)}
               />
-              <p className="feedbackInline" style={{ color: nombreFB.color }}>
-                {nombreFB.text}
+              <p className="feedbackInline" style={{ color: feedback.nombreFB.color }}>
+                {feedback.nombreFB.text}
               </p>
             </div>
             <div className="inputlabel">
@@ -57,8 +56,8 @@ const AgregarAlumno = ({
                 min={7}
                 max={12}
               />
-              <p className="feedbackInline" style={{ color: telefonoFB.color }}>
-                {telefonoFB.text}
+              <p className="feedbackInline" style={{ color: feedback.telefonoFB.color }}>
+                {feedback.telefonoFB.text}
               </p>
             </div>
             <NacimientoComponent alumnoForm={alumnoForm} setNacimiento={setAlumnoForm} />

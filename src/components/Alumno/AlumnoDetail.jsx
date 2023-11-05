@@ -1,7 +1,5 @@
 import React from 'react';
-
 import InputReComponent from '../Utils/InputReComponent';
-import NacimientoComponent from '../Utils/NacimientoComponent';
 
 const AlumnoDetail = ({
   activeDetail,
@@ -11,27 +9,28 @@ const AlumnoDetail = ({
   actAlu,
   handleChangeName,
   handleChangePhone,
-  nombreFB,
-  telefonoFB
+  feedback,
+  clearState
 }) => {  
   const URL_BASE = 'http://localhost:8083/api/';
 
   const handleCloseForm = () => {
     setActiveDetail(false);
+    clearState()
     setActAlu('')
   };
 
   const actualizarAlumno = () => {
     const nombreAlu = document.getElementById('nombreAlumno').value;
     const telAlu = document.getElementById('telefonoAlumno').value;
-    const nacAlu = document.getElementById('nacimientoPicker').value;
+    // const nacAlu = document.getElementById('nacimientoPicker').value;
     const data = {
       id: actAlu.id,
       esalumno: true,
     };
     nombreAlu === '' ? (data.nombre = actAlu.nombre) : (data.nombre = nombreAlu);
     telAlu === '' ? (data.telefono = actAlu.telefono) : (data.telefono = telAlu);
-    nacAlu === '' ? (data.fechanac = actAlu.fechanac) : (data.fechanac = nacAlu);
+    // nacAlu === '' ? (data.fechanac = actAlu.fechanac) : (data.fechanac = nacAlu);
 
     setActiveDetail(false);
 
@@ -60,10 +59,10 @@ const AlumnoDetail = ({
               name={'nombre'}
               className={'profesor-add-form-input'}
               placeholder={actAlu.nombre}
-              onChangeFuncion={(e) => handleChangeName(e, 'clase-detail-guardar', '', false)}
+              onChangeFuncion={(e) => handleChangeName(e, 'clase-detail-guardar', 'telefonoAlumno', false)}
             />
-            <p className="feedbackInline" style={{ color: nombreFB.color }}>
-              {nombreFB.text}
+            <p className="feedbackInline" style={{ color: feedback.nombreFB.color }}>
+              {feedback.nombreFB.text}
             </p>
           </div>
           <div className="inputlabel">
@@ -77,17 +76,17 @@ const AlumnoDetail = ({
               min={7}
               max={12}
             />
-            <p className="feedbackInline" style={{ color: telefonoFB.color }}>
-              {telefonoFB.text}
+            <p className="feedbackInline" style={{ color: feedback.telefonoFB.color }}>
+              {feedback.telefonoFB.text}
             </p>
           </div>
+          
           <div id="clase-detail-btns">
-            <button id="clase-detail-guardar" onClick={actualizarAlumno}>
-              Guardar
-            </button>
-            <button id="clase-detail-cancelar" onClick={handleCloseForm}>
-              Cancelar
-            </button>
+            {(feedback.nombreFBCorrecto === false || feedback.telefonoFBCorrecto === false)
+              ? <button id="clase-detail-disabled" type='button' disabled={true}> Guardar </button>
+              : <button id="clase-detail-guardar" onClick={actualizarAlumno}> Guardar </button>
+            }
+            <button id="clase-detail-cancelar" onClick={handleCloseForm}> Cancelar </button>
           </div>
         </div>
       )}

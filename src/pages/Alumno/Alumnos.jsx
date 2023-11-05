@@ -27,6 +27,15 @@ const Users = ({ setSesion }) => {
   //feedback del input
   const [nombreFB, setNombreFB] = useState({ text: '', color: '' });
   const [telefonoFB, setTelefonoFB] = useState({ text: '', color: '' });
+  
+  const feedbackStructure = { text: '', color: '' }
+  
+  const [feedback, setFeedback] = useState({
+    nombreFB: feedbackStructure,
+    telefonoFB: feedbackStructure,
+    nombreFBCorrecto: null,
+    telefonoFBCorrecto: null
+  })
 
   const [active, setActive] = useState(false);
 
@@ -82,9 +91,10 @@ const Users = ({ setSesion }) => {
     //validar que el nombre sea solo texto y que no exista repetidos
     setAlumnoForm({...alumnoForm, [e.target.name]: e.target.value});
     const nextInput = document.getElementById(telefonoInputName);
-    
+
     if (e.target.value === '') {
-      setNombreFB({ ...nombreFB, text: '', color: '' });
+      // setNombreFB({ ...nombreFB, text: '', color: '' });
+      setFeedback({ ...feedback, nombreFBCorrecto:false, nombreFB:{...feedback.nombreFB, text:'', color:''}})
       if (shouldIStartDisabled) {
         nextInput.disabled = true;
         submitBtn.disabled = true;
@@ -93,11 +103,12 @@ const Users = ({ setSesion }) => {
       //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
         if (checkStudentExistence(e.target.value)) {
-          setNombreFB({
-            ...nombreFB,
-            text: 'El nombre de alumno es correcto',
-            color: '#7CBD1E',
-          });
+          setFeedback({...feedback, nombreFBCorrecto:true, nombreFB: {...feedback.nombreFB, text: 'El nombre de alumno es correcto', color: '#7CBD1E' }})
+          // setNombreFB({
+          //   ...nombreFB,
+          //   text: 'El nombre de alumno es correcto',
+          //   color: '#7CBD1E',
+          // });
           shouldIStartDisabled && (nextInput.disabled = false);
         } else {
           setNombreFB({
@@ -105,17 +116,19 @@ const Users = ({ setSesion }) => {
             text: 'El nombre de usuario ya existe',
             color: '#CC3636',
           });
+          setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'El nombre de usuario ya existe', color: '#CC3636' }})
           if (shouldIStartDisabled) {
             nextInput.disabled = true;
             submitBtn.disabled = true;
           } 
         }
       } else {
-        setNombreFB({
-          ...nombreFB,
-          text: 'Escriba un nombre de usuario sin numeros',
-          color: '#CC3636',
-        });
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de usuario sin numeros', color: '#CC3636'}})
+        // setNombreFB({
+        //   ...nombreFB,
+        //   text: 'Escriba un nombre de usuario sin numeros',
+        //   color: '#CC3636',
+        // });
       }
     }
   };
@@ -129,22 +142,25 @@ const Users = ({ setSesion }) => {
     const shouldIStartDisabled = checkDisabled;
 
     if (tel === '') {
-      setTelefonoFB({ ...telefonoFB, text: '', color: '' });
+      setFeedback({...feedback, telefonoFB: feedbackStructure})
+      // setTelefonoFB({ ...telefonoFB, text: '', color: '' });
       shouldIStartDisabled && (submitBtn.disabled = true);
     } else {
       if (tel.match(pattern) != null && tel.length >= 7) {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'El nummero de telefono es correcto',
-          color: '#7CBD1E',
-        });
+        setFeedback({...feedback, telefonoFBCorrecto: true, telefonoFB: {...feedback.telefonoFB, text: 'El numero de telefono es correcto', color: '#7CBD1E'}})
+        // setTelefonoFB({
+        //   ...telefonoFB,
+        //   text: 'El nummero de telefono es correcto',
+        //   color: '#7CBD1E',
+        // });
         shouldIStartDisabled && (submitBtn.disabled = false);
       } else {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'Solo numeros, minimo 7',
-          color: '#CC3636',
-        });
+        setFeedback({...feedback,  telefonoFBCorrecto: false, telefonoFB: {...feedback.telefonoFB, text: 'Solo numeros, minimo 7', color: '#CC3636'}})
+        // setTelefonoFB({
+        //   ...telefonoFB,
+        //   text: 'Solo numeros, minimo 7',
+        //   color: '#CC3636',
+        // });
         shouldIStartDisabled && (submitBtn.disabled = true);
       }
     }
@@ -181,14 +197,20 @@ const Users = ({ setSesion }) => {
       telefono: '',
       nacimiento: ''
      });
-     setNombreFB({
-      text: '',
-      color: ''
-     })
-     setTelefonoFB({
-      text: '',
-      color: ''
-     })
+    //  setNombreFB({
+    //   text: '',
+    //   color: ''
+    //  })
+    //  setTelefonoFB({
+    //   text: '',
+    //   color: ''
+    //  })
+    setFeedback({
+      nombreFB: feedbackStructure,
+      telefonoFB: feedbackStructure,
+      telefonoFBCorrecto: null,
+      nombreFBCorrecto: null,
+    })
   };
 
   const checkStudentExistence = (student) => {
@@ -209,8 +231,7 @@ const Users = ({ setSesion }) => {
           setAlumnoForm={setAlumnoForm}
           clearState={clearState}
           alumnoForm={alumnoForm}
-          nombreFB={nombreFB}
-          telefonoFB={telefonoFB}
+          feedback={feedback}
         />
         {alumnosLoader ? 
           <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
@@ -225,13 +246,13 @@ const Users = ({ setSesion }) => {
                 actAlu={actAlu}
                 handleChangeName={handleChangeName}
                 handleChangePhone={handleChangePhone}
-                nombreFB={nombreFB}
-                telefonoFB={telefonoFB}
+                feedback={feedback}
+                clearState={clearState}
                 setAlumnoForm={setAlumnoForm}
                 alumnoForm={alumnoForm}
               />
               <AlumnosList alumnos={alumnos} actAlu={actAlu} setActAlu={setActAlu} setLoadingDetails={setLoadingDetails}
-                loadingDetails={loadingDetails}/>
+                loadingDetails={loadingDetails} />
             </div>
           </>
         }

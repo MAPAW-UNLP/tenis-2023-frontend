@@ -13,7 +13,9 @@ const Users = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [alumnos, setAlumnos] = useState([]);
-  const [alumnosLoader, setAlumnosLoader] = useState(true);
+  const [alumnosLoader, setAlumnosLoader] = useState(true); //Spinner
+  const [loadingDetails, setLoadingDetails] = useState(false) // Spinner opciones
+
   const [actAlumnos, setActAlumnos] = useState(false);
 
   const [alumnoForm, setAlumnoForm] = useState({
@@ -52,7 +54,8 @@ const Users = ({ setSesion }) => {
       fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
-        .then(() => setActiveDetail(true));
+        .then(() => setActiveDetail(true))
+        .then(() => setLoadingDetails(false))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlu]);
@@ -218,6 +221,7 @@ const Users = ({ setSesion }) => {
                 activeDetail={activeDetail}
                 setActiveDetail={setActiveDetail}
                 setAluDetail={setAluDetail}
+                setActAlu={setActAlu}
                 actAlu={actAlu}
                 handleChangeName={handleChangeName}
                 handleChangePhone={handleChangePhone}
@@ -225,9 +229,9 @@ const Users = ({ setSesion }) => {
                 telefonoFB={telefonoFB}
                 setAlumnoForm={setAlumnoForm}
                 alumnoForm={alumnoForm}
-                clearState={clearState}
               />
-              <AlumnosList alumnos={alumnos} setActAlu={setActAlu} />
+              <AlumnosList alumnos={alumnos} actAlu={actAlu} setActAlu={setActAlu} setLoadingDetails={setLoadingDetails}
+                loadingDetails={loadingDetails}/>
             </div>
           </>
         }

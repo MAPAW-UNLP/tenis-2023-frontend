@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, actUser }) => {
+export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, setActUser, actUser }) => {
   let clasesIndividuales = 0;
   let clasesGrupales = 0;
 
@@ -11,6 +11,7 @@ export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, actU
 
   const handleCloseForm = () => {
     setActiveDetail(false);
+    setActUser('');
   }
 
   const returnTipoClase = (tipoClase) => {

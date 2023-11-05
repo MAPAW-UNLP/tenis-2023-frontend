@@ -5,7 +5,7 @@ import Alumno from './Alumno';
 
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
-const AlumnosList = ({ alumnos, setActAlu }) => {
+const AlumnosList = ({ alumnos, actAlu, setActAlu, loadingDetails, setLoadingDetails }) => {
   const [activeDetail, setActiveDetail] = useState(false);
   const [cobrosActUser, setCobrosActUser] = useState();
   const [actUser, setActUser] = useState('');
@@ -19,7 +19,8 @@ const AlumnosList = ({ alumnos, setActAlu }) => {
       fetch(`${URL_BASE}pagos_por_persona?personaId=${actUser.id}`)
         .then((response) => response.json())
         .then((data) => setCobrosActUser(data))
-        .then(() => setActiveDetail(true));
+        .then(() => setActiveDetail(true))
+        .then(() => setLoadingDetails(false))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actUser]);
@@ -42,7 +43,8 @@ const AlumnosList = ({ alumnos, setActAlu }) => {
   return (
     <>
       <div id="alumnos-list-options">
-        <CobroDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} cobrosActUser={cobrosActUser} actUser={actUser}/>
+        <CobroDetail activeDetail={activeDetail} setActiveDetail={setActiveDetail} cobrosActUser={cobrosActUser}
+          setActUser={setActUser} actUser={actUser}/>
         <p className='list-options-header'>Nombre </p>
         <p className='list-options-header'>Telefono</p>
         <p className='list-options-header'>Pagos</p>
@@ -54,7 +56,8 @@ const AlumnosList = ({ alumnos, setActAlu }) => {
 
       <div id="alumnos-list">
         {alumnosFiltrados.map((a) => (
-          <Alumno key={a.nombre} info={a} setActAlu={setActAlu} setActUser={setActUser} />
+          <Alumno key={a.nombre} info={a} actAlu={actAlu} setActAlu={setActAlu} actUser={actUser} setActUser={setActUser}
+            loadingDetails={loadingDetails} setLoadingDetails={setLoadingDetails} />
         ))}
       </div>
     </>

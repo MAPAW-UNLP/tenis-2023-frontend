@@ -7,20 +7,18 @@ const AlumnoDetail = ({
   activeDetail,
   setActiveDetail,
   setAluDetail,
+  setActAlu,
   actAlu,
   handleChangeName,
   handleChangePhone,
   nombreFB,
-  telefonoFB,
-  alumnoForm,
-  setAlumnoForm,
-  clearState
+  telefonoFB
 }) => {  
   const URL_BASE = 'http://localhost:8083/api/';
 
   const handleCloseForm = () => {
     setActiveDetail(false);
-    clearState()
+    setActAlu('')
   };
 
   const actualizarAlumno = () => {

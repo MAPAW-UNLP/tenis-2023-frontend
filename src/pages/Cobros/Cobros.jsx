@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import moment from 'moment';
 import { AgregarMovimiento } from '../../components/Movimiento/AgregarMovimiento'
 import { MovimientoTable } from '../../components/Movimiento/MovimientoTable'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
@@ -18,22 +19,73 @@ export const Cobros = ({ setSesion }) => {
   const [alumnos, setAlumnos] = useState([]);
   const [cobrosLoader, setCobrosLoader] = useState(true); // Spinner
 
+  // Trae todos los COBROS 
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`${URL_BASE}pagos`, requestOptions)
+    fetch(`${URL_BASE}cobros`, requestOptions)
       .then((response) => response.json())
       .then((data) => setCobros(data))
       .then(() => setCobrosLoader(() => false));
 
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => setAlumnos(ordenarPorNombre(data)))
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actCobros]);
 
+  // Estado para el formulario de "Agregar Cobro"
+  const [cobroAddForm, setCobroAddForm] = useState({
+    alumnoId: '',
+    concepto: '',
+    monto: '',
+    descripcion: ''
+  })
+
+  // Actualiza los datos del formulario para agregar un COBRO
+  const handleChangeFormData = (e) => {
+    setCobroAddForm({ ...cobroAddForm, [e.target.name]: e.target.value });
+  };
+
+  // Reseteo el formulario de COBRO
+  const resetCobroAddForm = () => {
+    setCobroAddForm({
+      alumnoId: '',
+      concepto: '',
+      monto: '',
+      descripcion: ''
+    })
+  }
+
+  // Funcion para cerrar el formulario de creacion de COBRO
+  const handleCloseForm = () => {
+    resetCobroAddForm()
+    setActive(false);
+  };
+
+  const submitCobroForm = (event) => {
+    event.preventDefault();
+    setActive(false);
+
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({
+        concepto: cobroAddForm.concepto,
+        monto: cobroAddForm.monto,
+        descripcion: cobroAddForm.descripcion,
+        fecha: moment().format('YYYY/MM/DD'),
+      }),
+    };
+
+    fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
+      .then((response) => response.json())
+      .then(() => setActCobros((v) => !v));
+  };
+
+
+  // Opciones de movimiento (Cobro) para el formulario de 'Agregar Cobro'
   const movimientoOptions = [
     {
       id: 1,
@@ -54,12 +106,14 @@ export const Cobros = ({ setSesion }) => {
       <NavBar title={'Cobros'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
-        <AgregarMovimiento active={active} setActive={setActive} setActCobros={setActCobros}
-          alumnos={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+        
+        <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
+          handleChangeFormData={handleChangeFormData} alumnos={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+        
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :
-          <MovimientoTable />
+          <MovimientoTable cobros={cobros} />
         }
       </div>
     </div>

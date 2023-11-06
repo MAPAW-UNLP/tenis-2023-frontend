@@ -108,12 +108,12 @@ export const Cobros = ({ setSesion }) => {
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
         
         <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
-          handleChangeFormData={handleChangeFormData} alumnos={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+          handleChangeFormData={handleChangeFormData} personas={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
         
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :
-          <MovimientoTable cobros={cobros} />
+          <MovimientoTable movimientos={cobros} />
         }
       </div>
     </div>

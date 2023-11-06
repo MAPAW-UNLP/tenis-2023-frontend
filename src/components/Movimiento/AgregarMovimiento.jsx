@@ -2,7 +2,7 @@ import React from 'react';
 import { MovimientoForm } from './MovimientoForm';
 
 export const AgregarMovimiento = ({ active, handleCloseForm, submitMovimientoForm, handleChangeFormData,
-  alumnos, movimientoName, movimientoOptions }) => {
+  personas, movimientoName, movimientoOptions }) => {
 
   return (
     <>

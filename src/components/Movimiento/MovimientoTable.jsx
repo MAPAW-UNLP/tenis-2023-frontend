@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import InputComponent from '../Utils/InputComponent';
 
-export const MovimientoTable = ({ cobros }) => {
+export const MovimientoTable = ({ movimientos }) => {
   return (
     <div className="container" style={{
       backgroundColor: 'white', paddingLeft: '5px', paddingRight: '5px', maxHeight: '60vh',
@@ -26,14 +26,14 @@ export const MovimientoTable = ({ cobros }) => {
           </tr>
         </thead>
         <tbody>
-          {cobros.map((cobro) => (
-              <Fragment key={cobro.id}>
+          {movimientos.map((movimiento) => (
+              <Fragment key={movimiento.id}>
                 <tr style={{ height: '8px' }} />
                 <tr className='table-row'>
-                  <td>{cobro.fecha}</td>
-                  <td>{cobro.concepto_desc}</td>
-                  <td>{cobro.descripcion}</td>
-                  <td className='monto-td'>${cobro.monto}</td>
+                  <td>{movimiento.fecha}</td>
+                  <td>{movimiento.concepto_desc}</td>
+                  <td>{movimiento.descripcion}</td>
+                  <td className='monto-td'>${movimiento.monto}</td>
                   <td></td>
                 </tr>
               </Fragment>

@@ -41,7 +41,8 @@ export const Cobros = ({ setSesion }) => {
     personaId: '', // Antes alumnoID, ahora es personaId para poder usarlo como generico pero en los endpoints cambiamos el nombre
     concepto: '',
     monto: '',
-    descripcion: ''
+    descripcion: '',
+    tipoClaseId: '',
   })
 
   // Actualiza los datos del formulario para agregar un COBRO
@@ -55,7 +56,8 @@ export const Cobros = ({ setSesion }) => {
       personaId: '',
       concepto: '',
       monto: '',
-      descripcion: ''
+      descripcion: '',
+      tipoClaseId: ''
     })
   }
 
@@ -69,19 +71,36 @@ export const Cobros = ({ setSesion }) => {
     event.preventDefault();
     setActive(false);
 
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify({
-        concepto: cobroAddForm.concepto,
-        monto: cobroAddForm.monto,
-        descripcion: cobroAddForm.descripcion,
-        fecha: moment().format('YYYY/MM/DD'),
-      }),
-    };
-
-    fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
-      .then((response) => response.json())
-      .then(() => setActCobros((v) => !v));
+    if (cobroAddForm.personaId) {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          alumnoId: +cobroAddForm.personaId,
+          concepto: cobroAddForm.concepto,
+          monto: cobroAddForm.monto,
+          descripcion: cobroAddForm.descripcion,
+          idTipoClase: cobroAddForm.tipoClaseId,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      }
+      fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActCobros((v) => !v));
+    }
+    else {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          concepto: cobroAddForm.concepto,
+          monto: cobroAddForm.monto,
+          descripcion: cobroAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      }
+      fetch(`${URL_BASE}nuevo_cobro`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActCobros((v) => !v));
+    }
   };
 
 

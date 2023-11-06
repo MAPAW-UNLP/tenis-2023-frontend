@@ -38,7 +38,7 @@ export const Cobros = ({ setSesion }) => {
 
   // Estado para el formulario de "Agregar Cobro"
   const [cobroAddForm, setCobroAddForm] = useState({
-    alumnoId: '',
+    personaId: '', // Antes alumnoID, ahora es personaId para poder usarlo como generico pero en los endpoints cambiamos el nombre
     concepto: '',
     monto: '',
     descripcion: ''
@@ -52,7 +52,7 @@ export const Cobros = ({ setSesion }) => {
   // Reseteo el formulario de COBRO
   const resetCobroAddForm = () => {
     setCobroAddForm({
-      alumnoId: '',
+      personaId: '',
       concepto: '',
       monto: '',
       descripcion: ''
@@ -106,10 +106,11 @@ export const Cobros = ({ setSesion }) => {
       <NavBar title={'Cobros'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
-        
+
         <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
-          handleChangeFormData={handleChangeFormData} personas={alumnos} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
-        
+          movivimientoAddForm={cobroAddForm} handleChangeFormData={handleChangeFormData} personas={alumnos}
+          movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :

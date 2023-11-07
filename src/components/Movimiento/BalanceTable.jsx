@@ -1,6 +1,6 @@
 import '../../styles/movimiento/movimientoTable.css'
 
-export const BalanceTable = () => {
+export const BalanceTable = ({ balanceNumerico }) => {
   return (
     <>
       <div className="container container-balance" style={{
@@ -94,7 +94,9 @@ export const BalanceTable = () => {
           </tbody>
         </table>
       </div>
-      <div className='balance-table-footer'>Total: $15000</div>
+      <div className='balance-table-footer'>
+        Total: ${balanceNumerico.balanceGeneral}
+      </div>
     </>
   )
 }

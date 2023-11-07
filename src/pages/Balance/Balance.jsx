@@ -10,12 +10,12 @@ import '../../styles/movimiento/movimiento.css'
 export const Balance = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
-  const [active, setActive] = useState(false);
-  const [cobros, setCobros] = useState([]);
-  const [actCobros, setActCobros] = useState(false);
+  const [actMovimientos, setActMovimientos] = useState(false);
 
-  const [alumnos, setAlumnos] = useState([]);
-  const [cobrosLoader, setCobrosLoader] = useState(true); // Spinner
+  // Estado para 'totalCobros' 'totalPagos' y 'balanceGeneral'
+  const [balanceNumerico, setBalanceNumerico] = useState();
+
+  const [movimientosLoader, setMovimientosLoader] = useState(true); // Spinner
 
   // Dia formateado para HTML
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2);
@@ -23,48 +23,46 @@ export const Balance = ({ setSesion }) => {
   const año = new Date().getFullYear();
   const today = `${año}-${mes}-${day}`;
 
+  // Trae los datos necesarios desde la BD
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
-    fetch(`${URL_BASE}pagos`, requestOptions)
-      .then((response) => response.json())
-      .then((data) => setCobros(data))
-      .then(() => setCobrosLoader(() => false));
 
-    fetch(`${URL_BASE}alumnos`, requestOptions)
+    fetch(`${URL_BASE}balance-general`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => setBalanceNumerico(data))
+      .then(() => setMovimientosLoader(() => false));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actCobros]);
+  }, [actMovimientos]);
 
   return (
     <div className='movimiento-component'>
       <NavBar title={'Balanza general'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
-        {cobrosLoader ?
-          <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
+        {movimientosLoader ?
+          <LoaderSpinner active={movimientosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :
           <>
             <div className="balance-container">
               <div className='balance-head'>
-                <div style={{display:'flex', justifyContent:'space-around', width:'80%'}}>
-                  <span style={{marginRight:'.5em'}}>Filtros</span>
+                <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%' }}>
+                  <span style={{ marginRight: '.5em' }}>Filtros</span>
                   <InputComponent type={'date'} id={'fechaInicio'} className={'input-date-balance'} placeholder={'Fecha'} min={today}
-                    // onChangeFuncion={handleFechaInicioChange}
+                  // onChangeFuncion={handleFechaInicioChange}
                   />
                   <InputComponent type={'date'} id={'fechaFin'} className={'input-date-balance'} placeholder={'Fecha'} min={today}
-                    // onChangeFuncion={handleFechaInicioChange}
+                  // onChangeFuncion={handleFechaInicioChange}
                   />
                   <InputComponent type={'text'} id={'balanceDesc'} className={'input-text-balance'} placeholder={'Descripcion'}
-                    // onChangeFuncion={handleFechaInicioChange}
+                  // onChangeFuncion={handleFechaInicioChange}
                   />
                 </div>
-                <button className='button-balance-head' onClick={()=> alert('Filtrado :)')}>Filtrar</button>
+                <button className='button-balance-head' onClick={() => alert('Filtrado :)')}>Filtrar</button>
               </div>
             </div>
-            <BalanceTable />
+            <BalanceTable balanceNumerico={balanceNumerico} />
           </>
         }
       </div>

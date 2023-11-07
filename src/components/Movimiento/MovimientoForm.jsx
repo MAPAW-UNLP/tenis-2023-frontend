@@ -17,7 +17,8 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
         {movivimientoAddForm.concepto === '1' ?
           <>
             <label htmlFor="concepto" className="movimiento-form-label"> * </label>
-            <SelectReComponent name={'personaId'} onChange={handleChangeFormData} options={personas} placeholder={'Seleccionar alumno'} />
+            <SelectReComponent name={'personaId'} onChange={handleChangeFormData} options={personas} 
+              placeholder={`Seleccionar ${movimiento === 'Cobro' ? 'alumno' : 'profesor'}`} />
           </>
           : movivimientoAddForm.personaId = ''
         }

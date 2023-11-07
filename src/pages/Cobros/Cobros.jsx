@@ -101,6 +101,8 @@ export const Cobros = ({ setSesion }) => {
         .then((response) => response.json())
         .then(() => setActCobros((v) => !v));
     }
+
+    resetCobroAddForm()
   };
 
 

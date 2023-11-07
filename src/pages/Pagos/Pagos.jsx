@@ -38,7 +38,7 @@ export const Pagos = ({ setSesion }) => {
 
   // Estado para el formulario de "Agregar Pago"
   const [pagoAddForm, setPagoAddForm] = useState({
-    idProfesor: '',
+    personaId: '',
     concepto: '',
     monto: '',
     descripcion: ''
@@ -49,10 +49,10 @@ export const Pagos = ({ setSesion }) => {
     setPagoAddForm({ ...pagoAddForm, [e.target.name]: e.target.value });
   };
 
-  // Reseteo el formulario de COBRO
+  // Reseteo el formulario de PAGO
   const resetPagoAddForm = () => {
     setPagoAddForm({
-      idProfesor: '',
+      personaId: '',
       concepto: '',
       monto: '',
       descripcion: ''
@@ -65,27 +65,46 @@ export const Pagos = ({ setSesion }) => {
     setActive(false);
   };
 
-  const submitCobroForm = (event) => {
+  const submitPagoForm = (event) => {
     event.preventDefault();
     setActive(false);
 
-    const requestOptions = {
-      method: 'POST',
-      body: JSON.stringify({
-        concepto: pagoAddForm.concepto,
-        monto: pagoAddForm.monto,
-        descripcion: pagoAddForm.descripcion,
-        fecha: moment().format('YYYY/MM/DD'),
-      }),
-    };
+    if (pagoAddForm.personaId) {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          profesorId: +pagoAddForm.personaId,
+          concepto: pagoAddForm.concepto,
+          monto: pagoAddForm.monto,
+          descripcion: pagoAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      };
 
-    fetch(`${URL_BASE}nuevo_pago`, requestOptions)
-      .then((response) => response.json())
-      .then(() => setActPagos((v) => !v));
-  };
+      fetch(`${URL_BASE}nuevo_pago`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActPagos((v) => !v));
+    }
+    else {
+      const requestOptions = {
+        method: 'POST',
+        body: JSON.stringify({
+          concepto: pagoAddForm.concepto,
+          monto: pagoAddForm.monto,
+          descripcion: pagoAddForm.descripcion,
+          fecha: moment().format('YYYY/MM/DD'),
+        }),
+      };
+
+      fetch(`${URL_BASE}nuevo_pago`, requestOptions)
+        .then((response) => response.json())
+        .then(() => setActPagos((v) => !v));
+    }
+
+    resetPagoAddForm()
+  }
 
   // Opciones de movimiento (PAGO) para el formulario de 'Agregar Pago'
-
   const movimientoOptions = [
     {
       id: 1,
@@ -107,8 +126,9 @@ export const Pagos = ({ setSesion }) => {
       <div className='movimiento-component-mainContent'>
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo pago"} />
 
-        <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
-          handleChangeFormData={handleChangeFormData} personas={profesores} movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+        <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitPagoForm}
+          movivimientoAddForm={pagoAddForm} handleChangeFormData={handleChangeFormData} personas={profesores}
+          movimientoName={"Pago"} movimientoOptions={movimientoOptions} />
 
         {pagosLoader ?
           <LoaderSpinner active={pagosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />

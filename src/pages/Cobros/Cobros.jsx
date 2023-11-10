@@ -68,7 +68,6 @@ export const Cobros = ({ setSesion }) => {
   };
 
   const submitCobroForm = (event) => {
-    event.preventDefault();
     setActive(false);
 
     if (cobroAddForm.personaId) {

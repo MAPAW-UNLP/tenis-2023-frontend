@@ -66,7 +66,6 @@ export const Pagos = ({ setSesion }) => {
   };
 
   const submitPagoForm = (event) => {
-    event.preventDefault();
     setActive(false);
 
     if (pagoAddForm.personaId) {

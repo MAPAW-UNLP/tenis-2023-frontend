@@ -58,7 +58,17 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
 
   // Verificar cuando el movimiento es un PAGO
   const verifyFormPago = () => {
-    alert('Hola desde pago :)')
+    const verify = []
+    if (!movivimientoAddForm.concepto) verify.push('El concepto no puede estar vacio');
+    if (movivimientoAddForm.concepto === '1') {
+      if (!movivimientoAddForm.personaId)
+        verify.push('Debe seleccionar un profesor')
+    }
+    if (!movivimientoAddForm.descripcion) verify.push('La descripcion no puede estar vacia')
+    if (!movivimientoAddForm.monto) verify.push('El monto no puede estar vacio')
+
+    setErrors(verify)
+    return verify.length === 0 ? true : false
   }
 
   return (
@@ -98,13 +108,13 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
         <label htmlFor="monto" className="movimiento-form-label"> * </label>
         <InputReComponent name={'monto'} onChangeFuncion={handleChangeFormData} placeholder={'Monto'} />
 
-        <div style={{ fontFamily: 'var(--normal-text)', width:'80%', color:'red', fontSize:'.9em'}}>
+        <div style={{ fontFamily: 'var(--normal-text)', width: '80%', color: 'red', fontSize: '.9em' }}>
           {errors.map((error, index) => (
             <p key={`error-${index}`}>* {error}</p>
           ))}
         </div>
 
-        <button className="movimiento-add-form-addBtn" style={{ marginTop: '1em' }} onClick={handleCheckAddForm}> Aceptar </button>
+        <button className="movimiento-add-form-addBtn" style={{ marginTop: '.5em' }} onClick={handleCheckAddForm}> Aceptar </button>
       </form>
     </div>
   )

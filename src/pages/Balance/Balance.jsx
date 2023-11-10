@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { BalanceTable } from '../../components/Movimiento/BalanceTable'
-import InputComponent from '../../components/Utils/InputComponent'
+import InputReComponent from '../../components/Utils/InputReComponent'
 import { ordenarPorNombre } from '../../components/Utils/Functions'
 import LoaderSpinner from '../../components/LoaderSpinner'
 import NavBar from '../Navbar/NavBar'
 
 import '../../styles/movimiento/movimiento.css'
+import NoData from '../../Img/noData.png'
 
 export const Balance = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
@@ -16,6 +17,7 @@ export const Balance = ({ setSesion }) => {
   const [balance, setBalance] = useState();
 
   const [movimientosLoader, setMovimientosLoader] = useState(true); // Spinner
+  const [filtrarSpinner, setFiltarSpinner] = useState(false)
 
   // Dia formateado para HTML
   const mes = ('0' + (new Date().getMonth() + 1)).slice(-2);
@@ -30,20 +32,45 @@ export const Balance = ({ setSesion }) => {
     descripcion: ''
   })
 
+  // Funcion para manejar el ingreso (input) de opciones en el filtrado
+  const handleFiltro = (event) => {
+    setDatos({ ...datos, [event.target.name]: event.target.value })
+  }
+
+  // Funcion para manejar el envio de datos en el filtrado
+  const handleFiltrado = () => {
+    if (!datos.fechaInicio) datos.fechaInicio = today
+    if (!datos.fechaFin) datos.fechaFin = today
+    setActMovimientos((value) => !value)
+    setFiltarSpinner(true)
+  }
+
   // Trae los datos necesarios desde la BD
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
 
-    fetch(`${URL_BASE}balance-en-fecha?fecha_inicio='${datos.fechaInicio}'&fecha_fin=${datos.fechaFin}&descripcion=${datos.descripcion}`,
-    requestOptions)
+    fetch(`${URL_BASE}balance-en-fecha?fecha_inicio=${datos.fechaInicio}&fecha_fin=${datos.fechaFin}&descripcion=${datos.descripcion}`,
+      requestOptions)
       .then((response) => response.json())
       .then((data) => setBalance(data))
-      .then(() => setMovimientosLoader(() => false));
+      .then(() => setMovimientosLoader(() => false))
+      .then(() => setFiltarSpinner(() => false))
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actMovimientos]);
+
+  // Spinner filtrado
+  const LoadingSpinner = () => {
+    return (
+      <div style={{display:'inline-block', width:'24px', height:'24px',
+      borderTopColor:'rgb(255, 255, 255)', borderRightColor:'rgba(255, 255, 255, 0.4)', borderBottomColor:'rgba(255, 255, 255, 0.4)',
+      borderLeftColor:'rgba(255, 255, 255, 0.4)', borderWidth:'3px', borderStyle:'solid', borderImage:'none', borderRadius: '50%',
+      animation: 'spin 1s ease-in-out infinite', WebkitAnimation:'spin 1s ease-in-out infinte'}} />
+    )
+  }
+
 
   return (
     <div className='movimiento-component'>
@@ -57,20 +84,38 @@ export const Balance = ({ setSesion }) => {
               <div className='balance-head'>
                 <div style={{ display: 'flex', justifyContent: 'space-around', width: '80%' }}>
                   <span style={{ marginRight: '.5em' }}>Filtros</span>
-                  <InputComponent type={'date'} id={'fechaInicio'} className={'input-date-balance'} placeholder={'Fecha'} min={today}
-                  // onChangeFuncion={handleFechaInicioChange}
+                  <InputReComponent type={'date'} name={'fechaInicio'} id={'fechaInicio'} className={'input-date-balance'} placeholder={'Fecha'}
+                    onChangeFuncion={handleFiltro}
                   />
-                  <InputComponent type={'date'} id={'fechaFin'} className={'input-date-balance'} placeholder={'Fecha'} min={today}
-                  // onChangeFuncion={handleFechaInicioChange}
+                  <InputReComponent type={'date'} name={'fechaFin'} id={'fechaFin'} className={'input-date-balance'} placeholder={'Fecha'}
+                    onChangeFuncion={handleFiltro}
                   />
-                  <InputComponent type={'text'} id={'balanceDesc'} className={'input-text-balance'} placeholder={'Descripcion'}
-                  // onChangeFuncion={handleFechaInicioChange}
+                  <InputReComponent type={'text'} name={'descripcion'} id={'balanceDesc'} className={'input-text-balance'} placeholder={'Descripcion'}
+                    onChangeFuncion={handleFiltro}
                   />
                 </div>
-                <button className='button-balance-head' onClick={() => alert('Filtrado :)')}>Filtrar</button>
+                <button className='button-balance-head' onClick={handleFiltrado}>
+                  {filtrarSpinner
+                    ? <LoadingSpinner/>
+                    : 'Filtar'
+                  }
+                </button>
               </div>
             </div>
-            <BalanceTable balance={balance} />
+
+            {balance.movimientos.length === 0
+              ?
+              <div style={{ marginBottom: '10em', marginTop: '1.3em' }}>
+                <img alt="Balance sin datos" style={{ height: "25em" }} src={NoData} />
+                <p style={{ textAlign: 'center', fontSize: '1.4em', fontFamily: 'var(--normal-text)', color: 'white', marginTop: '-1em' }}>
+                  No hay movimientos registrados en el rango ingresado
+                </p>
+                <p style={{ textAlign: 'center', marginTop: '.2em', fontSize: '1.1em', fontWeight: 'bold', fontFamily: 'var(--normal-text)', color: 'white' }}>
+                  {datos.fechaInicio} ---- {datos.fechaFin}
+                </p>
+              </div>
+              : <BalanceTable balance={balance} />
+            }
           </>
         }
       </div>

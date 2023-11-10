@@ -1,8 +1,6 @@
 import React from 'react'
 
 export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, setActUser, actUser }) => {
-  let clasesIndividuales = 0;
-  let clasesGrupales = 0;
 
   const mostrarFechaDescentemente = (fecha) => {
     const date = (fecha).split('-');
@@ -16,8 +14,9 @@ export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, setA
 
   const returnTipoClase = (tipoClase) => {
     if (tipoClase === 0) return 'Alquiler'
-    else if (tipoClase === 1) return 'Clase Indv.'
-    else return 'Clase Grupal'
+    else if (tipoClase === 1) return 'Clase Individual'
+    else if (tipoClase === 2) return 'Clase Grupal'
+    else return "-"
   }
 
   return (
@@ -33,7 +32,7 @@ export const CobroDetail = ({ activeDetail, setActiveDetail, cobrosActUser, setA
                 <div className='cobros-detail-item' key={i}>
                   <div className='cobros-detail-fecha'>{mostrarFechaDescentemente(el.fecha)}</div>
                   <div className='cobros-detail-tipo'>Tipo: {returnTipoClase(el.idTipoClase)}</div>
-                  <div className='cobros-detail-cantidad'>Monto: $2500 </div>
+                  <div className='cobros-detail-cantidad'>Monto: ${el.monto} </div>
                 </div>)
             })}
           </div>

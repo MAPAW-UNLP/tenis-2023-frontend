@@ -16,7 +16,7 @@ const AlumnosList = ({ alumnos, actAlu, setActAlu, loadingDetails, setLoadingDet
 
   useEffect(() => {
     if (actUser !== '') {
-      fetch(`${URL_BASE}cobros_por_alumno?alumnoId=${actUser.id}`)
+      fetch(`${URL_BASE}cobros_por_alumno_v2?alumnoId=${actUser.id}`)
         .then((response) => response.json())
         .then((data) => setCobrosActUser(data))
         .then(() => setActiveDetail(true))

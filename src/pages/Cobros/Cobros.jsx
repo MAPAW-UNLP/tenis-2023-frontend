@@ -42,7 +42,7 @@ export const Cobros = ({ setSesion }) => {
     concepto: '',
     monto: '',
     descripcion: '',
-    tipoClaseId: '',
+    tipoClaseId: '1',
   })
 
   // Actualiza los datos del formulario para agregar un COBRO
@@ -122,6 +122,19 @@ export const Cobros = ({ setSesion }) => {
     }
   ];
 
+  // Opciones de clases (Individual - Grupal ) para el formulario de 'Agregar Cobro'
+  // cuando se selecciona un alumno
+  const clasesOptions = [
+    {
+      id: 1,
+      tipo: "Individual"
+    },
+    {
+      id: 2,
+      tipo: "Grupal"
+    }
+  ]
+
   return (
     <div className='movimiento-component'>
       <NavBar title={'Cobros'} setSesion={setSesion} />
@@ -130,7 +143,7 @@ export const Cobros = ({ setSesion }) => {
 
         <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
           movivimientoAddForm={cobroAddForm} handleChangeFormData={handleChangeFormData} personas={alumnos}
-          movimientoName={"Cobro"} movimientoOptions={movimientoOptions} />
+          movimientoName={"Cobro"} movimientoOptions={movimientoOptions} clasesOptions={clasesOptions} />
 
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />

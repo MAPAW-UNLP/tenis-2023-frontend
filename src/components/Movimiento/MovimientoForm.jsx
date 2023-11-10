@@ -22,9 +22,21 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
             Al seleccionar otra opcion reseteamos personaID del formulario para no enviarlo en el endpoint */}
         {movivimientoAddForm.concepto === '1' ?
           <>
-            <label htmlFor="concepto" className="movimiento-form-label"> * </label>
+            <label htmlFor="personaId" className="movimiento-form-label"> * </label>
             <SelectReComponent name={'personaId'} onChange={handleChangeFormData} options={personas}
               placeholder={`Seleccionar ${movimiento === 'Cobro' ? 'alumno' : 'profesor'}`} />
+            {movimiento === "Cobro" &&
+              <>
+                <label htmlFor="tipoClaseId" className="movimiento-form-label"> * </label>
+                <select name={'tipoClaseId'} onChange={handleChangeFormData} >
+                  <option value=''> Tipo de clase </option>
+                  {clasesOptions.map((option) =>
+                    <option value={option.id} id={`tipo-clase-${option.id}`} key={`tipo-clase-${option.id}`}>
+                      {option.tipo}
+                    </option>)}
+                </select>
+              </>
+            }
           </>
           : handleResetOptions()
         }

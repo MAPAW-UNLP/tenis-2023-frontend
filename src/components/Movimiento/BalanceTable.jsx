@@ -1,6 +1,7 @@
+import { Fragment } from 'react'
 import '../../styles/movimiento/movimientoTable.css'
 
-export const BalanceTable = ({ balanceNumerico }) => {
+export const BalanceTable = ({ balance }) => {
   return (
     <>
       <div className="container container-balance" style={{
@@ -10,7 +11,7 @@ export const BalanceTable = ({ balanceNumerico }) => {
         <table className="movimiento-table" style={{ marginBottom: '5px', position: 'relative' }}>
           <thead className='table-head' style={{ position: 'sticky', top: '0' }}>
             <tr>
-              <th>Día</th>
+              <th>Fecha</th>
               <th>Concepto</th>
               <th>Descripción</th>
               <th style={{ width: '10em' }} />
@@ -20,82 +21,24 @@ export const BalanceTable = ({ balanceNumerico }) => {
           </thead>
           <tbody>
             <tr style={{ height: '8px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Juan Cruz Gutierrez</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Jhon Doe</td>
-              <td />
-              <td className='debe-td' />
-              <td className='haber-td'>$2000</td>
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Donacion</td>
-              <td>Donacion de Levy</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Matias Adorno</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Diego Gonzales</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Jhon Doe</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Jhon Doe</td>
-              <td />
-              <td className='debe-td' />
-              <td className='haber-td'>$2000</td>
-            </tr>
-            <tr style={{ height: '5px' }} />
-            <tr className='table-row'>
-              <td>30/10/23</td>
-              <td>Alumno</td>
-              <td>Jhon Doe</td>
-              <td />
-              <td className='debe-td'>$1000</td>
-              <td className='haber-td' />
-            </tr>
+            {balance.movimientos.map((item) => (
+              <Fragment key={`${item.id}-${item.movimiento_id}`}>
+                <tr className='table-row'>
+                  <td>{item.fecha}</td>
+                  <td>{item.concepto_desc}</td>
+                  <td>{item.descripcion}</td>
+                  <td />
+                  <td className='debe-td'>{item.movimiento_id === 1 && `$${item.monto}`}</td>
+                  <td className='haber-td'>{item.movimiento_id === 2 && `$${item.monto}`}</td>
+                </tr>
+                <tr style={{ height: '5px' }} />
+              </Fragment>
+            ))}
           </tbody>
         </table>
       </div>
       <div className='balance-table-footer'>
-        Total: ${balanceNumerico.balanceGeneral}
+        Total: ${balance.total}
       </div>
     </>
   )

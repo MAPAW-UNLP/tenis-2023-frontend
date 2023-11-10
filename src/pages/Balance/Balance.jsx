@@ -12,8 +12,8 @@ export const Balance = ({ setSesion }) => {
 
   const [actMovimientos, setActMovimientos] = useState(false);
 
-  // Estado para 'totalCobros' 'totalPagos' y 'balanceGeneral'
-  const [balanceNumerico, setBalanceNumerico] = useState();
+  // Estado para 'movimientos' y 'total' de balance
+  const [balance, setBalance] = useState();
 
   const [movimientosLoader, setMovimientosLoader] = useState(true); // Spinner
 
@@ -23,15 +23,23 @@ export const Balance = ({ setSesion }) => {
   const año = new Date().getFullYear();
   const today = `${año}-${mes}-${day}`;
 
+  // Datos usados para el filtro de busqueda en balance
+  const [datos, setDatos] = useState({
+    fechaInicio: today,
+    fechaFin: today,
+    descripcion: ''
+  })
+
   // Trae los datos necesarios desde la BD
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
     };
 
-    fetch(`${URL_BASE}balance-general`, requestOptions)
+    fetch(`${URL_BASE}balance-en-fecha?fecha_inicio='${datos.fechaInicio}'&fecha_fin=${datos.fechaFin}&descripcion=${datos.descripcion}`,
+    requestOptions)
       .then((response) => response.json())
-      .then((data) => setBalanceNumerico(data))
+      .then((data) => setBalance(data))
       .then(() => setMovimientosLoader(() => false));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +47,7 @@ export const Balance = ({ setSesion }) => {
 
   return (
     <div className='movimiento-component'>
-      <NavBar title={'Balanza general'} setSesion={setSesion} />
+      <NavBar title={'Balance general'} setSesion={setSesion} />
       <div className='movimiento-component-mainContent'>
         {movimientosLoader ?
           <LoaderSpinner active={movimientosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
@@ -62,7 +70,7 @@ export const Balance = ({ setSesion }) => {
                 <button className='button-balance-head' onClick={() => alert('Filtrado :)')}>Filtrar</button>
               </div>
             </div>
-            <BalanceTable balanceNumerico={balanceNumerico} />
+            <BalanceTable balance={balance} />
           </>
         }
       </div>

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import LinkItem from '../../components/LinkItem';
 
 import '../../styles/navbar.css'
+
 import { useState } from 'react';
 
 const NavBar = ({title, setSesion}) => {
@@ -27,18 +28,30 @@ const NavBar = ({title, setSesion}) => {
         localStorage.setItem('sesion', '');
         setSesion('')
     }
+
+    const esProfesor = true; // Simula la sesión para ocultar elementos, eventualmente esta información debe
+    // ser sacada de la sesión actual obtenida.
+
   return (
       <div id='navBar-component'>
           <div id='navBar-transparent'></div>
           <nav id='navBar'>
               <ul id='navBar-list'  >
                   <LinkItem to={'/inicio'}  setActive={setActive} name={'Inicio'}/>
-                  <LinkItem to={'/canchas'}  setActive={setActive} name={'Canchas'}/>
-                  <LinkItem to={'/reservas'}  setActive={setActive} name={'Reservas'}/>
-                  <LinkItem to={'/alumnos'} setActive={setActive} name={'Alumnos'} />
-                  <LinkItem to={'/profesores'} setActive={setActive} name={'Profesores'} />
-                  <LinkItem to={'/crearClase'}  setActive={setActive} name={'Crear clase'}/>
-                  <LinkItem to={'/cobros'} setActive={setActive} name={'Cobros'} />
+            {esProfesor ? (
+                <>
+                    <LinkItem to={'/reservas'} setActive={setActive} name={'Reservas'} />
+                    <LinkItem to={'/crearClase'} setActive={setActive} name={'Crear clase'} />
+                    <LinkItem to={'/ausencias'} setActive={setActive} name={'Ausencias y suspenciones'} />
+                </>
+                ) : (
+                <>
+                    <LinkItem to={'/canchas'} setActive={setActive} name={'Canchas'} />
+                    <LinkItem to={'/alumnos'} setActive={setActive} name={'Alumnos'} />
+                    <LinkItem to={'/profesores'} setActive={setActive} name={'Profesores'} />
+                    <LinkItem to={'/cobros'} setActive={setActive} name={'Cobros'} />
+                </>
+                )}
                   <li> <Link to="/" className='linkCerrarSesion' onClick={handleCloseSesion}>Cerrar Sesión </Link></li>
               </ul>
           </nav>

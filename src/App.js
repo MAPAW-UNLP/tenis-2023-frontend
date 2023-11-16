@@ -11,6 +11,11 @@ import Alumnos from './pages/Alumno/Alumnos';
 import { Profesores } from './pages/Profesor/Profesores';
 import { Cobros } from './pages/Cobros/Cobros';
 import CrearClase from './pages/CrearClase';
+import SuspencionClase from './pages/AusenciasSuspenciones/SuspencionClase';
+import PeriodoAusencia from './pages/AusenciasSuspenciones/PeriodoAusencia';
+import SolicitudesSuspencion from './pages/AusenciasSuspenciones/SolicitudesSuspencion';
+import SolicitudesAusencias from './pages/AusenciasSuspenciones/SolicitudesAusencias';
+import Ausencias from './pages/AusenciasSuspenciones/Ausencias'
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant';
@@ -20,6 +25,7 @@ import './styles/App.css';
 
 //routes react
 import { Routes, Route } from 'react-router-dom';
+
 
 function App() {
   //para la sesion
@@ -49,6 +55,11 @@ function App() {
           <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
           <Route path="/crearClase" element={<CrearClase setSesion={setSesion} />}/>
+          <Route path="/periodoAusencia" element={<PeriodoAusencia setSesion={setSesion} />}/>
+          <Route path="/suspencionClase" element={<SuspencionClase setSesion={setSesion} />}/>
+          <Route path="/misSolicitudesSuspencion" element={<SolicitudesSuspencion setSesion={setSesion} />}/>
+          <Route path="/misSolicitudesAusencia" element={<SolicitudesAusencias setSesion={setSesion} />}/>
+          <Route path="/ausencias" element={<Ausencias setSesion={setSesion} />}/>
         </Routes>
       </div>
     </>

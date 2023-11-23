@@ -18,6 +18,7 @@ export const Cobros = ({ setSesion }) => {
 
   const [alumnos, setAlumnos] = useState([]);
   const [cobrosLoader, setCobrosLoader] = useState(true); // Spinner
+  const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
 
   // Trae todos los COBROS 
   useEffect(() => {
@@ -27,7 +28,8 @@ export const Cobros = ({ setSesion }) => {
     fetch(`${URL_BASE}cobros`, requestOptions)
       .then((response) => response.json())
       .then((data) => setCobros(data))
-      .then(() => setCobrosLoader(() => false));
+      .then(() => setCobrosLoader(() => false))
+      .then(() => setLoadingFetch(false))
 
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
@@ -69,7 +71,8 @@ export const Cobros = ({ setSesion }) => {
 
   const submitCobroForm = (event) => {
     setActive(false);
-
+    setLoadingFetch(true)
+    
     if (cobroAddForm.personaId) {
       const requestOptions = {
         method: 'POST',
@@ -147,7 +150,7 @@ export const Cobros = ({ setSesion }) => {
         {cobrosLoader ?
           <LoaderSpinner active={cobrosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :
-          <MovimientoTable movimientos={cobros} />
+          <MovimientoTable movimientos={cobros} loadingFetch={loadingFetch} />
         }
       </div>
     </div>

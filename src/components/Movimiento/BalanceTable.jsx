@@ -13,8 +13,9 @@ export const BalanceTable = ({ balance }) => {
             <tr>
               <th>Fecha</th>
               <th>Concepto</th>
-              <th>Descripción</th>
-              <th style={{ width: '10em' }} />
+              <th>Profesor/Alumno</th>
+              <th style={{textAlign:'left'}}>Descripción</th>
+              {/* <th style={{ width: '10em' }} /> */}
               <th className='debe-th'>Debe</th>
               <th className='haber-th'>Haber</th>
             </tr>
@@ -26,8 +27,9 @@ export const BalanceTable = ({ balance }) => {
                 <tr className='table-row'>
                   <td>{item.fecha}</td>
                   <td>{item.concepto_desc}</td>
+                  <td>{item.nombre}</td>
                   <td>{item.descripcion}</td>
-                  <td />
+                  {/* <td /> */}
                   <td className='debe-td'>{item.movimiento_id === 1 && `$${item.monto}`}</td>
                   <td className='haber-td'>{item.movimiento_id === 2 && `$${item.monto}`}</td>
                 </tr>

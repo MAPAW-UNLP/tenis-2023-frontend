@@ -18,6 +18,7 @@ export const Pagos = ({ setSesion }) => {
 
   const [profesores, setProfesores] = useState([]);
   const [pagosLoader, setPagosLoader] = useState(true); // Spinner
+  const [loadingFetch, setLoadingFetch] = useState() // Spinner despues de cargar un cobro
 
   // Trae todos los PAGOS 
   useEffect(() => {
@@ -27,7 +28,8 @@ export const Pagos = ({ setSesion }) => {
     fetch(`${URL_BASE}pagos`, requestOptions)
       .then((response) => response.json())
       .then((data) => setPagos(data))
-      .then(() => setPagosLoader(() => false));
+      .then(() => setPagosLoader(() => false))
+      .then(() => setLoadingFetch(false))
 
     fetch(`${URL_BASE}profesoress`, requestOptions)
       .then((response) => response.json())
@@ -67,6 +69,7 @@ export const Pagos = ({ setSesion }) => {
 
   const submitPagoForm = (event) => {
     setActive(false);
+    setLoadingFetch(true)
 
     if (pagoAddForm.personaId) {
       const requestOptions = {
@@ -132,7 +135,7 @@ export const Pagos = ({ setSesion }) => {
         {pagosLoader ?
           <LoaderSpinner active={pagosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
           :
-          <MovimientoTable movimientos={pagos} />
+          <MovimientoTable movimientos={pagos} loadingFetch={loadingFetch} />
         }
       </div>
     </div>

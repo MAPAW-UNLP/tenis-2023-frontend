@@ -1,12 +1,9 @@
 import React, {useState, useEffect} from 'react'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
-
 import NavBar from '../Navbar/NavBar'
 import AgregarAlumno from '../../components/Alumno/AgregarAlumno'
 import AlumnosList from '../../components/Alumno/AlumnosList'
 import LoaderSpinner from '../../components/LoaderSpinner'
+import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
  
 import AlumnoDetail from '../../components/Alumno/AlumnoDetail' 
 
@@ -16,7 +13,9 @@ const Users = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
 
   const [alumnos, setAlumnos] = useState([]);
-  const [alumnosLoader, setAlumnosLoader] = useState(false);
+  const [alumnosLoader, setAlumnosLoader] = useState(true); //Spinner
+  const [loadingDetails, setLoadingDetails] = useState(false) // Spinner opciones
+
   const [actAlumnos, setActAlumnos] = useState(false);
 
   const [alumnoForm, setAlumnoForm] = useState({
@@ -28,6 +27,15 @@ const Users = ({ setSesion }) => {
   //feedback del input
   const [nombreFB, setNombreFB] = useState({ text: '', color: '' });
   const [telefonoFB, setTelefonoFB] = useState({ text: '', color: '' });
+  
+  const feedbackStructure = { text: '', color: '' }
+  
+  const [feedback, setFeedback] = useState({
+    nombreFB: feedbackStructure,
+    telefonoFB: feedbackStructure,
+    nombreFBCorrecto: null,
+    telefonoFBCorrecto: null
+  })
 
   const [active, setActive] = useState(false);
 
@@ -42,7 +50,7 @@ const Users = ({ setSesion }) => {
     };
     fetch(`${URL_BASE}alumnos`, requestOptions)
       .then((response) => response.json())
-      .then((data) => setAlumnos(ordenarPorNombre(data.detail)))
+      .then((data) => {setAlumnos((data.length !== 0) ? ordenarPorNombre(data) : data)})
       .then(() => setAlumnosLoader((v) => false));
 
     /* Desactivar spinner */
@@ -52,10 +60,11 @@ const Users = ({ setSesion }) => {
   // Este useEffect se dispara cuando traemos los datos para editar un alumno. Setea actAlu y mmuestra desplegable de edicion
   useEffect(() => {
     if (actAlu !== '') {
-      fetch(`${URL_BASE}persona?personaId=${actAlu.id}`)
+      fetch(`${URL_BASE}alumno?alumnoId=${actAlu.id}`)
         .then((response) => response.json())
         .then((data) => setAluDetail(data))
-        .then(() => setActiveDetail(true));
+        .then(() => setActiveDetail(true))
+        .then(() => setLoadingDetails(false))
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actAlu]);
@@ -82,9 +91,10 @@ const Users = ({ setSesion }) => {
     //validar que el nombre sea solo texto y que no exista repetidos
     setAlumnoForm({...alumnoForm, [e.target.name]: e.target.value});
     const nextInput = document.getElementById(telefonoInputName);
-    
+
     if (e.target.value === '') {
-      setNombreFB({ ...nombreFB, text: '', color: '' });
+      // setNombreFB({ ...nombreFB, text: '', color: '' });
+      setFeedback({ ...feedback, nombreFBCorrecto:false, nombreFB:{...feedback.nombreFB, text:'', color:''}})
       if (shouldIStartDisabled) {
         nextInput.disabled = true;
         submitBtn.disabled = true;
@@ -93,11 +103,12 @@ const Users = ({ setSesion }) => {
       //Cumple las expectativas de ser un nombre
       if (pattern.test(word)) {
         if (checkStudentExistence(e.target.value)) {
-          setNombreFB({
-            ...nombreFB,
-            text: 'El nombre de alumno es correcto',
-            color: '#7CBD1E',
-          });
+          setFeedback({...feedback, nombreFBCorrecto:true, nombreFB: {...feedback.nombreFB, text: 'El nombre de alumno es correcto', color: '#7CBD1E' }})
+          // setNombreFB({
+          //   ...nombreFB,
+          //   text: 'El nombre de alumno es correcto',
+          //   color: '#7CBD1E',
+          // });
           shouldIStartDisabled && (nextInput.disabled = false);
         } else {
           setNombreFB({
@@ -105,17 +116,19 @@ const Users = ({ setSesion }) => {
             text: 'El nombre de usuario ya existe',
             color: '#CC3636',
           });
+          setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'El nombre de usuario ya existe', color: '#CC3636' }})
           if (shouldIStartDisabled) {
             nextInput.disabled = true;
             submitBtn.disabled = true;
           } 
         }
       } else {
-        setNombreFB({
-          ...nombreFB,
-          text: 'Escriba un nombre de usuario sin numeros',
-          color: '#CC3636',
-        });
+        setFeedback({...feedback, nombreFBCorrecto:false, nombreFB: {...feedback.nombreFB, text: 'Escriba un nombre de usuario sin numeros', color: '#CC3636'}})
+        // setNombreFB({
+        //   ...nombreFB,
+        //   text: 'Escriba un nombre de usuario sin numeros',
+        //   color: '#CC3636',
+        // });
       }
     }
   };
@@ -129,22 +142,25 @@ const Users = ({ setSesion }) => {
     const shouldIStartDisabled = checkDisabled;
 
     if (tel === '') {
-      setTelefonoFB({ ...telefonoFB, text: '', color: '' });
+      setFeedback({...feedback, telefonoFB: feedbackStructure})
+      // setTelefonoFB({ ...telefonoFB, text: '', color: '' });
       shouldIStartDisabled && (submitBtn.disabled = true);
     } else {
       if (tel.match(pattern) != null && tel.length >= 7) {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'El nummero de telefono es correcto',
-          color: '#7CBD1E',
-        });
+        setFeedback({...feedback, telefonoFBCorrecto: true, telefonoFB: {...feedback.telefonoFB, text: 'El numero de telefono es correcto', color: '#7CBD1E'}})
+        // setTelefonoFB({
+        //   ...telefonoFB,
+        //   text: 'El nummero de telefono es correcto',
+        //   color: '#7CBD1E',
+        // });
         shouldIStartDisabled && (submitBtn.disabled = false);
       } else {
-        setTelefonoFB({
-          ...telefonoFB,
-          text: 'Solo numeros, minimo 7',
-          color: '#CC3636',
-        });
+        setFeedback({...feedback,  telefonoFBCorrecto: false, telefonoFB: {...feedback.telefonoFB, text: 'Solo numeros, minimo 7', color: '#CC3636'}})
+        // setTelefonoFB({
+        //   ...telefonoFB,
+        //   text: 'Solo numeros, minimo 7',
+        //   color: '#CC3636',
+        // });
         shouldIStartDisabled && (submitBtn.disabled = true);
       }
     }
@@ -164,12 +180,11 @@ const Users = ({ setSesion }) => {
       body: JSON.stringify({
         nombre: alumnoForm.nombre,
         telefono: alumnoForm.telefono,
-        fechanac: alumnoForm.nacimiento,
-        esalumno: true,
+        fechaNac: alumnoForm.nacimiento,
       }),
     };
 
-    fetch(`${URL_BASE}persona`, requestOptions)
+    fetch(`${URL_BASE}alumno`, requestOptions)
       .then((response) => response.json())
       .then(() => setActAlumnos((v) => !v))
       .then(clearState)
@@ -181,14 +196,20 @@ const Users = ({ setSesion }) => {
       telefono: '',
       nacimiento: ''
      });
-     setNombreFB({
-      text: '',
-      color: ''
-     })
-     setTelefonoFB({
-      text: '',
-      color: ''
-     })
+    //  setNombreFB({
+    //   text: '',
+    //   color: ''
+    //  })
+    //  setTelefonoFB({
+    //   text: '',
+    //   color: ''
+    //  })
+    setFeedback({
+      nombreFB: feedbackStructure,
+      telefonoFB: feedbackStructure,
+      telefonoFBCorrecto: null,
+      nombreFBCorrecto: null,
+    })
   };
 
   const checkStudentExistence = (student) => {
@@ -198,11 +219,8 @@ const Users = ({ setSesion }) => {
   return (
     <div id='alumnos-component'>
       <NavBar title={'Alumnos'} setSesion={setSesion}/> 
-      <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
       <div id='alumnos-component-mainContent'>
-        <button id='canchas-add-btn' onClick={() => {setActive((active)=> true)}}>
-          <FontAwesomeIcon icon={faPlusCircle}/>
-        </button>
+        <GenericLargeButton title={"Crear nuevo alumno"} doSomething={() => setActive(true)}/>
         <AgregarAlumno 
           active={active} 
           setActive={setActive} 
@@ -212,27 +230,31 @@ const Users = ({ setSesion }) => {
           setAlumnoForm={setAlumnoForm}
           clearState={clearState}
           alumnoForm={alumnoForm}
-          nombreFB={nombreFB}
-          telefonoFB={telefonoFB}
+          feedback={feedback}
         />
-        {alumnos.length === 0 ? <div>...cargando</div>
+        {alumnosLoader ? 
+          <LoaderSpinner active={alumnosLoader} containerClass={'canchasLoader'} loaderClass={'canchasLoaderSpinner'} />
         : 
-          <div id="alumnos-list-component">
-            <AlumnoDetail
-              activeDetail={activeDetail}
-              setActiveDetail={setActiveDetail}
-              setAluDetail={setAluDetail}
-              actAlu={actAlu}
-              handleChangeName={handleChangeName}
-              handleChangePhone={handleChangePhone}
-              nombreFB={nombreFB}
-              telefonoFB={telefonoFB}
-              setAlumnoForm={setAlumnoForm}
-              alumnoForm={alumnoForm}
-              clearState={clearState}
-            />
-            <AlumnosList alumnos={alumnos} setActAlu={setActAlu} />
-          </div>
+          <>
+            <div id="alumnos-list-component">
+              <AlumnoDetail
+                activeDetail={activeDetail}
+                setActiveDetail={setActiveDetail}
+                setAluDetail={setAluDetail}
+                setActAlu={setActAlu}
+                actAlu={actAlu}
+                handleChangeName={handleChangeName}
+                handleChangePhone={handleChangePhone}
+                feedback={feedback}
+                clearState={clearState}
+                setAlumnoForm={setAlumnoForm}
+                alumnoForm={alumnoForm}
+                setActAlumnos={setActAlumnos}
+              />
+              <AlumnosList alumnos={alumnos} actAlu={actAlu} setActAlu={setActAlu} setLoadingDetails={setLoadingDetails}
+                loadingDetails={loadingDetails} />
+            </div>
+          </>
         }
       </div>
     </div>

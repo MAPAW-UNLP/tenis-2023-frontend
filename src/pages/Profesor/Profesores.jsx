@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { checkExistenceIn, ordenarPorNombre, validateEmail } from '../../components/Utils/Functions' 
 
 import NavBar from '../Navbar/NavBar'
 import AgregarProfesor from '../../components/Profesor/AgregarProfesor'
 import { ProfesoresList } from '../../components/Profesor/ProfesoresList'
 import LoaderSpinner from '../../components/LoaderSpinner'
+import { GenericLargeButton } from '../../components/Utils/GenericLargeButton'
 
 import '../../styles/profesores.css'
 import { ProfesorDetail }  from '../../components/Profesor/ProfesorDetail'
@@ -241,10 +240,7 @@ export const Profesores = ({ setSesion }) => {
     <div id='profesores-component'>
         <NavBar title={'Profesores'} setSesion={setSesion}/>
         <div id='profesores-component-mainContent'>
-            <button id='canchas-add-btn' onClick={() => {setActive(true)}}>
-              <FontAwesomeIcon icon={faPlusCircle}/>
-            </button>
-            
+          <GenericLargeButton title={"Crear nuevo profesor"} doSomething={() => setActive(true)}/>          
             <AgregarProfesor 
               active={active} handleCloseForm={handleCloseForm} handleChangeName={handleChangeName} handleChangeEmail={handleChangeEmail}
               handleChangePhone={handleChangePhone} feedback={feedback} submitProfesorForm={submitProfesorForm}

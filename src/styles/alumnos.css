@@ -1,9 +1,10 @@
-#alumnos-component{
+#alumnos-component {
     background-color: var(--primary-blue);
     height: 100%;
+    min-height: 100vh;
 }
 
-#alumnos-component-mainContent{
+#alumnos-component-mainContent {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -12,20 +13,18 @@
     margin: auto;
     margin-top: 5vh;
     align-items: center;
-   
-
 }
 
-#alumnos-list-component{
+#alumnos-list-component {
     margin-top: 2vh;
     width: 100%;
     border-radius: 20px;
     background-color: var(--neutral-white);
     margin-bottom: 10vh;
-    cursor: default; 
+    cursor: default;
 }
 
-#alumnos-list-options{
+#alumnos-list-options {
     height: 8vh;
     display: grid;
     grid-template-columns: 20% 20% 20% 40%;
@@ -34,24 +33,24 @@
     justify-content: center;
     color: var(--neutral-black);
     font-family: var(--title-text);
-    font-size: 150%;
     border-bottom: 5px solid var(--neutral-black);
     background-color: var(--neutral-white);
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
     padding-left: 2%;
-
-
 }
 
-#alumnos-searchbar{
+.list-options-header {
+    font-size: 150%;
+}
+
+#alumnos-searchbar {
     position: relative;
     width: 90%;
 }
 
-#alumnos-searchbar input{
+#alumnos-searchbar input {
     width: 100%;
-    
     font-family: var(--normal-text);
     font-size: 100%;
     border-radius: 10px;
@@ -61,21 +60,21 @@
     transition: all 0.5s ease;
 }
 
-#alumnos-searchbar input:focus{
+#alumnos-searchbar input:focus {
     outline: 2px solid var(--accent-green);
     border: none;
 }
 
-#magnify-iconAlumnos{
+#magnify-iconAlumnos {
     color: var(--neutral-black);
     position: absolute;
     top: 10%;
     right: 5%;
 }
 
-.alumno-info{
+.alumno-info {
     display: grid;
-    grid-template-columns: 20% 20% 20% 40% ;
+    grid-template-columns: 20% 20% 20% 40%;
     margin: 0.5%;
     padding: 1%;
     border-radius: 12px;
@@ -85,45 +84,49 @@
     font-size: 110%;
 }
 
-#alumno-add-component{
+#alumno-add-component {
     background-color: var(--neutral-white);
     display: flex;
     flex-direction: column;
     position: absolute;
     top: 50%;
-    border-radius:20px; 
+    border-radius: 20px;
     width: 40vw;
     z-index: 20;
-    box-shadow: -2px -4px 400px 600px rgba(0,0,0,0.24);
+    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
 }
 
-#alumnos-list{
+#alumnos-list {
     min-height: 100%;
     height: 60vh;
-    overflow-y: scroll; 
+    overflow-y: scroll;
 }
 
 #alumnos-list::-webkit-scrollbar {
-    width: 12px;/* width of the entire scrollbar */
+    width: 12px;
+    /* width of the entire scrollbar */
 }
-  
-  #alumnos-list::-webkit-scrollbar-track {
-    background-color:transparent;
-    border-bottom-left-radius:20px ;
-    border-bottom-right-radius:20px ;
-    opacity: .5;   
+
+#alumnos-list::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    opacity: .5;
 }
-  
+
 #alumnos-list::-webkit-scrollbar-thumb {
-      
-    background-color: var(--accent-green);    /* color of the scroll thumb */
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    border: 2px solid var(--neutral-white);  /* creates padding around scroll thumb */
+
+    background-color: var(--accent-green);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);
+    /* creates padding around scroll thumb */
 }
 
 
-#close-alumno-add-form{
-    background:  none;
+#close-alumno-add-form {
+    background: none;
     position: absolute;
     top: 1vh;
     border: none;
@@ -135,15 +138,14 @@
     cursor: pointer;
 }
 
-#close-alumno-add-form:hover{
+#close-alumno-add-form:hover {
     font-size: 175%;
     font-weight: bolder;
     color: #CC3636;
 }
 
-#alumno-add-component h2{
+#alumno-add-component h2 {
     width: 100%;
-    
     margin-top: 3vh;
     background-color: var(--neutral-white);
     color: var(--neutral-black);
@@ -152,7 +154,7 @@
     font-family: var(--title-text);
 }
 
-#alumno-add-form{
+#alumno-add-form {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -161,13 +163,13 @@
     background-color: var(--neutral-white);
 }
 
-.alumno-add-form-input{
+.alumno-add-form-input {
     font-family: var(--normal-text);
     margin: auto;
     margin-bottom: 15px;
     width: 90%;
     height: 2.2rem;
-    margin: 1.7vh 2vw ;
+    margin: 1.7vh 2vw;
     border-radius: 2px;
     font-size: large;
     background-color: var(--neutral-white);
@@ -177,21 +179,22 @@
     transition: all 0.5s ease;
 }
 
-.alumno-add-form-input:focus{
-    border:none;
+.alumno-add-form-input:focus {
+    border: none;
     outline: 2px solid var(--accent-green);
 }
 
-.alumno-add-form-input:disabled{
+.alumno-add-form-input:disabled {
     border: none;
     background-color: var(--neutral-black);
 }
-#inputDateBirth{
+
+#inputDateBirth {
     width: 81%;
     cursor: pointer;
 }
 
-#alumno-add-form-addBtn{
+#alumno-add-form-addBtn {
     width: 100%;
     background-color: var(--accent-green);
     height: 5rem;
@@ -201,18 +204,18 @@
     cursor: pointer;
 }
 
-#alumno-add-form-addBtn:disabled{
+#alumno-add-form-addBtn:disabled {
     background-color: var(--neutral-black);
 }
 
-.feedbackInline{
+.feedbackInline {
     font-family: var(--normal-text);
     position: relative;
     top: -1.5vh;
     font-size: 80%;
 }
 
-#nacimientoPicker{
+#nacimientoPicker {
     height: 2rem;
     margin: 2vh 10% 2vh 10%;
     width: 80%;
@@ -229,17 +232,18 @@
     transition: all 0.5s ease;
     cursor: pointer;
 }
-#nacimientoPicker::placeholder{
+
+#nacimientoPicker::placeholder {
     font-family: var(--normal-text);
     font-size: large;
     color: var(--neutral-black);
 }
 
-#nacimientoPicker:focus{
+#nacimientoPicker:focus {
     outline: 2px solid var(--accent-green);
 }
 
-#fecha-nacimiento{
+#fecha-nacimiento {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -248,7 +252,7 @@
     font-family: var(--normal-text);
 }
 
-#fecha-nacimiento input{
+#fecha-nacimiento input {
     width: 10%;
     font-size: 70%;
     padding-left: .2%;
@@ -258,7 +262,7 @@
     border: 1px solid var(--neutral-black);
 }
 
-#fecha-nacimiento input:last-child{
+#fecha-nacimiento input:last-child {
     width: 20%;
     font-size: 70%;
     font-family: var(--normal-text);
@@ -278,3 +282,119 @@
     color: var(--neutral-black);
     font-size: 120%;
 } */
+
+/* COBROS DEL ALUMNO */
+
+.cobros-detail {
+    background-color: var(--neutral-white);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 30%;
+    left: 30vw;
+    border-radius: 20px;
+    width: 40vw;
+    z-index: 20;
+    box-shadow: -2px -4px 400px 600px rgba(0, 0, 0, 0.24);
+}
+
+.close-detail-add-form {
+    background: none;
+    position: absolute;
+    top: 1vh;
+    border: none;
+    right: 2vw;
+    font-family: var(--title-text);
+    font-size: 1.4em;
+    color: var(--neutral-black);
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+
+.close-detail-add-form:hover {
+    color: #CC3636;
+}
+
+.cobros-detail-list {
+    height: 40vh;
+    overflow-y: scroll;
+    margin-bottom: 2em;
+}
+
+.cobros-detail-list::-webkit-scrollbar {
+    width: 12px;
+    /* width of the entire scrollbar */
+}
+
+.cobros-detail-list::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    opacity: .5;
+}
+
+.cobros-detail-list::-webkit-scrollbar-thumb {
+    background-color: var(--neutral-black);
+    /* color of the scroll thumb */
+    border-radius: 20px;
+    /* roundness of the scroll thumb */
+    border: 2px solid var(--neutral-white);
+    /* creates padding around scroll thumb */
+}
+
+/* Aca poner los scrollss */
+
+.cobros-detail-item {
+    display: flex;
+    flex-direction: column;
+    background-color: #94F5C5;
+    /* height: 13vh; */
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    border: 3px dashed var(--neutral-black);
+    border-left: 6px dashed var(--neutral-black);
+    padding: 1em;
+    color: var(--neutral-black);
+    /* font-family: var(--normal-text); */
+}
+
+.cobros-detail h2 {
+    width: 100%;
+    margin-top: 3vh;
+    background-color: var(--neutral-white);
+    color: var(--neutral-black);
+    font-size: 250%;
+    text-align: center;
+    font-family: var(--title-text);
+}
+
+.cobros-detail-title{
+    text-align: center;
+    font-family: var(--title-text);
+    margin-bottom: .3em;
+}
+
+.cobros-detail-fecha {
+    font-size: 1.1em;
+}
+
+.cobros-detail-tipo {
+    font-size: 1.3em;
+}
+
+.cobros-detail-cantidad {
+    font-family: var(--normal-text);
+    font-size: 1.2em;
+}
+
+.cobros-detail-contadores {
+    margin: 5% auto 5% auto;
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    flex-direction: row;
+    font-family: var(--title-text);
+    font-size: 140%;
+    color: var(--primary-blue)
+}

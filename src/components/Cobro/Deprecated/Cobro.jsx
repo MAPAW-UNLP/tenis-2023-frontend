@@ -25,9 +25,9 @@ export const Cobro = ({ info,setActUser }) => {
             <p>{mostrarFechaDescentemente()}</p>
             <p>{returnTipoClase(info.idTipoClase)}</p>
             <p>{info.cantidad}</p>
-            <button id='historial-usuario-btn' onClick={()=> setActUser({id:info.idPersona, nombre:info.nombrePersona})}>
+            {/* <button id='historial-usuario-btn' onClick={()=> setActUser({id:info.idPersona, nombre:info.nombrePersona})}>
               <FontAwesomeIcon icon={faFileInvoiceDollar}/>
-            </button>
+            </button> */}
         </div>
     )
 }

@@ -22,7 +22,7 @@ export const Movimientos = ({ setSesion }) => {
           <div className="image" style={{ backgroundColor: '#75ebb0', position: 'relative' }}>
             <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
               <FontAwesomeIcon icon={faDollarSign} style={{ position: 'absolute', left: '32%', top: '0', bottom: '0', margin: 'auto' }} />
-              <FontAwesomeIcon icon={faUpLong} style={{ position: 'absolute', right: '32%', top: '0', bottom: '0', margin: 'auto' }} />
+              <FontAwesomeIcon icon={faDownLong} style={{ position: 'absolute', right: '32%', top: '0', bottom: '0', margin: 'auto' }} />
             </div>
           </div>
           <div className="content">
@@ -39,7 +39,7 @@ export const Movimientos = ({ setSesion }) => {
           <div className="image" style={{ backgroundColor: '#f5a694', position: 'relative' }}>
             <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
               <FontAwesomeIcon icon={faDollarSign} style={{ position: 'absolute', left: '32%', top: '0', bottom: '0', margin: 'auto' }} />
-              <FontAwesomeIcon icon={faDownLong} style={{ position: 'absolute', right: '32%', top: '0', bottom: '0', margin: 'auto' }} />
+              <FontAwesomeIcon icon={faUpLong} style={{ position: 'absolute', right: '32%', top: '0', bottom: '0', margin: 'auto' }} />
             </div>
           </div>
           <div className="content">

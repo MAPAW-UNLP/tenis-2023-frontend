@@ -41,6 +41,7 @@ export const Pagos = ({ setSesion }) => {
   // Estado para el formulario de "Agregar Pago"
   const [pagoAddForm, setPagoAddForm] = useState({
     personaId: '',
+    personaSeleccionada: '',
     concepto: '',
     monto: '',
     descripcion: ''
@@ -48,13 +49,40 @@ export const Pagos = ({ setSesion }) => {
 
   // Actualiza los datos del formulario para agregar un PAGO
   const handleChangeFormData = (e) => {
-    setPagoAddForm({ ...pagoAddForm, [e.target.name]: e.target.value });
+    if (e.target.name === 'personaId') {
+      // El valor de la persona seleccionada
+      const personaSeleccionada = e.target[e.target.selectedIndex].text;
+
+      // Si no seleccionamos ningun alumno resetamos el input a cadena vacia ("")
+      if (e.target.value === "") {
+        setPagoAddForm({
+          ...pagoAddForm,
+          'personaSeleccionada': "",
+          [e.target.name]: e.target.value,
+          'descripcion': ""
+        });
+      }
+      // Si tenemos que setear personaId con un valor != vacio --> entonces agarramos el valor de option y lo
+      // seteamos en el formulario del estado
+      else {
+        setPagoAddForm({
+          ...pagoAddForm,
+          'personaSeleccionada': personaSeleccionada,
+          [e.target.name]: e.target.value,
+          'descripcion': `Pago a: ${personaSeleccionada}`
+        });
+      }
+    }
+    else {
+      setPagoAddForm({ ...pagoAddForm, [e.target.name]: e.target.value });
+    }
   };
 
   // Reseteo el formulario de PAGO
   const resetPagoAddForm = () => {
     setPagoAddForm({
       personaId: '',
+      personaSeleccionada: '',
       concepto: '',
       monto: '',
       descripcion: ''
@@ -129,7 +157,7 @@ export const Pagos = ({ setSesion }) => {
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo pago"} />
 
         <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitPagoForm}
-          movivimientoAddForm={pagoAddForm} handleChangeFormData={handleChangeFormData} personas={profesores}
+          movimientoAddForm={pagoAddForm} handleChangeFormData={handleChangeFormData} personas={profesores}
           movimientoName={"Pago"} movimientoOptions={movimientoOptions} />
 
         {pagosLoader ?

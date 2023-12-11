@@ -41,6 +41,7 @@ export const Cobros = ({ setSesion }) => {
   // Estado para el formulario de "Agregar Cobro"
   const [cobroAddForm, setCobroAddForm] = useState({
     personaId: '', // Antes alumnoID, ahora es personaId para poder usarlo como generico pero en los endpoints cambiamos el nombre
+    personaSeleccionada: '',
     concepto: '',
     monto: '',
     descripcion: '',
@@ -49,13 +50,40 @@ export const Cobros = ({ setSesion }) => {
 
   // Actualiza los datos del formulario para agregar un COBRO
   const handleChangeFormData = (e) => {
-    setCobroAddForm({ ...cobroAddForm, [e.target.name]: e.target.value });
+    if (e.target.name === 'personaId') {
+      // El valor de la persona seleccionada
+      const personaSeleccionada = e.target[e.target.selectedIndex].text;
+      
+      // Si no seleccionamos ningun alumno resetamos el input a cadena vacia ("")
+      if (e.target.value === "") {
+        setCobroAddForm({
+          ...cobroAddForm,
+          'personaSeleccionada': "",
+          [e.target.name]: e.target.value,
+          'descripcion': ""
+        });
+      }
+      // Si tenemos que setear personaId con un valor != vacio --> entonces agarramos el valor de option y lo
+      // seteamos en el formulario del estado
+      else {
+        setCobroAddForm({
+          ...cobroAddForm,
+          'personaSeleccionada': personaSeleccionada,
+          [e.target.name]: e.target.value,
+          'descripcion': `Cobro a: ${personaSeleccionada}`
+        });
+      }
+    }
+    else {
+      setCobroAddForm({ ...cobroAddForm, [e.target.name]: e.target.value });
+    }
   };
 
   // Reseteo el formulario de COBRO
   const resetCobroAddForm = () => {
     setCobroAddForm({
       personaId: '',
+      personaSeleccionada: '',
       concepto: '',
       monto: '',
       descripcion: '',
@@ -72,7 +100,7 @@ export const Cobros = ({ setSesion }) => {
   const submitCobroForm = (event) => {
     setActive(false);
     setLoadingFetch(true)
-    
+
     if (cobroAddForm.personaId) {
       const requestOptions = {
         method: 'POST',
@@ -144,7 +172,7 @@ export const Cobros = ({ setSesion }) => {
         <GenericLargeButton doSomething={() => setActive(true)} title={"Crear nuevo cobro"} />
 
         <AgregarMovimiento active={active} handleCloseForm={handleCloseForm} submitMovimientoForm={submitCobroForm}
-          movivimientoAddForm={cobroAddForm} handleChangeFormData={handleChangeFormData} personas={alumnos}
+          movimientoAddForm={cobroAddForm} handleChangeFormData={handleChangeFormData} personas={alumnos}
           movimientoName={"Cobro"} movimientoOptions={movimientoOptions} clasesOptions={clasesOptions} />
 
         {cobrosLoader ?

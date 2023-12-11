@@ -43,11 +43,9 @@ export const Movimientos = ({ setSesion }) => {
             </div>
           </div>
           <div className="content">
-            <a href="#">
-              <span className="title" style={{ color: '#f5a694' }}>
-                Pagos
-              </span>
-            </a>
+            <span className="title" style={{ color: '#f5a694' }}>
+              Pagos
+            </span>
 
             <p className="desc">
               Movimiento de egreso de dinero
@@ -56,18 +54,16 @@ export const Movimientos = ({ setSesion }) => {
         </div>
 
         <div className="card balance" style={{ marginTop: '1.2em', width: '38em', maxWidth: 'none' }}
-            onClick={() => handleRedirect('../balance')}>
+          onClick={() => handleRedirect('../balance')}>
           <div className="image" style={{ backgroundColor: '#78a1ca', position: 'relative' }}>
             <div style={{ fontSize: '5em', color: '#5d5d5d' }}>
               <FontAwesomeIcon icon={faScaleBalanced} style={{ position: 'absolute', left: '0', right: '0', top: '0', bottom: '0', margin: 'auto' }} />
             </div>
           </div>
           <div className="content">
-            <a href="#">
-              <span className="title" style={{ color: '#78a1ca' }}>
-                Balance general
-              </span>
-            </a>
+            <span className="title" style={{ color: '#78a1ca' }}>
+              Balance general
+            </span>
 
             <p className="desc">
               Balance general de los movimientos

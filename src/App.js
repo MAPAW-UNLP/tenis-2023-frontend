@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 //Components
 import { Login } from './pages/Login/Login';
 import { Home } from './pages/Home/Home';
+import { HomeRe } from './pages/Home/HomeRe';
 import { Canchas } from './pages/Cancha/Canchas';
 import { Reservas } from './pages/Reserva/Reservas';
 import Alumnos from './pages/Alumno/Alumnos';
@@ -44,7 +45,8 @@ function App() {
         <header className="App-header"></header>
         <Routes>
           <Route path="/" element={<Login setSesion={setSesion} />} />
-          <Route path="/inicio" element={<Home setSesion={setSesion} />} />
+          <Route path="/inicioOld" element={<Home setSesion={setSesion} />} />
+          <Route path="/inicio" element={<HomeRe setSesion={setSesion} />} />
           <Route path="/reservas" element={<HomeVariant setSesion={setSesion} />} />
           <Route path="/canchas" element={<Canchas setSesion={setSesion} />} />
           <Route path="/alumnos" element={<Alumnos setSesion={setSesion} />}/>

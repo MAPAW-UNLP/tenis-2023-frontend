@@ -24,6 +24,7 @@ import './styles/App.css';
 
 //routes react
 import { Routes, Route } from 'react-router-dom';
+import { Ajustes } from './pages/Ajustes/Ajustes';
 
 function App() {
   //para la sesion
@@ -57,6 +58,7 @@ function App() {
           <Route path="/movimientos" element={<Movimientos setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
           <Route path="/crearClase" element={<CrearClase setSesion={setSesion} />}/>
+          <Route path="/ajustes" element={<Ajustes setSesion={setSesion} />}/>
         </Routes>
       </div>
     </>

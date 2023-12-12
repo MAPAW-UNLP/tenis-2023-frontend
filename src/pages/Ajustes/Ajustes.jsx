@@ -8,7 +8,7 @@ import LoaderSpinner from '../../components/LoaderSpinner';
 export const Ajustes = ({ setSesion }) => {
   const URL_BASE = `http://localhost:8083/api/`;
   const [profesores, setProfesores] = useState([]);
-  const [tipoClases, setTipoClaes] = useState([])
+  const [tipoClases, setTipoClases] = useState([])
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export const Ajustes = ({ setSesion }) => {
       try {
         const response = await fetch(`${URL_BASE}clases`, requestOptions);
         const data = await response.json();
-        setTipoClaes(data);
+        setTipoClases(data);
         setCargando(false);
       } catch (error) {
         console.error('Error al obtener datos desde la BD', error);
@@ -47,12 +47,22 @@ export const Ajustes = ({ setSesion }) => {
 
   // Handler para guardar los valores en el estado de profesor (con el nuevo valor en caso de ser cambiado)
   const handleProfesorChange = (nombre, valor) => {
-
+    setProfesores((prevProfesores) => {
+      const nuevosProfesores = prevProfesores.map((profesor) =>
+        profesor.nombre === nombre.nombre ? { ...profesor, valor: valor.substring(1) } : profesor
+      );
+      return nuevosProfesores;
+    });
   };
 
   // Handler para actualizar (de ser necesario) los valores de los importes de las clases
-  const handleTipoClaseChange = (nombre, valor) => {
-
+  const handleTipoClaseChange = (tipo, valor) => {
+    setTipoClases((prevTipoClases) => {
+      const nuevosTipoClase = prevTipoClases.map((tipoClase) =>
+      tipoClase.tipo === tipo.tipo ? { ...tipoClase, importe: valor.substring(1) } : tipoClase
+      );
+      return nuevosTipoClase;
+    });
   };
 
   // Handler para actualizar el valor por defecto que viene desde la configuracion
@@ -87,7 +97,7 @@ export const Ajustes = ({ setSesion }) => {
                     <input type='text'
                       className='table-input-ajustes'
                       style={{ backgroundColor: '#d9d9d9', border: 'none', color: '#5d5d5d', fontSize: 'inherit' }}
-                      value={tipoClase.importe}
+                      value={'$' + (tipoClase.importe || '')}
                       onChange={(e) => handleTipoClaseChange(tipoClase, e.target.value)}
                     />
                   </div>
@@ -120,7 +130,7 @@ export const Ajustes = ({ setSesion }) => {
                     <input type='text'
                       className='table-input-ajustes'
                       style={{ backgroundColor: '#d9d9d9', border: 'none', color: '#5d5d5d', fontSize: 'inherit' }}
-                      value={'$1000'}
+                      value={'$' + (profesor.valor || '')}
                       onChange={(e) => handleProfesorChange(profesor, e.target.value)}
                     />
                   </div>

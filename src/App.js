@@ -25,6 +25,7 @@ import './styles/App.css';
 //routes react
 import { Routes, Route } from 'react-router-dom';
 import { Ajustes } from './pages/Ajustes/Ajustes';
+import { AlumnosNew } from './pages/Alumno/AlumnosNew';
 
 function App() {
   //para la sesion
@@ -51,6 +52,7 @@ function App() {
           <Route path="/reservas" element={<HomeVariant setSesion={setSesion} />} />
           <Route path="/canchas" element={<Canchas setSesion={setSesion} />} />
           <Route path="/alumnos" element={<Alumnos setSesion={setSesion} />}/>
+          <Route path="/alumnosNew" element={<AlumnosNew setSesion={setSesion} />}/>
           <Route path="/profesores" element={<Profesores setSesion={setSesion} />}/>
           <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
           <Route path="/pagos" element={<Pagos setSesion={setSesion} />}/>

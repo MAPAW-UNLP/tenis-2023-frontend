@@ -8,7 +8,7 @@ import moment from 'moment';
 
 import { formatDate } from './Functions';
 
-const NacimientoComponent = ({alumnoForm, setNacimiento}) => {
+const NacimientoComponent = ({alumnoForm, setNacimiento, nombre}) => {
     const [startDate, setStartDate] = useState(new Date());
     const years = range(1970, getYear(new Date()) + 1, 1);
     const months = [
@@ -33,7 +33,9 @@ const NacimientoComponent = ({alumnoForm, setNacimiento}) => {
     }
 
     return (
-      <DatePicker id='nacimientoPicker'
+      <DatePicker 
+        name={nombre || ''}
+        id='nacimientoPicker'
         placeholderText='Nacimiento'
         renderCustomHeader={({
           date,

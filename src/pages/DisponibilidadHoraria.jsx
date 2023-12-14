@@ -89,13 +89,8 @@ export const DisponibilidadHoraria = ({ setSesion }) => {
     const botonContinuar = document.getElementById('boton-continuar');
     botonContinuar.disabled = true;
 
-    const horaFinElement = document.getElementById('horafin')
+    const horaFinElement = document.getElementById('horaFin')
     horaFinElement.disabled = true;
-    
-    const botones = document.getElementsByClassName("inputReserva");
-    for (const as of checkboxes) {
-      as.disabled = true;
-    }
 
     const requestOptions = {
       method: 'POST',

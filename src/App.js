@@ -14,6 +14,8 @@ import { Pagos } from './pages/Pagos/Pagos';
 import { Balance } from './pages/Balance/Balance';
 import CrearClase from './pages/CrearClase';
 import { Movimientos } from './pages/Movimientos/Movimientos'
+import { DisponibilidadHoraria } from './pages/DisponibilidadHoraria'
+import { MisPagos } from './pages/MisPagos'
 
 //VarianteHome
 import HomeVariant from './pages/Reserva/HomeVariant';
@@ -55,6 +57,8 @@ function App() {
           <Route path="/movimientos" element={<Movimientos setSesion={setSesion} />}/>
           <Route path="/nuevaReserva" element={<Reservas setSesion={setSesion} />}/>
           <Route path="/crearClase" element={<CrearClase setSesion={setSesion} />}/>
+          <Route path="/misPagos" element={<MisPagos setSesion={setSesion} />}/>
+          <Route path="/disponibilidadHoraria" element={<DisponibilidadHoraria setSesion={setSesion} />}/>
         </Routes>
       </div>
     </>

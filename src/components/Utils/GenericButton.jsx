@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import '../../styles/buttons/genericButton.css';
 
-export const GenericButton = ({ marginBottom, backgroundColor, color, borderRadius, width,
-  centrado, fontSize, fontWeight, children, onClick }) => {
+export const GenericButton = ({ marginBottom, marginTop, backgroundColor, color, borderRadius, width,
+  centrado, fontSize, fontWeight, children, boxShadow, onClick }) => {
 
   const [hovered, setHovered] = useState(false);
 
@@ -16,7 +16,7 @@ export const GenericButton = ({ marginBottom, backgroundColor, color, borderRadi
 
   const styles = {
     backgroundColor: backgroundColor || '#7CBD1E',
-    boxShadow: hovered ? '0px 2px 1px #75b21a' : '0px 2px 1px #5d5d5d',
+    boxShadow: hovered ? (boxShadow ? boxShadow : '0px 2px 1px #75b21a') : '0px 2px 1px #5d5d5d',
     color: color || 'white',
     borderRadius: borderRadius || '5px',
     padding: '10px 15px',
@@ -28,6 +28,7 @@ export const GenericButton = ({ marginBottom, backgroundColor, color, borderRadi
     transition: 'background-color 0.3s ease, box-shadow 0.3s ease',
     fontSize: fontSize || '1em',
     fontWeight: fontWeight || 'bold',
+    marginTop: marginTop || '1.2em'
   };
 
   return (

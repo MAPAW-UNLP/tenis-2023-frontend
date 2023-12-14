@@ -137,7 +137,8 @@ export const Ajustes = ({ setSesion }) => {
                 </div>
               ))}
             </div>
-            <GenericButton marginBottom={"1.5em"} backgroundColor={'#92bc1e'} color="white" borderRadius="1em" width="20em" centrado onClick={() => console.log('Jeje')}>
+            <GenericButton marginBottom={"1.5em"} backgroundColor={'#92bc1e'} color="white" borderRadius="1em" width="20em" 
+              centrado onClick={() => console.log('Jeje')}>
               Confirmar cambios
             </GenericButton>
           </div>

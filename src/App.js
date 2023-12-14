@@ -51,8 +51,7 @@ function App() {
           <Route path="/inicio" element={<HomeRe setSesion={setSesion} />} />
           <Route path="/reservas" element={<HomeVariant setSesion={setSesion} />} />
           <Route path="/canchas" element={<Canchas setSesion={setSesion} />} />
-          <Route path="/alumnos" element={<Alumnos setSesion={setSesion} />}/>
-          <Route path="/alumnosNew" element={<AlumnosNew setSesion={setSesion} />}/>
+          <Route path="/alumnos" element={<AlumnosNew setSesion={setSesion} />}/>
           <Route path="/profesores" element={<Profesores setSesion={setSesion} />}/>
           <Route path="/cobros" element={<Cobros setSesion={setSesion} />}/>
           <Route path="/pagos" element={<Pagos setSesion={setSesion} />}/>

@@ -1,18 +1,20 @@
 import InputReComponent from '../Utils/InputReComponent';
+import InputValueComponent from '../Utils/InputValueComponent';
 import SelectReComponent from '../Utils/SelectReComponent';
 import '../../styles/movimiento/movimientoForm.css'
 
 import { useState } from 'react';
 
-export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas, handleChangeFormData, movivimientoAddForm,
+export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas, handleChangeFormData, movimientoAddForm,
   movimientoOptions, movimiento, clasesOptions }) => {
 
   // Arreglo de errores
   const [errors, setErrors] = useState([])
 
   const handleResetOptions = () => {
-    movivimientoAddForm.personaId = ''
-    movivimientoAddForm.tipoClaseId = ''
+    movimientoAddForm.personaId = ''
+    movimientoAddForm.tipoClaseId = ''
+    movimientoAddForm.personaSeleccionada = ''
   }
 
 
@@ -42,15 +44,15 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
   // Verificar cuando el movimiento es un COBRO
   const verifyFormCobro = () => {
     const verify = []
-    if (!movivimientoAddForm.concepto) verify.push('El concepto no puede estar vacio');
-    if (movivimientoAddForm.concepto === '1') {
-      if (!movivimientoAddForm.personaId)
+    if (!movimientoAddForm.concepto) verify.push('El concepto no puede estar vacio');
+    if (movimientoAddForm.concepto === '1') {
+      if (!movimientoAddForm.personaId)
         verify.push('Debe seleccionar un alumno')
-      if (!movivimientoAddForm.tipoClaseId)
+      if (!movimientoAddForm.tipoClaseId)
         verify.push('Debe seleccionar un tipo de clase')
     }
-    if (!movivimientoAddForm.descripcion) verify.push('La descripcion no puede estar vacia')
-    if (!movivimientoAddForm.monto) verify.push('El monto no puede estar vacio')
+    if (!movimientoAddForm.descripcion) verify.push('La descripcion no puede estar vacia')
+    if (!movimientoAddForm.monto) verify.push('El monto no puede estar vacio')
 
     setErrors(verify)
     return verify.length === 0 ? true : false
@@ -59,13 +61,13 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
   // Verificar cuando el movimiento es un PAGO
   const verifyFormPago = () => {
     const verify = []
-    if (!movivimientoAddForm.concepto) verify.push('El concepto no puede estar vacio');
-    if (movivimientoAddForm.concepto === '1') {
-      if (!movivimientoAddForm.personaId)
+    if (!movimientoAddForm.concepto) verify.push('El concepto no puede estar vacio');
+    if (movimientoAddForm.concepto === '1') {
+      if (!movimientoAddForm.personaId)
         verify.push('Debe seleccionar un profesor')
     }
-    if (!movivimientoAddForm.descripcion) verify.push('La descripcion no puede estar vacia')
-    if (!movivimientoAddForm.monto) verify.push('El monto no puede estar vacio')
+    if (!movimientoAddForm.descripcion) verify.push('La descripcion no puede estar vacia')
+    if (!movimientoAddForm.monto) verify.push('El monto no puede estar vacio')
 
     setErrors(verify)
     return verify.length === 0 ? true : false
@@ -81,7 +83,7 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
 
         {/* Si es un alumno/profesor muestro desplegable con la lista de usuarios correspondiente.
             Al seleccionar otra opcion reseteamos personaID del formulario para no enviarlo en el endpoint */}
-        {movivimientoAddForm.concepto === '1' ?
+        {movimientoAddForm.concepto === '1' ?
           <>
             <label htmlFor="personaId" className="movimiento-form-label"> * </label>
             <SelectReComponent name={'personaId'} onChange={handleChangeFormData} options={personas}
@@ -103,8 +105,9 @@ export const MovimientoForm = ({ handleCloseForm, submitMovimientoForm, personas
         }
 
         <label htmlFor="descripcion" className="movimiento-form-label"> * </label>
-        <InputReComponent name={'descripcion'} onChangeFuncion={handleChangeFormData} placeholder={'Descripcion'} />
-
+        <InputValueComponent type={'text'} name={'descripcion'} onChangeFuncion={handleChangeFormData} placeholder={'Descripcion'}
+          value={movimientoAddForm.descripcion} />
+          
         <label htmlFor="monto" className="movimiento-form-label"> * </label>
         <InputReComponent name={'monto'} onChangeFuncion={handleChangeFormData} placeholder={'Monto'} />
 

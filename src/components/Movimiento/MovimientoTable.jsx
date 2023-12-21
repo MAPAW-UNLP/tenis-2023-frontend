@@ -34,7 +34,7 @@ export const MovimientoTable = ({ movimientos, loadingFetch }) => {
         <table className="movimiento-table" style={{ marginBottom: '5px', position: 'relative' }}>
           <thead className='table-head' style={{ position: 'sticky', top: '0' }}>
             <tr>
-              <th>Día</th>
+              <th>Fecha y hora</th>
               <th>Concepto</th>
               <th style={{ textAlign: 'center' }}>Descripción</th>
               <th>Monto</th>
@@ -51,7 +51,7 @@ export const MovimientoTable = ({ movimientos, loadingFetch }) => {
               <Fragment key={movimiento.id}>
                 <tr style={{ height: '8px' }} />
                 <tr className='table-row'>
-                  <td>{movimiento.fecha}</td>
+                  <td>{movimiento.fecha_format} - {movimiento.hora} hs</td>
                   <td>{movimiento.concepto_desc}</td>
                   {movimiento.idAlumno
                     ? <td><span style={{ fontWeight: 'bold', fontSize: '1.1em' }}>{movimiento.nombreAlumno}</span> <br /> {movimiento.descripcion}</td>
